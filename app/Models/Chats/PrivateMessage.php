@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\PrivateChats;
+namespace App\Models\Chats;
 
 use Illuminate\Database\Eloquent\Model;
 
