@@ -15,7 +15,16 @@ class CreateEducationStatusesTable extends Migration
     {
         Schema::create('education_statuses', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('user_id');
+
+            $table->string('education_level');
+            $table->string('field_of_study');
+            $table->string('school_name');
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

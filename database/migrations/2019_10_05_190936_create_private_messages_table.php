@@ -15,7 +15,14 @@ class CreatePrivateMessagesTable extends Migration
     {
         Schema::create('private_messages', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('sender_id');
+            $table->bigInteger('receiver_id');
+            $table->bigInteger('parent_message_id')->nullable();
+
+            $table->string('content');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -15,7 +15,14 @@ class CreateSystemLogsTable extends Migration
     {
         Schema::create('system_logs', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('actor_id');
+
+            $table->string('action_type');
+            $table->string('action_target');
+            $table->string('remark');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

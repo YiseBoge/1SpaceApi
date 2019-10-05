@@ -14,8 +14,8 @@ class CreateReminderUserTable extends Migration
     public function up()
     {
         Schema::create('reminder_user', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->timestamps();
+            $table->bigInteger('reminder_id');
+            $table->bigInteger('user_id');
         });
     }
 

@@ -14,8 +14,8 @@ class CreateNoticeUserTable extends Migration
     public function up()
     {
         Schema::create('notice_user', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->timestamps();
+            $table->bigInteger('notice_id');
+            $table->bigInteger('user_id');
         });
     }
 

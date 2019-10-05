@@ -15,7 +15,13 @@ class CreateNoticesTable extends Migration
     {
         Schema::create('notices', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('poster_id');
+
+            $table->string('title');
+            $table->string('description');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

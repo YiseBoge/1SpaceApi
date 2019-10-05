@@ -15,7 +15,14 @@ class CreateFamilyStatusesTable extends Migration
     {
         Schema::create('family_statuses', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('user_id');
+
+            $table->string('status');
+            $table->string('partner_name');
+            $table->integer('number_of_children');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

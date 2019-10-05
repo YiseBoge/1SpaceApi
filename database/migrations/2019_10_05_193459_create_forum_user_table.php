@@ -14,8 +14,8 @@ class CreateForumUserTable extends Migration
     public function up()
     {
         Schema::create('forum_user', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->timestamps();
+            $table->bigInteger('forum_id');
+            $table->bigInteger('user_id');
         });
     }
 

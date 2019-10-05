@@ -6,6 +6,7 @@ use Accounts\FamilyStatusController;
 use Accounts\WorkExperienceController;
 use Chats\PrivateMessageController;
 use Forums\ForumController;
+use Forums\ForumMessageController;
 use Generics\AddressController;
 use Generics\DepartmentController;
 use Generics\FileController;
@@ -34,6 +35,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //  API Resources  //
 
+Route::apiResource('accounts/account', ContactPersonController::class);
 Route::apiResource('accounts/contact-person', ContactPersonController::class);
 Route::apiResource('accounts/education-status', EducationStatusController::class);
 Route::apiResource('accounts/family-status', FamilyStatusController::class);
@@ -42,7 +44,7 @@ Route::apiResource('accounts/work-experience', WorkExperienceController::class);
 Route::apiResource('chats/private-message', PrivateMessageController::class);
 
 Route::apiResource('forums/forum', ForumController::class);
-Route::apiResource('forums/forum-message', Forums\ForumMessageController::class);
+Route::apiResource('forums/forum-message', ForumMessageController::class);
 
 Route::apiResource('generics/forum', AddressController::class);
 Route::apiResource('generics/department', DepartmentController::class);

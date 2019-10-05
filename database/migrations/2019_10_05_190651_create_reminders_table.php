@@ -15,7 +15,15 @@ class CreateRemindersTable extends Migration
     {
         Schema::create('reminders', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('poster_id');
+
+            $table->string('title');
+            $table->string('description');
+            $table->date('target_date');
+            $table->integer('remind_before');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
