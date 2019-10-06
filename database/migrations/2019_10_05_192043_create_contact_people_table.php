@@ -19,7 +19,6 @@ class CreateContactPeopleTable extends Migration
             $table->bigInteger('address_id');
 
             $table->string('personal_name');
-            $table->string('personal_name');
             $table->string('father_name');
             $table->string('grand_father_name');
             $table->string('phone_number');
