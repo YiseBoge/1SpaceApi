@@ -21,6 +21,7 @@ class CreateContactPeopleTable extends Migration
             $table->string('personal_name');
             $table->string('father_name');
             $table->string('grand_father_name');
+            $table->string('sex');
             $table->string('phone_number');
             $table->string('employer_company');
             $table->string('type');

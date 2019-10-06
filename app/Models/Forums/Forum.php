@@ -4,10 +4,10 @@ namespace App\Models\Forums;
 
 use App\Traits\Enums;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Forum extends Model
 {
@@ -19,7 +19,7 @@ class Forum extends Model
     ];
 
     protected $enumTypes = [
-        
+
     ];
 
     /**
@@ -27,15 +27,15 @@ class Forum extends Model
      */
     public function creator()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'creator_id');
     }
 
     /**
-     * @return HasMany
+     * @return BelongsToMany
      */
     public function users()
     {
-        return $this->hasMany('App\User');
+        return $this->belongsToMany('App\User', 'forum_user');
     }
 
     /**

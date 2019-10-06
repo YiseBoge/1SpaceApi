@@ -3,11 +3,10 @@
 namespace App\Models\Notices;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Notice extends Model
 {
@@ -22,15 +21,15 @@ class Notice extends Model
      */
     public function poster()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'poster_id');
     }
 
     /**
-     * @return HasMany
+     * @return BelongsToMany
      */
     public function users()
     {
-        return $this->hasMany('App\User');
+        return $this->belongsToMany('App\User', 'notice_user');
     }
 
     /**
@@ -39,5 +38,5 @@ class Notice extends Model
     public function file()
     {
         return $this->morphOne('App\Models\Generics\File', 'fileable');
-    }    
+    }
 }

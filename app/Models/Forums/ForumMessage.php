@@ -3,10 +3,8 @@
 namespace App\Models\Forums;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ForumMessage extends Model
 {
@@ -29,7 +27,7 @@ class ForumMessage extends Model
      */
     public function sender()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'sender_id');
     }
 
     /**
@@ -37,6 +35,6 @@ class ForumMessage extends Model
      */
     public function receiver()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'receiver_id');
     }
 }

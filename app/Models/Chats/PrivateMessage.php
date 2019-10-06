@@ -3,10 +3,9 @@
 namespace App\Models\Chats;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PrivateMessage extends Model
 {
@@ -21,7 +20,7 @@ class PrivateMessage extends Model
      */
     public function sender()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'sender_id');
     }
 
     /**
@@ -29,7 +28,7 @@ class PrivateMessage extends Model
      */
     public function receiver()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'receiver_id');
     }
 
     /**
@@ -37,7 +36,7 @@ class PrivateMessage extends Model
      */
     public function parentMessage()
     {
-        return $this->belongsTo('App\Models\Chats\PrivateMessage');
+        return $this->belongsTo('App\Models\Chats\PrivateMessage', 'parent_message_id');
     }
 
     /**

@@ -3,12 +3,14 @@
 namespace App;
 
 use App\Traits\Enums;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class User extends Authenticatable
 {
@@ -47,6 +49,12 @@ class User extends Authenticatable
         'deleted_at',
     ];
 
+    protected $enumSexes = [
+        'Male',
+        'Female',
+    ];
+
+
     /**
      * @return BelongsTo
      */
@@ -80,17 +88,17 @@ class User extends Authenticatable
     }
 
     /**
-     * @return HasOne
+     * @return HasMany
      */
-    public function contactPerson()
+    public function contactPeople()
     {
-        return $this->hasOne('App\Models\Accounts\ContactPerson');
+        return $this->hasMany('App\Models\Accounts\ContactPerson');
     }
 
     /**
      * @return HasMany
      */
-    public function educationStatus()
+    public function educationStatuses()
     {
         return $this->hasMany('App\Models\Accounts\EducationStatus');
     }
@@ -136,11 +144,11 @@ class User extends Authenticatable
     }
 
     /**
-     * @return HasMany
+     * @return BelongsToMany
      */
     public function forums()
     {
-        return $this->hasMany('App\Models\Forums\Forum');
+        return $this->belongsToMany('App\Models\Forums\Forum', 'forum_user');
     }
 
      /**
@@ -176,11 +184,11 @@ class User extends Authenticatable
     }
 
     /**
-     * @return HasMany
+     * @return BelongsToMany
      */
     public function notices()
     {
-        return $this->hasMany('App\Models\Notices\Notice');
+        return $this->belongsToMany('App\Models\Notices\Notice', 'notice_user');
     }
 
     /**
@@ -200,10 +208,10 @@ class User extends Authenticatable
     }
 
     /**
-     * @return MorphOne
+     * @return MorphMany
      */
-    public function file()
+    public function files()
     {
-        return $this->morphOne('App\Models\Generics\File', 'fileable');
+        return $this->morphMany('App\Models\Generics\File', 'fileable');
     }
 }

@@ -3,11 +3,10 @@
 namespace App\Models\Generics;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Department extends Model
 {
@@ -30,22 +29,22 @@ class Department extends Model
      */
     public function parentDepartment()
     {
-        return $this->belongsTo('App\Models\Generics\Department');
+        return $this->belongsTo('App\Models\Generics\Department', 'parent_department_id');
     }
 
     /**
      * @return HasMany
      */
-    public function childDepartments()
+    public function subDepartments()
     {
         return $this->hasMany('App\Models\Generics\Department', 'parent_department_id');
     }
 
     /**
-     * @return MorphOne
+     * @return MorphMany
      */
-    public function file()
+    public function files()
     {
-        return $this->morphOne('App\Models\Generics\File', 'fileable');
+        return $this->morphMany('App\Models\Generics\File', 'fileable');
     }
 }
