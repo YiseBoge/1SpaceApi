@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNoticesTable extends Migration
+class CreateChildrenTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateNoticesTable extends Migration
      */
     public function up()
     {
-        Schema::create('notices', function (Blueprint $table) {
+        Schema::create('children', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('poster_id');
+            $table->bigInteger('family_status_id');
 
-            $table->string('title');
-            $table->string('description');
-            $table->date('target_date')->nullable();
-            $table->integer('remind_before')->nullable();
+            $table->string('name');
+            $table->string('sex');
+            $table->date('birth_date');
 
             $table->timestamps();
             $table->softDeletes();
@@ -34,6 +33,6 @@ class CreateNoticesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notices');
+        Schema::dropIfExists('children');
     }
 }

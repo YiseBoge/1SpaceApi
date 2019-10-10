@@ -5,6 +5,7 @@ namespace App\Models\Accounts;
 use App\Traits\Enums;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class FamilyStatus extends Model
@@ -29,5 +30,13 @@ class FamilyStatus extends Model
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function children()
+    {
+        return $this->hasMany('App\Models\Accounts\Child');
     }
 }

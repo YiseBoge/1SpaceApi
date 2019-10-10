@@ -39,18 +39,21 @@ Route::apiResource('accounts/account', ContactPersonController::class);
 Route::apiResource('accounts/contact-person', ContactPersonController::class);
 Route::apiResource('accounts/education-status', EducationStatusController::class);
 Route::apiResource('accounts/family-status', FamilyStatusController::class);
+Route::apiResource('accounts/child', ChildController::class);
 Route::apiResource('accounts/work-experience', WorkExperienceController::class);
 
 Route::apiResource('chats/private-message', PrivateMessageController::class);
 
 Route::apiResource('forums/forum', ForumController::class);
-Route::apiResource('forums/forum-message', ForumMessageController::class);
+Route::apiResource('forums/forum-post', ForumPostController::class);
+Route::apiResource('forums/forum-comment', ForumCommentController::class);
 
 Route::apiResource('generics/forum', AddressController::class);
 Route::apiResource('generics/department', DepartmentController::class);
 Route::apiResource('generics/file', FileController::class);
 Route::apiResource('generics/position', PositionController::class);
 Route::apiResource('generics/role', RoleController::class);
+Route::apiResource('generics/permission', PermissionController::class);
 Route::apiResource('generics/system-log', SystemLogController::class);
 
 Route::apiResource('notices/notice', NoticeController::class);

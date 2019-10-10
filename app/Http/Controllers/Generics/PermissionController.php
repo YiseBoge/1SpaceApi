@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Reminders;
+namespace App\Http\Controllers\Generics;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class ReminderController extends Controller
+class PermissionController extends Controller
 {
     /**
      * Display a listing of the resource.

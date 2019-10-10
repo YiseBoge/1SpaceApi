@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ForumMessage extends Model
+class ForumComment extends Model
 {
     use SoftDeletes;
 
@@ -17,24 +17,16 @@ class ForumMessage extends Model
     /**
      * @return BelongsTo
      */
-    public function forum()
+    public function forumPost()
     {
-        return $this->belongsTo('App\Models\Forums\Forum');
+        return $this->belongsTo('App\Models\Forums\ForumPost');
     }
 
     /**
      * @return BelongsTo
      */
-    public function sender()
+    public function commenter()
     {
-        return $this->belongsTo('App\User', 'sender_id');
-    }
-
-    /**
-     * @return BelongsTo
-     */
-    public function receiver()
-    {
-        return $this->belongsTo('App\User', 'receiver_id');
+        return $this->belongsTo('App\User', 'commenter_id');
     }
 }

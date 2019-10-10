@@ -4,7 +4,7 @@ namespace App\Models\Accounts;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EducationStatus extends Model
@@ -24,10 +24,10 @@ class EducationStatus extends Model
     }
 
     /**
-     * @return MorphOne
+     * @return MorphMany
      */
-    public function file()
+    public function files()
     {
-        return $this->morphOne('App\Models\Generics\File', 'fileable');
+        return $this->morphMany('App\Models\Generics\File', 'fileable');
     }
 }

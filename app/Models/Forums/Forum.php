@@ -41,8 +41,8 @@ class Forum extends Model
     /**
      * @return HasMany
      */
-    public function forumMessages()
+    public function forumPosts()
     {
-        return $this->hasMany('App\Models\Forums\Forum');
+        return $this->hasMany('App\Models\Forums\ForumPost');
     }
 }

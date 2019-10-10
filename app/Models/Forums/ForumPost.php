@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Models\Reminders;
+namespace App\Models\Forums;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Reminder extends Model
+class ForumPost extends Model
 {
     use SoftDeletes;
 
@@ -18,16 +18,24 @@ class Reminder extends Model
     /**
      * @return BelongsTo
      */
+    public function forum()
+    {
+        return $this->belongsTo('App\Models\Forums\Forum');
+    }
+
+    /**
+     * @return BelongsTo
+     */
     public function poster()
     {
         return $this->belongsTo('App\User', 'poster_id');
     }
 
     /**
-     * @return BelongsToMany
+     * @return HasMany
      */
-    public function users()
+    public function forumComments()
     {
-        return $this->belongsToMany('App\User', 'reminder_user');
+        return $this->hasMany('App\Models\Forums\ForumComment');
     }
 }

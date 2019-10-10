@@ -56,6 +56,14 @@ class User extends Authenticatable
 
 
     /**
+     * @return BelongsToMany
+     */
+    public function permissions()
+    {
+        return $this->belongsToMany('App\Models\Generics\Permission', 'permission_user');
+    }
+
+    /**
      * @return BelongsTo
      */
     public function role()
@@ -154,18 +162,11 @@ class User extends Authenticatable
      /**
      * @return HasMany
      */
-    public function sentForumMessages()
+    public function forumPosts()
     {
-        return $this->hasMany('App\Models\Forums\ForumMessage', 'sender_id');
+        return $this->hasMany('App\Models\Forums\ForumPost', 'poster_id');
     }
 
-    /**
-     * @return HasMany
-     */
-    public function receivedForumMessages()
-    {
-        return $this->hasMany('App\Models\Forums\ForumMessage', 'receiver_id');
-    }
 
     /**
      * @return HasMany

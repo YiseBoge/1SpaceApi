@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateForumMessagesTable extends Migration
+class CreatePermissionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateForumMessagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('forum_messages', function (Blueprint $table) {
+        Schema::create('permissions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('forum_id');
-            $table->bigInteger('sender_id');
-            $table->bigInteger('receiver_id');
 
-            $table->string('content');
+            $table->string('action');
+            $table->boolean('can_create')->default(true);
+            $table->boolean('can_edit')->default(true);
+            $table->boolean('can_delete')->default(true);
 
             $table->timestamps();
             $table->softDeletes();
@@ -33,6 +33,6 @@ class CreateForumMessagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('forum_messages');
+        Schema::dropIfExists('permissions');
     }
 }

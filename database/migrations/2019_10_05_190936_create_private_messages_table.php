@@ -19,7 +19,9 @@ class CreatePrivateMessagesTable extends Migration
             $table->bigInteger('receiver_id');
             $table->bigInteger('parent_message_id')->nullable();
 
+            $table->string('subject');
             $table->string('content');
+            $table->boolean('is_important');
 
             $table->timestamps();
             $table->softDeletes();

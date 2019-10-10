@@ -16,9 +16,10 @@ class CreateSystemLogsTable extends Migration
         Schema::create('system_logs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('actor_id');
+            $table->bigInteger('loggable_id');
+            $table->bigInteger('loggable_type');
 
             $table->string('action_type');
-            $table->string('action_target');
             $table->string('remark');
 
             $table->timestamps();
