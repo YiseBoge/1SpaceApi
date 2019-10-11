@@ -12,6 +12,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @method static User findOrFail(array|string|null $input)
+ */
 class User extends Authenticatable
 {
     use Notifiable;

@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @method static FamilyStatus findOrFail(array|string|null $input)
+ * @method static FamilyStatus create(array $array)
+ * @property mixed status
+ * @property string|null partner_name
+ */
 class FamilyStatus extends Model
 {
     use SoftDeletes;

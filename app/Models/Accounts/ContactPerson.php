@@ -8,6 +8,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @method static ContactPerson create(array $array)
+ * @method static ContactPerson findOrFail(int $id)
+ * @property int address_id
+ * @property string|null personal_name
+ * @property string|null father_name
+ * @property string|null grand_father_name
+ * @property string|null sex
+ * @property string|null phone_number
+ * @property string|null employer_company
+ */
 class ContactPerson extends Model
 {
     use SoftDeletes;
