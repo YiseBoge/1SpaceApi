@@ -19,7 +19,7 @@ class CreateDepartmentsTable extends Migration
 
             $table->string('name');
             $table->string('description');
-            $table->string('remark');
+            $table->string('remark')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

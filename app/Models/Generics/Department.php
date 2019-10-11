@@ -16,6 +16,10 @@ class Department extends Model
         'deleted_at',
     ];
 
+    protected $fillable = [
+        'name', 'description',
+    ];
+
      /**
      * @return HasMany
      */

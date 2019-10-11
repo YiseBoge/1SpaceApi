@@ -24,7 +24,7 @@ class CreateContactPeopleTable extends Migration
             $table->string('sex');
             $table->string('phone_number');
             $table->string('employer_company');
-            $table->string('type');
+            $table->string('type')->default('Emergency Contact');
 
             $table->timestamps();
             $table->softDeletes();

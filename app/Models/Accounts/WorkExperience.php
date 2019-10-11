@@ -15,6 +15,10 @@ class WorkExperience extends Model
         'deleted_at',
     ];
 
+    protected $fillable = [
+        'company_name', 'department', 'position', 'role',
+    ];
+
     /**
      * @return BelongsTo
      */

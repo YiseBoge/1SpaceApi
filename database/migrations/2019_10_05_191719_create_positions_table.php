@@ -19,7 +19,7 @@ class CreatePositionsTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->integer('quantity_needed');
-            $table->string('remark');
+            $table->string('remark')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

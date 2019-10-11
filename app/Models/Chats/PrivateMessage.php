@@ -15,6 +15,10 @@ class PrivateMessage extends Model
         'deleted_at',
     ];
 
+    protected $fillable = [
+        'subject', 'content',
+    ];
+
     /**
      * @return BelongsTo
      */

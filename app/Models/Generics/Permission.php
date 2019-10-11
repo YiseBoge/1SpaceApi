@@ -14,6 +14,10 @@ class Permission extends Model
         'deleted_at',
     ];
 
+    protected $fillable = [
+        'action',
+    ];
+
     /**
      * @return BelongsToMany
      */

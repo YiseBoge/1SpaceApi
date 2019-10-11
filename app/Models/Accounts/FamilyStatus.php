@@ -17,11 +17,15 @@ class FamilyStatus extends Model
         'deleted_at',
     ];
 
+    protected $fillable = [
+        'status',
+    ];
+
     protected $enumTypes = [
         'Married',
         'Single',
         'Divorced',
-        'Widowed'
+        'Widowed',
     ];
 
     /**

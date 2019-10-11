@@ -15,6 +15,10 @@ class File extends Model
         'deleted_at',
     ];
 
+    protected $fillable = [
+        'file_name', 'file_url', 'file_type',
+    ];
+
     /**
      * Get the owning fileable model.
      */
@@ -29,6 +33,7 @@ class File extends Model
         'Company Document',
         'Certificate',
         'Notice Document',
+        'Other'
     ];
 
 

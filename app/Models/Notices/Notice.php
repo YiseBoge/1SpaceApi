@@ -16,6 +16,10 @@ class Notice extends Model
         'deleted_at',
     ];
 
+    protected $fillable = [
+        'title', 'description',
+    ];
+
     /**
      * @return BelongsTo
      */

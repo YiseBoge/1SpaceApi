@@ -14,6 +14,10 @@ class Address extends Model
         'deleted_at',
     ];
 
+    protected $fillable = [
+        'region', 'zone', 'woreda', 'city', 'sub_city', 'kebele', 'block_no', 'house_no',
+    ];
+
      /**
      * @return HasOne
      */

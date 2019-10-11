@@ -12,6 +12,14 @@ class Child extends Model
     use SoftDeletes;
     use Enums;
 
+    protected $dates = [
+        'deleted_at',
+    ];
+
+    protected $fillable = [
+        'name', 'sex', 'birth_date',
+    ];
+
     protected $enumSexes = [
         'Male',
         'Female',

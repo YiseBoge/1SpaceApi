@@ -14,6 +14,10 @@ class ForumComment extends Model
         'deleted_at',
     ];
 
+    protected $fillable = [
+        'comment',
+    ];
+
     /**
      * @return BelongsTo
      */

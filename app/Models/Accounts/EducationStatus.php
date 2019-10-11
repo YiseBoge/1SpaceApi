@@ -15,6 +15,10 @@ class EducationStatus extends Model
         'deleted_at',
     ];
 
+    protected $fillable = [
+        'education_level', 'field_of_study', 'school_name',
+    ];
+
      /**
      * @return BelongsTo
      */

@@ -16,6 +16,10 @@ class CreatePermissionUserTable extends Migration
         Schema::create('permission_user', function (Blueprint $table) {
             $table->bigInteger('permission_id');
             $table->bigInteger('user_id');
+
+            $table->boolean('can_create')->default(true);
+            $table->boolean('can_edit')->default(true);
+            $table->boolean('can_delete')->default(true);
         });
     }
 

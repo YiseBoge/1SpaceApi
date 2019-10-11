@@ -18,8 +18,13 @@ class Forum extends Model
         'deleted_at',
     ];
 
-    protected $enumTypes = [
+    protected $fillable = [
+        'title', 'description', 'forum_type',
+    ];
 
+    protected $enumTypes = [
+        'Department Forum',
+        'Custom Forum',
     ];
 
     /**

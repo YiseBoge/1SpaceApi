@@ -17,6 +17,10 @@ class ContactPerson extends Model
         'deleted_at',
     ];
 
+    protected $fillable = [
+        'personal_name', 'father_name', 'grand_father_name', 'sex', 'phone_number', 'employer_company',
+    ];
+
     protected $enumTypes = [
         'Emergency Contact',
         'Voucher',

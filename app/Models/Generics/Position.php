@@ -15,6 +15,10 @@ class Position extends Model
         'deleted_at',
     ];
 
+    protected $fillable = [
+        'name', 'description', 'quantity_needed',
+    ];
+
      /**
      * @return HasMany
      */

@@ -15,6 +15,10 @@ class ForumPost extends Model
         'deleted_at',
     ];
 
+    protected $fillable = [
+        'content',
+    ];
+
     /**
      * @return BelongsTo
      */
