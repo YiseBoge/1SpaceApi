@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @method static Forum findOrFail(int $id)
+ * @method static Forum create(array $array)
+ * @property string|null title
+ * @property string|null description
+ * @property string|null forum_type
+ */
 class Forum extends Model
 {
     use SoftDeletes;

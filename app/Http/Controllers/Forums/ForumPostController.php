@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Forums;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Forums\ForumCommentResource;
-use App\Models\Forums\ForumComment;
+use App\Http\Resources\Forums\ForumPostResource;
 use App\Models\Forums\ForumPost;
 use App\User;
 use Exception;
@@ -12,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
-class ForumCommentController extends Controller
+class ForumPostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,8 +20,8 @@ class ForumCommentController extends Controller
      */
     public function index()
     {
-        $data = ForumComment::all();
-        return ForumCommentResource::collection($data);
+        $data = ForumPost::all();
+        return ForumPostResource::collection($data);
     }
 
     /**
@@ -39,21 +38,19 @@ class ForumCommentController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return ForumCommentResource
+     * @return ForumPostResource
      */
     public function store(Request $request)
     {
-        User::findOrFail($request->input('commenter_id'));
-        $forumPost = ForumPost::findOrFail($request->input('forum_post_id'));
+        User::findOrFail($request->input('poster_id'));
+        $forum = User::findOrFail($request->input('forum_id'));
 
-        $data = ForumComment::create([
-            'comment' => $request->input('comment'),
+        $data = ForumPost::create([
+            'content' => $request->input('content'),
         ]);
 
-        $data->commenter_id = $request->input('commenter_id');
-
-        if ($forumPost->forumComments()->save($data)) {
-            return new ForumCommentResource($data);
+        if ($forum->forumPosts()->save($data)) {
+            return new ForumPostResource($data);
         }
     }
 
@@ -61,12 +58,12 @@ class ForumCommentController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return ForumCommentResource
+     * @return ForumPostResource
      */
     public function show($id)
     {
-        $data = ForumComment::findOrFail($id);
-        return new ForumCommentResource($data);
+        $data = ForumPost::findOrFail($id);
+        return new ForumPostResource($data);
     }
 
     /**
@@ -85,16 +82,17 @@ class ForumCommentController extends Controller
      *
      * @param Request $request
      * @param int $id
-     * @return ForumCommentResource
+     * @return ForumPostResource
      */
     public function update(Request $request, $id)
     {
-        $data = ForumComment::findOrFail($id);
+        $data = ForumPost::findOrFail($id);
 
-        $data->comment = $request->input('comment');
+        $data->content = $request->input('content');
+        $data->likes = $request->input('likes');
 
         if ($data->save()) {
-            return new ForumCommentResource($data);
+            return new ForumPostResource($data);
         }
     }
 
@@ -102,14 +100,14 @@ class ForumCommentController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return ForumCommentResource
+     * @return ForumPostResource
      * @throws Exception
      */
     public function destroy($id)
     {
-        $data = ForumComment::findOrFail($id);
+        $data = ForumPost::findOrFail($id);
         if ($data->delete()) {
-            return new ForumCommentResource($data);
+            return new ForumPostResource($data);
         }
     }
 }
