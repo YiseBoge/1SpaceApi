@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @method static Role findOrFail(int $id)
+ * @method static Role create(array $array)
+ * @property string|null remark
+ * @property string|null name
+ * @property string|null description
+ * @property integer quantity_needed
+ */
 class Role extends Model
 {
     use SoftDeletes;

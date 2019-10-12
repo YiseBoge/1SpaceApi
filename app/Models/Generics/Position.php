@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @method static Position findOrFail(int $id)
+ * @method static Position create(array $array)
+ * @property string|null remark
+ * @property string|null name
+ * @property string|null description
+ * @property integer quantity_needed
+ */
 class Position extends Model
 {
     use SoftDeletes;
