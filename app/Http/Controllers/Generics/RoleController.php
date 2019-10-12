@@ -44,7 +44,33 @@ class RoleController extends Controller
         $data = Role::create([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
-            'quantity_needed' => $request->input('quantity_needed'),
+
+            'can_add_user' => $request->has('can_add_user'),
+            'can_edit_user' => $request->has('can_edit_user'),
+            'can_delete_user' => $request->has('can_delete_user'),
+            'can_activate_user' => $request->has('can_activate_user'),
+            'can_deactivate_user' => $request->has('can_deactivate_user'),
+            'can_assign_user_admin' => $request->has('can_assign_user_admin'),
+            'can_generate_user_cv' => $request->has('can_generate_user_cv'),
+            'can_generate_user_report' => $request->has('can_generate_user_report'),
+
+            'can_assign_organogram_admin' => $request->has('can_assign_organogram_admin'),
+            'can_add_department' => $request->has('can_add_department'),
+            'can_edit_department' => $request->has('can_edit_department'),
+            'can_delete_department' => $request->has('can_delete_department'),
+            'can_add_position' => $request->has('can_add_position'),
+            'can_edit_position' => $request->has('can_edit_position'),
+            'can_delete_position' => $request->has('can_delete_position'),
+            'can_add_professional_role' => $request->has('can_add_professional_role'),
+            'can_edit_professional_role' => $request->has('can_edit_professional_role'),
+            'can_delete_professional_role' => $request->has('can_delete_professional_role'),
+
+            'can_assign_project_admin' => $request->has('can_assign_project_admin'),
+            'can_add_project' => $request->has('can_add_project'),
+            'can_edit_project' => $request->has('can_edit_project'),
+            'can_delete_project' => $request->has('can_delete_project'),
+            'can_evaluate_project' => $request->has('can_evaluate_project'),
+            'can_generate_project_report' => $request->has('can_generate_project_report'),
         ]);
 
         $data->remark = $request->input('remark');
@@ -90,8 +116,33 @@ class RoleController extends Controller
 
         $data->name = $request->input('name');
         $data->description = $request->input('description');
-        $data->quantity_needed = $request->input('quantity_needed');
         $data->remark = $request->input('remark');
+
+        $data->can_add_user = $request->has('can_add_user');
+        $data->can_edit_user = $request->has('can_edit_user');
+        $data->can_delete_user = $request->has('can_delete_user');
+        $data->can_activate_user = $request->has('can_activate_user');
+        $data->can_deactivate_user = $request->has('can_deactivate_user');
+        $data->can_assign_user_admin = $request->has('can_assign_user_admin');
+        $data->can_generate_user_cv = $request->has('can_generate_user_cv');
+        $data->can_generate_user_report = $request->has('can_generate_user_report');
+
+        $data->can_assign_organogram_admin = $request->has('can_assign_organogram_admin');
+        $data->can_add_department = $request->has('can_add_department');
+        $data->can_edit_department = $request->has('can_edit_department');
+        $data->can_delete_department = $request->has('can_delete_department');
+        $data->can_add_position = $request->has('can_add_position');
+        $data->can_edit_position = $request->has('can_edit_position');
+        $data->can_delete_position = $request->has('can_delete_position');
+        $data->can_add_professional_role = $request->has('can_add_professional_role');
+        $data->can_edit_professional_role = $request->has('can_edit_professional_role');
+        $data->can_delete_professional_role = $request->has('can_delete_professional_role');
+
+        $data->can_assign_project_admin = $request->has('can_assign_project_admin');
+        $data->can_add_project = $request->has('can_add_project');
+        $data->can_delete_project = $request->has('can_delete_project');
+        $data->can_evaluate_project = $request->has('can_evaluate_project');
+        $data->can_generate_project_report = $request->has('can_generate_project_report');
 
         if ($data->save()) {
             return new RoleResource($data);

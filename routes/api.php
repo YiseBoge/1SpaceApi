@@ -45,7 +45,7 @@ Route::apiResource('forums/forum', ForumController::class);
 Route::apiResource('forums/forum-post', ForumPostController::class);
 Route::apiResource('forums/forum-comment', ForumCommentController::class);
 
-Route::apiResource('generics/forum', AddressController::class);
+Route::apiResource('generics/address', AddressController::class);
 Route::apiResource('generics/department', DepartmentController::class);
 Route::apiResource('generics/position', PositionController::class);
 Route::apiResource('generics/role', RoleController::class);

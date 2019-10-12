@@ -59,14 +59,6 @@ class User extends Authenticatable
 
 
     /**
-     * @return BelongsToMany
-     */
-    public function permissions()
-    {
-        return $this->belongsToMany('App\Models\Generics\Permission', 'permission_user');
-    }
-
-    /**
      * @return BelongsTo
      */
     public function role()

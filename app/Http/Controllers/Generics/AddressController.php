@@ -42,7 +42,7 @@ class AddressController extends Controller
     public function store(Request $request)
     {
         $data = Address::create([
-            'title' => $request->input('title'),
+            'region' => $request->input('region'),
             'zone' => $request->input('zone'),
             'woreda' => $request->input('woreda'),
             'city' => $request->input('city'),
