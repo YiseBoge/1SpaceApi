@@ -20,7 +20,7 @@ class NoticeController extends Controller
      */
     public function index()
     {
-        $data = Notice::all();
+        $data = Notice::paginate();
         return NoticeResource::collection($data);
     }
 

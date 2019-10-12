@@ -19,7 +19,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $data = Role::all();
+        $data = Role::paginate();
         return RoleResource::collection($data);
     }
 

@@ -20,7 +20,7 @@ class PrivateMessageController extends Controller
      */
     public function index()
     {
-        $data = PrivateMessage::all();
+        $data = PrivateMessage::paginate();
         return PrivateMessageResource::collection($data);
     }
 

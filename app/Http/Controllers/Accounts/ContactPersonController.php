@@ -20,7 +20,7 @@ class ContactPersonController extends Controller
      */
     public function index()
     {
-        $data = ContactPerson::all();
+        $data = ContactPerson::paginate();
         return ContactPersonResource::collection($data);
     }
 

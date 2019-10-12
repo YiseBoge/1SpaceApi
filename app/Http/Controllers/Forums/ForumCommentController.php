@@ -21,7 +21,7 @@ class ForumCommentController extends Controller
      */
     public function index()
     {
-        $data = ForumComment::all();
+        $data = ForumComment::paginate();
         return ForumCommentResource::collection($data);
     }
 

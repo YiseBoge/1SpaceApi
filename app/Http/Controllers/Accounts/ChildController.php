@@ -20,7 +20,7 @@ class ChildController extends Controller
      */
     public function index()
     {
-        $data = Child::all();
+        $data = Child::paginate();
         return ChildResource::collection($data);
     }
 

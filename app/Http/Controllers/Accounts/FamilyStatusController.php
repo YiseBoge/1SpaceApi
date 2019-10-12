@@ -20,7 +20,7 @@ class FamilyStatusController extends Controller
      */
     public function index()
     {
-        $data = FamilyStatus::all();
+        $data = FamilyStatus::paginate();
         return FamilyStatusResource::collection($data);
     }
 

@@ -20,7 +20,7 @@ class WorkExperienceController extends Controller
      */
     public function index()
     {
-        $data = WorkExperience::all();
+        $data = WorkExperience::paginate();
         return WorkExperienceResource::collection($data);
     }
 

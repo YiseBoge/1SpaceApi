@@ -19,7 +19,7 @@ class AddressController extends Controller
      */
     public function index()
     {
-        $data = Address::all();
+        $data = Address::paginate();
         return AddressResource::collection($data);
     }
 

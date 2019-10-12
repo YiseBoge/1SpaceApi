@@ -19,7 +19,7 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $data = Department::all();
+        $data = Department::paginate();
         return DepartmentResource::collection($data);
     }
 
