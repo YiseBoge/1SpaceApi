@@ -3,7 +3,12 @@
 namespace App\Http\Controllers\Forums;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Forums\ForumResource;
+use App\Models\Forums\Forum;
+use App\User;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
 class ForumController extends Controller
@@ -11,11 +16,12 @@ class ForumController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return AnonymousResourceCollection
      */
     public function index()
     {
-        //
+        $data = Forum::paginate();
+        return ForumResource::collection($data);
     }
 
     /**
@@ -32,22 +38,33 @@ class ForumController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return ForumResource
      */
     public function store(Request $request)
     {
-        //
+        $user = User::findOrFail($request->input('creator_id'));
+
+        $data = Forum::create([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'forum_type' => $request->input('forum_type'),
+        ]);
+
+        if ($user->createdForums()->save($data)) {
+            return new ForumResource($data);
+        }
     }
 
     /**
      * Display the specified resource.
      *
      * @param int $id
-     * @return Response
+     * @return ForumResource
      */
     public function show($id)
     {
-        //
+        $data = Forum::findOrFail($id);
+        return new ForumResource($data);
     }
 
     /**
@@ -66,21 +83,33 @@ class ForumController extends Controller
      *
      * @param Request $request
      * @param int $id
-     * @return Response
+     * @return ForumResource
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = Forum::findOrFail($id);
+
+        $data->title = $request->input('title');
+        $data->description = $request->input('description');
+        $data->forum_type = $request->input('forum_type');
+
+        if ($data->save()) {
+            return new ForumResource($data);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return Response
+     * @return ForumResource
+     * @throws Exception
      */
     public function destroy($id)
     {
-        //
+        $data = Forum::findOrFail($id);
+        if ($data->delete()) {
+            return new ForumResource($data);
+        }
     }
 }

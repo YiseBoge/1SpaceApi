@@ -2,18 +2,31 @@
 
 namespace App\Models\Notices;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @method static Notice findOrFail(int $id)
+ * @method static Notice create(array $array)
+ * @property DateTime|null target_date
+ * @property DateTime|null remind_before
+ * @property string|null title
+ * @property string|null description
+ */
 class Notice extends Model
 {
     use SoftDeletes;
 
     protected $dates = [
         'deleted_at',
+    ];
+
+    protected $fillable = [
+        'title', 'description',
     ];
 
     /**

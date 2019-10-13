@@ -8,12 +8,23 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @method static Department findOrFail(int $id)
+ * @method static Department create(array $array)
+ * @property string|null remark
+ * @property string|null name
+ * @property string|null description
+ */
 class Department extends Model
 {
     use SoftDeletes;
 
     protected $dates = [
         'deleted_at',
+    ];
+
+    protected $fillable = [
+        'name', 'description',
     ];
 
      /**

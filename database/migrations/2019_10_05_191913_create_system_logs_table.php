@@ -20,7 +20,7 @@ class CreateSystemLogsTable extends Migration
             $table->bigInteger('loggable_type');
 
             $table->string('action_type');
-            $table->string('remark');
+            $table->string('remark')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

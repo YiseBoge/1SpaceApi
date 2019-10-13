@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Accounts;
+namespace App\Http\Controllers\Forums;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Accounts\ChildResource;
-use App\Models\Accounts\Child;
-use App\Models\Accounts\FamilyStatus;
+use App\Http\Resources\Forums\ForumPostResource;
+use App\Models\Forums\ForumPost;
+use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
-class ChildController extends Controller
+class ForumPostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,8 +20,8 @@ class ChildController extends Controller
      */
     public function index()
     {
-        $data = Child::paginate();
-        return ChildResource::collection($data);
+        $data = ForumPost::paginate();
+        return ForumPostResource::collection($data);
     }
 
     /**
@@ -38,34 +38,32 @@ class ChildController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return ChildResource
+     * @return ForumPostResource
      */
     public function store(Request $request)
     {
-        $family_status = FamilyStatus::findOrFail($request->input('family_status_id'));
+        User::findOrFail($request->input('poster_id'));
+        $forum = User::findOrFail($request->input('forum_id'));
 
-        $data = Child::create([
-            'name' => $request->input('name'),
-            'sex' => $request->input('sex'),
-            'birth_date' => $request->input('birth_date'),
+        $data = ForumPost::create([
+            'content' => $request->input('content'),
         ]);
 
-        if ($family_status->children()->save($data)) {
-            return new ChildResource($data);
+        if ($forum->forumPosts()->save($data)) {
+            return new ForumPostResource($data);
         }
-
     }
 
     /**
      * Display the specified resource.
      *
      * @param int $id
-     * @return ChildResource
+     * @return ForumPostResource
      */
     public function show($id)
     {
-        $data = Child::findOrFail($id);
-        return new ChildResource($data);
+        $data = ForumPost::findOrFail($id);
+        return new ForumPostResource($data);
     }
 
     /**
@@ -84,18 +82,17 @@ class ChildController extends Controller
      *
      * @param Request $request
      * @param int $id
-     * @return ChildResource
+     * @return ForumPostResource
      */
     public function update(Request $request, $id)
     {
-        $data = Child::findOrFail($id);
+        $data = ForumPost::findOrFail($id);
 
-        $data->name = $request->input('name');
-        $data->sex = $request->input('sex');
-        $data->birth_date = $request->input('birth_date');
+        $data->content = $request->input('content');
+        $data->likes = $request->input('likes');
 
         if ($data->save()) {
-            return new ChildResource($data);
+            return new ForumPostResource($data);
         }
     }
 
@@ -103,14 +100,14 @@ class ChildController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return ChildResource
+     * @return ForumPostResource
      * @throws Exception
      */
     public function destroy($id)
     {
-        $data = Child::findOrFail($id);
+        $data = ForumPost::findOrFail($id);
         if ($data->delete()) {
-            return new ChildResource($data);
+            return new ForumPostResource($data);
         }
     }
 }

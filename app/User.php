@@ -13,6 +13,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
+/**
+ * @method static User findOrFail(array|string|null $input)
+ */
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
@@ -55,14 +58,6 @@ class User extends Authenticatable implements JWTSubject
         'Female',
     ];
 
-
-    /**
-     * @return BelongsToMany
-     */
-    public function permissions()
-    {
-        return $this->belongsToMany('App\Models\Generics\Permission', 'permission_user');
-    }
 
     /**
      * @return BelongsTo

@@ -16,6 +16,10 @@ class SystemLog extends Model
         'deleted_at',
     ];
 
+    protected $fillable = [
+        'action_type',
+    ];
+
     protected $enumActionTypes = [
 
     ];

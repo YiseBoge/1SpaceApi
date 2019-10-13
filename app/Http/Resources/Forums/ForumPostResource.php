@@ -5,7 +5,7 @@ namespace App\Http\Resources\Forums;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ForumMessageResource extends JsonResource
+class ForumPostResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

@@ -21,7 +21,7 @@ class CreatePrivateMessagesTable extends Migration
 
             $table->string('subject');
             $table->string('content');
-            $table->boolean('is_important');
+            $table->boolean('is_important')->default(false);
 
             $table->timestamps();
             $table->softDeletes();
