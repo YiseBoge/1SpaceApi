@@ -20,7 +20,7 @@ class EducationStatusController extends Controller
      */
     public function index()
     {
-        $data = EducationStatus::all();
+        $data = EducationStatus::paginate();
         return EducationStatusResource::collection($data);
     }
 

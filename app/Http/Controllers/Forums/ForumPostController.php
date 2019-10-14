@@ -20,7 +20,7 @@ class ForumPostController extends Controller
      */
     public function index()
     {
-        $data = ForumPost::all();
+        $data = ForumPost::paginate();
         return ForumPostResource::collection($data);
     }
 
