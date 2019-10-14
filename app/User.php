@@ -233,9 +233,9 @@ class User extends Authenticatable implements JWTSubject
             'user' => array_merge(
                 $this->toArray(),
                 [
-                    'role' => $this->role,
-                    'position' => $this->position,
-                    'department' => $this->department
+                    'role' => $this->role->toArray(),
+                    // 'position' => $this->position->toArray(),
+                    // 'department' => $this->department->toArray()
                 ]
             )
         ];

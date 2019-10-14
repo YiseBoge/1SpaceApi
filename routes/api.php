@@ -26,8 +26,12 @@ use Generics\PositionController;
 use Generics\RoleController;
 use Notices\NoticeController;
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware(['jwt.auth', 'auth.permission:can_add_user'])->get('/user', function (Request $request) {
+    // return $request->user();
+    // $token = JWTAuth::fromUser(User::first());
+    // print $token;
+    print('user can add user');
+
 });
 
 
