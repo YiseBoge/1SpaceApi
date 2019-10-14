@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Notices;
+namespace App\Http\Controllers\Forums;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Notices\NoticeResource;
-use App\Models\Notices\Notice;
+use App\Http\Resources\Forums\ForumCommentResource;
+use App\Models\Forums\ForumComment;
+use App\Models\Forums\ForumPost;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
-class NoticeController extends Controller
+class ForumCommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,8 +21,8 @@ class NoticeController extends Controller
      */
     public function index()
     {
-        $data = Notice::all();
-        return NoticeResource::collection($data);
+        $data = ForumComment::all();
+        return ForumCommentResource::collection($data);
     }
 
     /**
@@ -38,22 +39,21 @@ class NoticeController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return NoticeResource
+     * @return ForumCommentResource
      */
     public function store(Request $request)
     {
-        $user = User::findOrFail($request->input('poster_id'));
+        User::findOrFail($request->input('commenter_id'));
+        $forumPost = ForumPost::findOrFail($request->input('forum_post_id'));
 
-        $data = Notice::create([
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
+        $data = ForumComment::create([
+            'comment' => $request->input('comment'),
         ]);
 
-        $data->target_date = $request->input('target_date');
-        $data->remind_before = $request->input('remind_before');
+        $data->commenter_id = $request->input('commenter_id');
 
-        if ($user->postedNotices()->save($data)) {
-            return new NoticeResource($data);
+        if ($forumPost->forumComments()->save($data)) {
+            return new ForumCommentResource($data);
         }
     }
 
@@ -61,12 +61,12 @@ class NoticeController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return NoticeResource
+     * @return ForumCommentResource
      */
     public function show($id)
     {
-        $data = Notice::findOrFail($id);
-        return new NoticeResource($data);
+        $data = ForumComment::findOrFail($id);
+        return new ForumCommentResource($data);
     }
 
     /**
@@ -85,19 +85,16 @@ class NoticeController extends Controller
      *
      * @param Request $request
      * @param int $id
-     * @return NoticeResource
+     * @return ForumCommentResource
      */
     public function update(Request $request, $id)
     {
-        $data = Notice::findOrFail($id);
+        $data = ForumComment::findOrFail($id);
 
-        $data->title = $request->input('title');
-        $data->description = $request->input('description');
-        $data->target_date = $request->input('target_date');
-        $data->remind_before = $request->input('remind_before');
+        $data->comment = $request->input('comment');
 
         if ($data->save()) {
-            return new NoticeResource($data);
+            return new ForumCommentResource($data);
         }
     }
 
@@ -105,14 +102,14 @@ class NoticeController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return NoticeResource
+     * @return ForumCommentResource
      * @throws Exception
      */
     public function destroy($id)
     {
-        $data = Notice::findOrFail($id);
+        $data = ForumComment::findOrFail($id);
         if ($data->delete()) {
-            return new NoticeResource($data);
+            return new ForumCommentResource($data);
         }
     }
 }

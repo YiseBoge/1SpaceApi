@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateReminderUserTable extends Migration
+class CreatePermissionUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,13 @@ class CreateReminderUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('reminder_user', function (Blueprint $table) {
-            $table->bigInteger('reminder_id');
+        Schema::create('permission_user', function (Blueprint $table) {
+            $table->bigInteger('permission_id');
             $table->bigInteger('user_id');
+
+            $table->boolean('can_create')->default(true);
+            $table->boolean('can_edit')->default(true);
+            $table->boolean('can_delete')->default(true);
         });
     }
 
@@ -26,6 +30,6 @@ class CreateReminderUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reminder_user');
+        Schema::dropIfExists('permission_user');
     }
 }

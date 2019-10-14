@@ -24,11 +24,11 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('sex');
             $table->string('phone_number');
             $table->string('personal_name');
             $table->string('father_name');
             $table->string('grand_father_name');
+            $table->string('sex');
             $table->date('birth_date');
             $table->date('employment_date');
             $table->bigInteger('pension_id_number');

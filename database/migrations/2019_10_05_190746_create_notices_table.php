@@ -19,6 +19,8 @@ class CreateNoticesTable extends Migration
 
             $table->string('title');
             $table->string('description');
+            $table->date('target_date')->nullable();
+            $table->integer('remind_before')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

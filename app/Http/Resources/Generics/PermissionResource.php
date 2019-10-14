@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Forums;
+namespace App\Http\Resources\Generics;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ForumMessageResource extends JsonResource
+class PermissionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

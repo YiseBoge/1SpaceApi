@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Notices;
+namespace App\Http\Controllers\Forums;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Notices\NoticeResource;
-use App\Models\Notices\Notice;
+use App\Http\Resources\Forums\ForumPostResource;
+use App\Models\Forums\ForumPost;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
-class NoticeController extends Controller
+class ForumPostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,8 +20,8 @@ class NoticeController extends Controller
      */
     public function index()
     {
-        $data = Notice::all();
-        return NoticeResource::collection($data);
+        $data = ForumPost::all();
+        return ForumPostResource::collection($data);
     }
 
     /**
@@ -38,22 +38,19 @@ class NoticeController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return NoticeResource
+     * @return ForumPostResource
      */
     public function store(Request $request)
     {
-        $user = User::findOrFail($request->input('poster_id'));
+        User::findOrFail($request->input('poster_id'));
+        $forum = User::findOrFail($request->input('forum_id'));
 
-        $data = Notice::create([
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
+        $data = ForumPost::create([
+            'content' => $request->input('content'),
         ]);
 
-        $data->target_date = $request->input('target_date');
-        $data->remind_before = $request->input('remind_before');
-
-        if ($user->postedNotices()->save($data)) {
-            return new NoticeResource($data);
+        if ($forum->forumPosts()->save($data)) {
+            return new ForumPostResource($data);
         }
     }
 
@@ -61,12 +58,12 @@ class NoticeController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return NoticeResource
+     * @return ForumPostResource
      */
     public function show($id)
     {
-        $data = Notice::findOrFail($id);
-        return new NoticeResource($data);
+        $data = ForumPost::findOrFail($id);
+        return new ForumPostResource($data);
     }
 
     /**
@@ -85,19 +82,17 @@ class NoticeController extends Controller
      *
      * @param Request $request
      * @param int $id
-     * @return NoticeResource
+     * @return ForumPostResource
      */
     public function update(Request $request, $id)
     {
-        $data = Notice::findOrFail($id);
+        $data = ForumPost::findOrFail($id);
 
-        $data->title = $request->input('title');
-        $data->description = $request->input('description');
-        $data->target_date = $request->input('target_date');
-        $data->remind_before = $request->input('remind_before');
+        $data->content = $request->input('content');
+        $data->likes = $request->input('likes');
 
         if ($data->save()) {
-            return new NoticeResource($data);
+            return new ForumPostResource($data);
         }
     }
 
@@ -105,14 +100,14 @@ class NoticeController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return NoticeResource
+     * @return ForumPostResource
      * @throws Exception
      */
     public function destroy($id)
     {
-        $data = Notice::findOrFail($id);
+        $data = ForumPost::findOrFail($id);
         if ($data->delete()) {
-            return new NoticeResource($data);
+            return new ForumPostResource($data);
         }
     }
 }

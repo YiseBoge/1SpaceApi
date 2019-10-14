@@ -18,8 +18,7 @@ class CreateFamilyStatusesTable extends Migration
             $table->bigInteger('user_id');
 
             $table->string('status');
-            $table->string('partner_name');
-            $table->integer('number_of_children');
+            $table->string('partner_name')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

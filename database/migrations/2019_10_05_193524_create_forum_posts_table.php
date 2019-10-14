@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRemindersTable extends Migration
+class CreateForumPostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateRemindersTable extends Migration
      */
     public function up()
     {
-        Schema::create('reminders', function (Blueprint $table) {
+        Schema::create('forum_posts', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('forum_id');
             $table->bigInteger('poster_id');
 
-            $table->string('title');
-            $table->string('description');
-            $table->date('target_date');
-            $table->integer('remind_before');
+            $table->string('content');
+            $table->integer('likes')->default(0);
 
             $table->timestamps();
             $table->softDeletes();
@@ -34,6 +33,6 @@ class CreateRemindersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reminders');
+        Schema::dropIfExists('forum_posts');
     }
 }

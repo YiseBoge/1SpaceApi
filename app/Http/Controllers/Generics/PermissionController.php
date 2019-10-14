@@ -1,21 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\Reminders;
+namespace App\Http\Controllers\Generics;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Generics\PermissionResource;
+use App\Models\Generics\Permission;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
-class ReminderController extends Controller
+class PermissionController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return AnonymousResourceCollection
      */
     public function index()
     {
-        //
+        $data = Permission::all();
+        return PermissionResource::collection($data);
     }
 
     /**
@@ -32,22 +37,29 @@ class ReminderController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return PermissionResource
      */
     public function store(Request $request)
     {
-        //
+        $data = Permission::create([
+            'action' => $request->input('action'),
+        ]);
+
+        if ($data->save()) {
+            return new PermissionResource($data);
+        }
     }
 
     /**
      * Display the specified resource.
      *
      * @param int $id
-     * @return Response
+     * @return PermissionResource
      */
     public function show($id)
     {
-        //
+        $data = Permission::findOrFail($id);
+        return new PermissionResource($data);
     }
 
     /**
@@ -66,21 +78,31 @@ class ReminderController extends Controller
      *
      * @param Request $request
      * @param int $id
-     * @return Response
+     * @return PermissionResource
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = Permission::findOrFail($id);
+
+        $data->action = $request->input('action');
+
+        if ($data->save()) {
+            return new PermissionResource($data);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return Response
+     * @return PermissionResource
+     * @throws Exception
      */
     public function destroy($id)
     {
-        //
+        $data = Permission::findOrFail($id);
+        if ($data->delete()) {
+            return new PermissionResource($data);
+        }
     }
 }

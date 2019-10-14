@@ -12,6 +12,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @method static User findOrFail(array|string|null $input)
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -54,6 +57,14 @@ class User extends Authenticatable
         'Female',
     ];
 
+
+    /**
+     * @return BelongsToMany
+     */
+    public function permissions()
+    {
+        return $this->belongsToMany('App\Models\Generics\Permission', 'permission_user');
+    }
 
     /**
      * @return BelongsTo
@@ -154,18 +165,11 @@ class User extends Authenticatable
      /**
      * @return HasMany
      */
-    public function sentForumMessages()
+    public function forumPosts()
     {
-        return $this->hasMany('App\Models\Forums\ForumMessage', 'sender_id');
+        return $this->hasMany('App\Models\Forums\ForumPost', 'poster_id');
     }
 
-    /**
-     * @return HasMany
-     */
-    public function receivedForumMessages()
-    {
-        return $this->hasMany('App\Models\Forums\ForumMessage', 'receiver_id');
-    }
 
     /**
      * @return HasMany

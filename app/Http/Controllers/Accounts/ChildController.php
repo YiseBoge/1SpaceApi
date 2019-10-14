@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Notices;
+namespace App\Http\Controllers\Accounts;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Notices\NoticeResource;
-use App\Models\Notices\Notice;
-use App\User;
+use App\Http\Resources\Accounts\ChildResource;
+use App\Models\Accounts\Child;
+use App\Models\Accounts\FamilyStatus;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
-class NoticeController extends Controller
+class ChildController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,8 +20,8 @@ class NoticeController extends Controller
      */
     public function index()
     {
-        $data = Notice::all();
-        return NoticeResource::collection($data);
+        $data = Child::all();
+        return ChildResource::collection($data);
     }
 
     /**
@@ -38,35 +38,34 @@ class NoticeController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return NoticeResource
+     * @return ChildResource
      */
     public function store(Request $request)
     {
-        $user = User::findOrFail($request->input('poster_id'));
+        $family_status = FamilyStatus::findOrFail($request->input('family_status_id'));
 
-        $data = Notice::create([
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
+        $data = Child::create([
+            'name' => $request->input('name'),
+            'sex' => $request->input('sex'),
+            'birth_date' => $request->input('birth_date'),
         ]);
 
-        $data->target_date = $request->input('target_date');
-        $data->remind_before = $request->input('remind_before');
-
-        if ($user->postedNotices()->save($data)) {
-            return new NoticeResource($data);
+        if ($family_status->children()->save($data)) {
+            return new ChildResource($data);
         }
+
     }
 
     /**
      * Display the specified resource.
      *
      * @param int $id
-     * @return NoticeResource
+     * @return ChildResource
      */
     public function show($id)
     {
-        $data = Notice::findOrFail($id);
-        return new NoticeResource($data);
+        $data = Child::findOrFail($id);
+        return new ChildResource($data);
     }
 
     /**
@@ -85,19 +84,18 @@ class NoticeController extends Controller
      *
      * @param Request $request
      * @param int $id
-     * @return NoticeResource
+     * @return ChildResource
      */
     public function update(Request $request, $id)
     {
-        $data = Notice::findOrFail($id);
+        $data = Child::findOrFail($id);
 
-        $data->title = $request->input('title');
-        $data->description = $request->input('description');
-        $data->target_date = $request->input('target_date');
-        $data->remind_before = $request->input('remind_before');
+        $data->name = $request->input('name');
+        $data->sex = $request->input('sex');
+        $data->birth_date = $request->input('birth_date');
 
         if ($data->save()) {
-            return new NoticeResource($data);
+            return new ChildResource($data);
         }
     }
 
@@ -105,14 +103,14 @@ class NoticeController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return NoticeResource
+     * @return ChildResource
      * @throws Exception
      */
     public function destroy($id)
     {
-        $data = Notice::findOrFail($id);
+        $data = Child::findOrFail($id);
         if ($data->delete()) {
-            return new NoticeResource($data);
+            return new ChildResource($data);
         }
     }
 }

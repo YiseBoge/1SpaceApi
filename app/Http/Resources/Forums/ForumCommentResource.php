@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Reminders;
+namespace App\Http\Resources\Forums;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ReminderResource extends JsonResource
+class ForumCommentResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
