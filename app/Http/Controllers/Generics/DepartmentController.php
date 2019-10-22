@@ -19,6 +19,8 @@ class DepartmentController extends Controller
      */
     public function index()
     {
+        if (request()->query('all')) return  Department::all();
+
         $data = Department::paginate();
         return DepartmentResource::collection($data);
     }

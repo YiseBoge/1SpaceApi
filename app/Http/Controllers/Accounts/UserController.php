@@ -17,10 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        if (request()->query('all')) {
-            $data =  User::all();
-            return $data;
-        }
+        if (request()->query('all')) return  User::all();
 
         $data = User::with(['role', 'position', 'department'])->paginate();
         return UserResource::collection($data);

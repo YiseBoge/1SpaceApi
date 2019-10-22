@@ -19,6 +19,8 @@ class RoleController extends Controller
      */
     public function index()
     {
+        if (request()->query('all')) return Role::all();
+
         $data = Role::paginate();
         return RoleResource::collection($data);
     }

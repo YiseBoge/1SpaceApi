@@ -19,6 +19,8 @@ class PositionController extends Controller
      */
     public function index()
     {
+        if (request()->query('all')) return  Position::all();
+
         $data = Position::paginate();
         return PositionResource::collection($data);
     }
