@@ -113,4 +113,16 @@ class ChildController extends Controller
             return new ChildResource($data);
         }
     }
+
+    /**
+     * Get the resource with the specified user id.
+     *
+     * @param int $familyStatusId
+     * @return AnonymousResourceCollection
+     */
+    public function getByFamilyStatusId($familyStatusId)
+    {
+        $data = Child::where('family_status_id', $familyStatusId)->get();
+        return ChildResource::collection($data);
+    }
 }
