@@ -15,6 +15,19 @@ class FamilyStatusResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'user' => $this->user,
+
+            'status' => $this->status,
+            'partner_name' => $this->partner_name,
+            'children' => ChildResource::collection($this->children),
+
+            'timestamps' => [
+                'created_at' => $this->created_at,
+                'updated_at' => $this->updated_at,
+                'deleted_at' => $this->deleted_at,
+            ],
+        ];
     }
 }

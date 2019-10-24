@@ -4,7 +4,7 @@ namespace App\Models\Chats;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -54,10 +54,10 @@ class PrivateMessage extends Model
     }
 
     /**
-     * @return HasOne
+     * @return HasMany
      */
-    public function forwardedMessage()
+    public function forwardedMessages()
     {
-        return $this->HasOne('App\Models\Chats\PrivateMessage', 'parent_message_id');
+        return $this->HasMany('App\Models\Chats\PrivateMessage', 'parent_message_id');
     }
 }

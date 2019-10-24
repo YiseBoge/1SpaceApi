@@ -15,6 +15,20 @@ class SystemLogResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'actor' => $this->actor,
+            'target' => $this->target,
+
+            'action_type' => $this->name,
+            'remark' => $this->remark,
+
+
+            'timestamps' => [
+                'created_at' => $this->created_at,
+                'updated_at' => $this->updated_at,
+                'deleted_at' => $this->deleted_at,
+            ],
+        ];
     }
 }

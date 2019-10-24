@@ -31,4 +31,12 @@ class SystemLog extends Model
     {
         return $this->belongsTo('App\User', 'actor_id');
     }
+
+    /**
+     * @return BelongsTo
+     */
+    public function target()
+    {
+        return $this->morphTo();
+    }
 }

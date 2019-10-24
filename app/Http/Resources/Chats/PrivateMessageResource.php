@@ -15,6 +15,22 @@ class PrivateMessageResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'sender' => $this->sender,
+            'receiver' => $this->receiver,
+            'parent_message' => $this->parentMessage,
+            'forwarded_messages' => PrivateMessageResource::collection($this->forwardedMessages),
+
+            'subject' => $this->subject,
+            'content' => $this->content,
+            'is_important' => $this->is_important,
+
+            'timestamps' => [
+                'created_at' => $this->created_at,
+                'updated_at' => $this->updated_at,
+                'deleted_at' => $this->deleted_at,
+            ],
+        ];
     }
 }
