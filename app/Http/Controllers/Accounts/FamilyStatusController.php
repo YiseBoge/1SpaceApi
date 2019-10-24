@@ -113,4 +113,16 @@ class FamilyStatusController extends Controller
             return new FamilyStatusResource($data);
         }
     }
+
+    /**
+     * Get the resource with the specified user id.
+     *
+     * @param int $userId
+     * @return FamilyStatusResource
+     */
+    public function getByUserId($userId)
+    {
+        $data = FamilyStatus::where('user_id', $userId)->get();
+        return new FamilyStatusResource($data);
+    }
 }
