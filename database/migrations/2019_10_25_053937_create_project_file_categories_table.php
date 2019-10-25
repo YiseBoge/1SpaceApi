@@ -15,6 +15,11 @@ class CreateProjectFileCategoriesTable extends Migration
     {
         Schema::create('project_file_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('project_file_id');
+
+            $table->string('name');
+            $table->string('description');
+
             $table->timestamps();
         });
     }
