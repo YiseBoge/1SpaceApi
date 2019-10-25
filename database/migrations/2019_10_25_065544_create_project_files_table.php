@@ -15,6 +15,10 @@ class CreateProjectFilesTable extends Migration
     {
         Schema::create('project_files', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('project_id');
+
+            $table->string('remark');
+            
             $table->timestamps();
         });
     }
