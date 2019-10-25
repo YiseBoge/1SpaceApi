@@ -15,6 +15,11 @@ class CreateProjectManagementOrganizationsTable extends Migration
     {
         Schema::create('project_management_organizations', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('project_id');
+
+            $table->string('title');
+            $table->string('description');
+            
             $table->timestamps();
         });
     }
