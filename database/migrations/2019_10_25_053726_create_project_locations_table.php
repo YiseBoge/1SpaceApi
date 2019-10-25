@@ -15,6 +15,11 @@ class CreateProjectLocationsTable extends Migration
     {
         Schema::create('project_locations', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('project_id');
+
+            $table->string('longtiude');
+            $table->string('latitude');
+            
             $table->timestamps();
         });
     }
