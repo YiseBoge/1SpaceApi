@@ -22,11 +22,9 @@ class ForumCommentResource extends JsonResource
 
             'comment' => $this->comment,
 
-            'timestamps' => [
-                'created_at' => $this->created_at,
-                'updated_at' => $this->updated_at,
-                'deleted_at' => $this->deleted_at,
-            ],
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'deleted_at' => $this->deleted_at,
         ];
     }
 }

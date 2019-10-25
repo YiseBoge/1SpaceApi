@@ -28,11 +28,9 @@ class ContactPersonResource extends JsonResource
             'employer_company' => $this->employer_company,
             'type' => $this->type,
 
-            'timestamps' => [
-                'created_at' => $this->created_at,
-                'updated_at' => $this->updated_at,
-                'deleted_at' => $this->deleted_at,
-            ],
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'deleted_at' => $this->deleted_at,
         ];
     }
 }

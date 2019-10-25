@@ -23,11 +23,9 @@ class FamilyStatusResource extends JsonResource
             'partner_name' => $this->partner_name,
             'children' => ChildResource::collection($this->children),
 
-            'timestamps' => [
-                'created_at' => $this->created_at,
-                'updated_at' => $this->updated_at,
-                'deleted_at' => $this->deleted_at,
-            ],
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'deleted_at' => $this->deleted_at,
         ];
     }
 }

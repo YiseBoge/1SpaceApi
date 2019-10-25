@@ -27,11 +27,9 @@ class PositionResource extends JsonResource
             'remark' => $this->remark,
             'quantity_available' => $this->quantity_needed - Position::all()->count(),
 
-            'timestamps' => [
-                'created_at' => $this->created_at,
-                'updated_at' => $this->updated_at,
-                'deleted_at' => $this->deleted_at,
-            ],
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'deleted_at' => $this->deleted_at,
         ];
     }
 }

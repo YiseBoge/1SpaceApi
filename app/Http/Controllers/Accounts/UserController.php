@@ -17,17 +17,23 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(Request $request)
     {
-        if (request()->query('all')) {
-            $data =  User::all();
-            return $data;
-        }
+        $personal_name = $request->input('personal_name');
+        $father_name = $request->input('father_name');
+        $grand_father_name = $request->input('grand_father_name');
+        $phone_number = $request->input('phone_number');
 
-        $data = User::with(['role', 'position', 'department'])->paginate();
-        return UserResource::collection($data);
+        $data = User::all();
+        if ($personal_name != null) $data = $data->where('personal_name', 'like', "%$personal_name%");
+        if ($father_name != null) $data = $data->where('father_name', 'like', "%$father_name%");
+        if ($grand_father_name != null) $data = $data->where('grand_father_name', 'like', "%$grand_father_name%");
+        if ($phone_number != null) $data = $data->where('phone_number', 'like', "%$phone_number%");
+
+        return $request->has('no_pagination') ? UserResource::collection($data) : UserResource::collection($data->paginate());
     }
 
     /**
