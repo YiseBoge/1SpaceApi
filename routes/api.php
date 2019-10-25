@@ -11,27 +11,47 @@
 |
 */
 
-use Accounts\ChildController;
-use Accounts\ContactPersonController;
-use Accounts\EducationStatusController;
-use Accounts\FamilyStatusController;
-use Accounts\WorkExperienceController;
-use Chats\PrivateMessageController;
-use Forums\ForumCommentController;
+use App\User;
 use Forums\ForumController;
+use Generics\RoleController;
+use Illuminate\Http\Request;
+use Accounts\ChildController;
+use Notices\NoticeController;
 use Forums\ForumPostController;
 use Generics\AddressController;
-use Generics\DepartmentController;
 use Generics\PositionController;
-use Generics\RoleController;
-use Notices\NoticeController;
+use Forums\ForumCommentController;
+use Generics\DepartmentController;
+use Chats\PrivateMessageController;
+use Accounts\FamilyStatusController;
+use Accounts\ContactPersonController;
+use Accounts\WorkExperienceController;
+use Accounts\EducationStatusController;
+use Accounts\UserController;
+
+Route::post('login', function (Request $request) {
+
+    $password = $request->input('password');
+    $login = $request->input('login');
+
+    $user = User::where('email', $login)->orWhere('phone_number', $login)->first();
+
+    if ($user && Hash::check($password, $user->password)) {
+        $token = JWTAuth::fromUser($user);
+        $data = ['token' => $token];
+        return response($data);
+
+    } else {
+        return response('Unauthorized', 401);
+    }
+});
+
 
 Route::middleware(['jwt.auth', 'auth.permission:can_add_user'])->get('/user', function (Request $request) {
     // return $request->user();
     // $token = JWTAuth::fromUser(User::first());
     // print $token;
     print('user can add user');
-
 });
 
 
@@ -42,6 +62,7 @@ Route::apiResource('accounts/education-status', EducationStatusController::class
 Route::apiResource('accounts/family-status', FamilyStatusController::class);
 Route::apiResource('accounts/child', ChildController::class);
 Route::apiResource('accounts/work-experience', WorkExperienceController::class);
+Route::apiResource('accounts/user', UserController::class);
 
 Route::apiResource('chats/private-message', PrivateMessageController::class);
 
