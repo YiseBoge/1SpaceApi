@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Generics;
+namespace App\Http\Controllers\Companies;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Generics\RoleResource;
-use App\Models\Generics\Role;
+use App\Http\Resources\Companies\RoleResource;
+use App\Models\Companies\Role;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;

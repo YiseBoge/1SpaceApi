@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Generics;
+namespace App\Http\Resources\Companies;
 
 use App\Http\Resources\Accounts\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DepartmentResource extends JsonResource
+class RoleResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,13 +18,13 @@ class DepartmentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'parent_department' => $this->parentDepartment,
-            'sub_departments' => DepartmentResource::collection($this->subDepartments),
             'users' => UserResource::collection($this->users),
 
-            'name' => $this->title,
+            'name' => $this->name,
             'description' => $this->description,
             'remark' => $this->remark,
+
+            // TODO check out how to show the permissions
 
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

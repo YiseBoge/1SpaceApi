@@ -3,23 +3,25 @@
 namespace App\Models\Project;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class ProjectManagementOrganization extends Model
 {
     /**
-     * @return BelongsTo
+     * @return HasMany
      */
-    public function project()
+    public function projects()
     {
-        return $this->belongsTo('App\Models\Project\Project');
+        return $this->hasMany('App\Models\Project\Project');
     }
 
     /**
      * @return HasMany
      */
-    public function teamMember()
+    public function teamMembers()
     {
-        return $this->hasMany('App\Models\Accounts\ProjectTeamMember');
+        return $this->hasMany('App\Models\Accounts\TeamMember');
     }
 
     /**

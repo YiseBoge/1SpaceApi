@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Resources\Generics;
+namespace App\Http\Resources\Companies;
 
 use App\Http\Resources\Accounts\UserResource;
-use App\Models\Generics\Position;
+use App\Models\Companies\Position;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

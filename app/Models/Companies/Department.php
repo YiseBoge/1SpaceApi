@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Generics;
+namespace App\Models\Companies;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,6 +27,14 @@ class Department extends Model
         'name', 'description',
     ];
 
+    /**
+     * @return BelongsTo
+     */
+    public function company()
+    {
+        return $this->belongsTo('App\Models\Companies\Company');
+    }
+
      /**
      * @return HasMany
      */
@@ -40,7 +48,7 @@ class Department extends Model
      */
     public function parentDepartment()
     {
-        return $this->belongsTo('App\Models\Generics\Department', 'parent_department_id');
+        return $this->belongsTo('App\Models\Companies\Department', 'parent_department_id');
     }
 
     /**
@@ -48,7 +56,7 @@ class Department extends Model
      */
     public function subDepartments()
     {
-        return $this->hasMany('App\Models\Generics\Department', 'parent_department_id');
+        return $this->hasMany('App\Models\Companies\Department', 'parent_department_id');
     }
 
     /**

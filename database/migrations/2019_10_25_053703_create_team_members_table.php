@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProjectFileCategoriesTable extends Migration
+class CreateTeamMembersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateProjectFileCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('project_file_categories', function (Blueprint $table) {
+        Schema::create('team_members', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('parent_category_id');
+            $table->bigInteger('pmo_id');
+            $table->bigInteger('user_id');
 
-            $table->string('name');
-            $table->string('description');
+            $table->string('professional_role');
+            $table->text('task_description');
 
             $table->timestamps();
             $table->softDeletes();
@@ -32,6 +33,6 @@ class CreateProjectFileCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('project_file_categories');
+        Schema::dropIfExists('project_team_members');
     }
 }

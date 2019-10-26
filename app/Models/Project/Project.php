@@ -3,6 +3,9 @@
 namespace App\Models\Project;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Project extends Model
 {
@@ -17,33 +20,17 @@ class Project extends Model
     /**
      * @return HasMany
      */
-    public function projectFiles()
+    public function coordinates()
     {
-        return $this->hasMany('App\Models\Project\ProjectFile');
+        return $this->hasMany('App\Models\Generics\Coordinate');
     }
 
     /**
-     * @return HasMany
+     * @return BelongsTo
      */
-    public function images()
+    public function pmo()
     {
-        return $this->hasMany('App\Models\Project\ProjectImage');
-    }
-
-    /**
-     * @return HasOne
-     */
-    public function location()
-    {
-        return $this->hasOne('App\Models\Project\ProjectLocation');
-    }
-
-    /**
-     * @return HasOne
-     */
-    public function projectManagementOrganization()
-    {
-        return $this->hasOne('App\Models\Project\ProjectManagementOrganization');
+        return $this->belongsTo('App\Models\Project\ProjectManagementOrganization');
     }
 
     /**

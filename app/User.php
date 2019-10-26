@@ -64,7 +64,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function role()
     {
-        return $this->belongsTo('App\Models\Generics\Role');
+        return $this->belongsTo('App\Models\Companies\Role');
     }
 
     /**
@@ -72,7 +72,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function department()
     {
-        return $this->belongsTo('App\Models\Generics\Department');
+        return $this->belongsTo('App\Models\Companies\Department');
     }
 
     /**
@@ -80,7 +80,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function position()
     {
-        return $this->belongsTo('App\Models\Generics\Position');
+        return $this->belongsTo('App\Models\Companies\Position');
     }
 
     /**

@@ -11,23 +11,25 @@
 |
 */
 
-use App\User;
-use Forums\ForumController;
-use Generics\RoleController;
-use Illuminate\Http\Request;
 use Accounts\ChildController;
-use Notices\NoticeController;
+use Accounts\ContactPersonController;
+use Accounts\EducationStatusController;
+use Accounts\FamilyStatusController;
+use Accounts\UserController;
+use Accounts\WorkExperienceController;
+use App\User;
+use Chats\PrivateMessageController;
+use Companies\DepartmentController;
+use Companies\PositionController;
+use Companies\RoleController;
+use Forums\ForumCommentController;
+use Forums\ForumController;
 use Forums\ForumPostController;
 use Generics\AddressController;
-use Generics\PositionController;
-use Forums\ForumCommentController;
-use Generics\DepartmentController;
-use Chats\PrivateMessageController;
-use Accounts\FamilyStatusController;
-use Accounts\ContactPersonController;
-use Accounts\WorkExperienceController;
-use Accounts\EducationStatusController;
-use Accounts\UserController;
+use Generics\FileController;
+use Generics\SystemLogController;
+use Illuminate\Http\Request;
+use Notices\NoticeController;
 
 Route::post('login', function (Request $request) {
 
@@ -66,16 +68,18 @@ Route::apiResource('accounts/user', UserController::class);
 
 Route::apiResource('chats/private-message', PrivateMessageController::class);
 
+Route::apiResource('companies/company', CompanyController::class);
+Route::apiResource('companies/department', DepartmentController::class);
+Route::apiResource('companies/position', PositionController::class);
+Route::apiResource('companies/role', RoleController::class);
+
 Route::apiResource('forums/forum', ForumController::class);
 Route::apiResource('forums/forum-post', ForumPostController::class);
 Route::apiResource('forums/forum-comment', ForumCommentController::class);
 
 Route::apiResource('generics/address', AddressController::class);
-Route::apiResource('generics/department', DepartmentController::class);
-Route::apiResource('generics/position', PositionController::class);
-Route::apiResource('generics/role', RoleController::class);
-//Route::apiResource('generics/file', \Generics\FileController::class);
-//Route::apiResource('generics/system-log', \Generics\SystemLogController::class);
+Route::apiResource('generics/file', FileController::class);
+Route::apiResource('generics/system-log', SystemLogController::class);
 
 Route::apiResource('notices/notice', NoticeController::class);
 

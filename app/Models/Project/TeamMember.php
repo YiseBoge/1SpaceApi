@@ -3,15 +3,25 @@
 namespace App\Models\Project;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
-class ProjectTeamMember extends Model
+class TeamMember extends Model
 {
     /**
      * @return BelongsTo
      */
-    public function projectManagementOrganization()
+    public function pmo()
     {
         return $this->belongsTo('App\Models\Project\ProjectManagementOrganization');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User');
     }
 
     /**

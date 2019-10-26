@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Models\Generics;
+namespace App\Models\Companies;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -48,6 +49,14 @@ class Role extends Model
     protected $fillable = [
         'name', 'description', 'quantity_needed',
     ];
+
+    /**
+     * @return BelongsTo
+     */
+    public function company()
+    {
+        return $this->belongsTo('App\Models\Companies\Company');
+    }
 
     /**
      * @return HasMany

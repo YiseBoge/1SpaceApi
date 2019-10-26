@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Generics;
+namespace App\Http\Controllers\Companies;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Generics\DepartmentResource;
-use App\Models\Generics\Department;
+use App\Http\Resources\Companies\DepartmentResource;
+use App\Models\Companies\Department;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Generics;
+namespace App\Http\Controllers\Companies;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Generics\PositionResource;
-use App\Models\Generics\Position;
+use App\Http\Resources\Companies\PositionResource;
+use App\Models\Companies\Position;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
