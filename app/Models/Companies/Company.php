@@ -2,6 +2,7 @@
 
 namespace App\Models\Companies;
 
+use App\Traits\Enums;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -9,6 +10,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Company extends Model
 {
     use SoftDeletes;
+    use Enums;
+
+    protected $dates = [
+        'deleted_at',
+    ];
+
+    protected $fillable = [
+        'name', 'description', 'category'
+    ];
+
+    protected $enumCategories = [
+        'Contractor',
+        'Consultant',
+    ];
 
 
     /**
