@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateProjectsTable extends Migration
 {
@@ -18,11 +18,14 @@ class CreateProjectsTable extends Migration
             $table->bigInteger('project_category_id');
 
             $table->string('name');
-            $table->string('client');
             $table->string('description');
-            $table->date('beginning_date');
+            $table->string('client');
+            $table->date('start_date');
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

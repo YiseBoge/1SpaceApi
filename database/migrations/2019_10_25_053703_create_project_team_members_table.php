@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateProjectTeamMembersTable extends Migration
 {
@@ -15,14 +15,14 @@ class CreateProjectTeamMembersTable extends Migration
     {
         Schema::create('project_team_members', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('project_managment_organization_id');
+            $table->bigInteger('pmo_id');
+            $table->bigInteger('user_id');
 
-            $table->string('name');
-            $table->string('company');
             $table->string('professional_role');
             $table->text('task_description');
-            
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

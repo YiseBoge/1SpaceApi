@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateProjectFileCategoriesTable extends Migration
 {
@@ -15,12 +15,13 @@ class CreateProjectFileCategoriesTable extends Migration
     {
         Schema::create('project_file_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('project_file_id');
+            $table->bigInteger('parent_category_id');
 
             $table->string('name');
             $table->string('description');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

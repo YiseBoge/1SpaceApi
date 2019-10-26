@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateProjectManagementOrganizationsTable extends Migration
 {
@@ -15,12 +15,14 @@ class CreateProjectManagementOrganizationsTable extends Migration
     {
         Schema::create('project_management_organizations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('project_id');
+            $table->bigInteger('company_id');
+            $table->bigInteger('parent_pmo_id')->nullable();
 
             $table->string('title');
             $table->string('description');
-            
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
