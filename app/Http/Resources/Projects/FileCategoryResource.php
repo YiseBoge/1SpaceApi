@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Generics;
+namespace App\Http\Resources\Projects;
 
+use App\Http\Resources\Generics\FileResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FileResource extends JsonResource
+class FileCategoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,12 +18,12 @@ class FileResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'project' => $this->project,
+            'parent_category' => $this->parentCategory,
+            'sub_categories' => FileCategoryResource::collection($this->subCategories),
+            'files' => FileResource::collection($this->files),
 
-            'file_name' => $this->file_name,
-            'file_url' => $this->file_url,
-            'file_type' => $this->file_type,
-            'file_description' => $this->file_description,
+            'name' => $this->name,
+            'description' => $this->description,
 
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

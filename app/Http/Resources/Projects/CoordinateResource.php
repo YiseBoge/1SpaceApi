@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Project;
+namespace App\Http\Resources\Projects;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProjectCategoryResource extends JsonResource
+class CoordinateResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,6 +15,9 @@ class ProjectCategoryResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'value' => $this->value,
+        ];
     }
 }

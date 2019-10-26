@@ -15,8 +15,9 @@ class CreateCoordinatesTable extends Migration
     {
         Schema::create('coordinates', function (Blueprint $table) {
             $table->bigIncrements('id');
-
             $table->bigInteger('project_id');
+
+            $table->float('value');
 
             $table->timestamps();
             $table->softDeletes();
