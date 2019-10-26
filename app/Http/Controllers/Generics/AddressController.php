@@ -20,8 +20,13 @@ class AddressController extends Controller
     public function index()
     {
         $filters = (array) json_decode(request()->input('filters'));
-        $data = Address::where($filters)->paginate();
-        return AddressResource::collection($data);
+        $queries = [];
+
+        foreach($filters as $key => $value) $queries[] = [$key, 'like', "%$value%"];
+        
+        $data = Address::where($queries);
+
+        return request()->has('no_pagination') ? AddressResource::collection($data->get()) : AddressResource::collection($data->paginate());
     }
 
     /**

@@ -20,8 +20,13 @@ class DepartmentController extends Controller
     public function index()
     {
         $filters = (array) json_decode(request()->input('filters'));
-        $data = Department::with(['subDepartments'])->where($filters)->paginate();
-        return DepartmentResource::collection($data);
+        $queries = [];
+
+        foreach($filters as $key => $value) $queries[] = [$key, 'like', "%$value%"];
+        
+        $data = Department::with(['subDepartments'])->where($queries);
+
+        return request()->has('no_pagination') ? DepartmentResource::collection($data->get()) : DepartmentResource::collection($data->paginate());
     }
 
     /**
