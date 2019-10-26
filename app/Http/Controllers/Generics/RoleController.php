@@ -19,7 +19,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $filters = (array) json_decode(request()->input('filter'));
+        $filters = (array) json_decode(request()->input('filters'));
         $data = Role::where($filter)->paginate();
         return RoleResource::collection($data);
     }

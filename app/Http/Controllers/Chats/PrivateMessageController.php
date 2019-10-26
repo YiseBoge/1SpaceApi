@@ -20,7 +20,8 @@ class PrivateMessageController extends Controller
      */
     public function index()
     {
-        $data = PrivateMessage::paginate();
+        $filters = (array) json_decode(request()->input('filters'));
+        $data = PrivateMessage::where($filters)->paginate();
         return PrivateMessageResource::collection($data);
     }
 

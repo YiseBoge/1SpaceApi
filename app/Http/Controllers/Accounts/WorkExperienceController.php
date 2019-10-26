@@ -20,7 +20,7 @@ class WorkExperienceController extends Controller
      */
     public function index()
     {
-        $filters = (array) json_decode(request()->input('filter'));
+        $filters = (array) json_decode(request()->input('filters'));
         $data = WorkExperience::where($filters)->paginate();
         return WorkExperienceResource::collection($data);
     }

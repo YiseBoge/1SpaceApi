@@ -19,7 +19,7 @@ class PositionController extends Controller
      */
     public function index()
     {
-        $filters = (array) json_decode(request()->input('filter'));
+        $filters = (array) json_decode(request()->input('filters'));
         $data = Position::with(['users'])->where($filters)->paginate();
         return PositionResource::collection($data);
     }

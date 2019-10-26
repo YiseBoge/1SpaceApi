@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $filters = (array) json_decode(request()->input('filter'));
+        $filters = (array) json_decode(request()->input('filters'));
 
         if (request()->query('all')) {
             $data =  User::all();

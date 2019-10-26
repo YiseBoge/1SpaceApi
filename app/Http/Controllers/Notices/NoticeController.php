@@ -20,7 +20,8 @@ class NoticeController extends Controller
      */
     public function index()
     {
-        $data = Notice::paginate();
+        $filters = (array) json_decode(request()->input('filters'));
+        $data = Notice::where($filters)->paginate();
         return NoticeResource::collection($data);
     }
 

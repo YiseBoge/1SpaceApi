@@ -20,7 +20,8 @@ class ForumPostController extends Controller
      */
     public function index()
     {
-        $data = ForumPost::paginate();
+        $filters = (array) json_decode(request()->input('filters'));
+        $data = ForumPost::where($filters)->paginate();
         return ForumPostResource::collection($data);
     }
 

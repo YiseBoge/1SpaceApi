@@ -20,7 +20,7 @@ class FamilyStatusController extends Controller
      */
     public function index()
     {
-        $filters = (array) json_decode(request()->input('filter'));
+        $filters = (array) json_decode(request()->input('filters'));
         $data = FamilyStatus::where($filters)->paginate();
         return FamilyStatusResource::collection($data);
     }

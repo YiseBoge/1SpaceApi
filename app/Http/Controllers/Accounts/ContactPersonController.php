@@ -21,7 +21,7 @@ class ContactPersonController extends Controller
      */
     public function index()
     {
-        $filters = (array) json_decode(request()->input('filter'));
+        $filters = (array) json_decode(request()->input('filters'));
         $data = ContactPerson::where($filters)->paginate();
         return ContactPersonResource::collection($data);
     }
