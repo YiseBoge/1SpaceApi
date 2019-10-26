@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Project;
+namespace App\Models\Projects;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,7 +14,7 @@ class FileCategory extends Model
      */
     public function parentCategory()
     {
-        return $this->belongsTo('App\Models\Project\FileCategory');
+        return $this->belongsTo('App\Models\Projects\FileCategory');
     }
 
     /**
@@ -22,7 +22,7 @@ class FileCategory extends Model
      */
     public function subCategories()
     {
-        return $this->hasMany('App\Models\Project\FileCategory');
+        return $this->hasMany('App\Models\Projects\FileCategory');
     }
 
     /**

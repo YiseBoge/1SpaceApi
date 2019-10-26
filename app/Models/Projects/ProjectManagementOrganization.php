@@ -1,19 +1,27 @@
 <?php
 
-namespace App\Models\Project;
+namespace App\Models\Projects;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
-class ProjectCategory extends Model
+class ProjectManagementOrganization extends Model
 {
     /**
      * @return HasMany
      */
     public function projects()
     {
-        return $this->hasMany('App\Models\Project\Project');
+        return $this->hasMany('App\Models\Projects\Project');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function teamMembers()
+    {
+        return $this->hasMany('App\Models\Accounts\TeamMember');
     }
 
     /**

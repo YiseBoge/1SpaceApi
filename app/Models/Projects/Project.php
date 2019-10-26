@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Project;
+namespace App\Models\Projects;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,7 +14,7 @@ class Project extends Model
      */
     public function projectCategory()
     {
-        return $this->belongsTo('App\Models\Project\ProjectCategory');
+        return $this->belongsTo('App\Models\Projects\ProjectCategory');
     }
 
     /**
@@ -30,7 +30,7 @@ class Project extends Model
      */
     public function pmo()
     {
-        return $this->belongsTo('App\Models\Project\ProjectManagementOrganization');
+        return $this->belongsTo('App\Models\Projects\ProjectManagementOrganization');
     }
 
     /**
