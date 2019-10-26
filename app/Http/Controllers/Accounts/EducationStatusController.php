@@ -20,7 +20,8 @@ class EducationStatusController extends Controller
      */
     public function index()
     {
-        $data = EducationStatus::paginate();
+        $filters = (array) json_decode(request()->input('filter'));
+        $data = EducationStatus::where($filters)->paginate();
         return EducationStatusResource::collection($data);
     }
 
@@ -116,17 +117,5 @@ class EducationStatusController extends Controller
         if ($data->delete()) {
             return new EducationStatusResource($data);
         }
-    }
-
-    /**
-     * Get the resource with the specified user id.
-     *
-     * @param int $userId
-     * @return AnonymousResourceCollection
-     */
-    public function getByUserId($userId)
-    {
-        $data = EducationStatus::where('user_id', $userId)->get();
-        return EducationStatusResource::collection($data);
     }
 }

@@ -19,7 +19,8 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $data = Department::paginate();
+        $filters = (array) json_decode(request()->input('filter'));
+        $data = Department::with(['subDepartments'])->where($filters)->paginate();
         return DepartmentResource::collection($data);
     }
 

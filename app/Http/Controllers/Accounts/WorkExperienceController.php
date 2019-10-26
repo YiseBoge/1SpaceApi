@@ -20,7 +20,8 @@ class WorkExperienceController extends Controller
      */
     public function index()
     {
-        $data = WorkExperience::paginate();
+        $filters = (array) json_decode(request()->input('filter'));
+        $data = WorkExperience::where($filters)->paginate();
         return WorkExperienceResource::collection($data);
     }
 
@@ -118,17 +119,5 @@ class WorkExperienceController extends Controller
         if ($data->delete()) {
             return new WorkExperienceResource($data);
         }
-    }
-
-    /**
-     * Get the resource with the specified user id.
-     *
-     * @param int $userId
-     * @return AnonymousResourceCollection
-     */
-    public function getByUserId($userId)
-    {
-        $data = WorkExperience::where('user_id', $userId)->get();
-        return WorkExperienceResource::collection($data);
     }
 }

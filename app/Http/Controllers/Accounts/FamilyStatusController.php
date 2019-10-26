@@ -20,7 +20,8 @@ class FamilyStatusController extends Controller
      */
     public function index()
     {
-        $data = FamilyStatus::paginate();
+        $filters = (array) json_decode(request()->input('filter'));
+        $data = FamilyStatus::where($filters)->paginate();
         return FamilyStatusResource::collection($data);
     }
 
@@ -112,17 +113,5 @@ class FamilyStatusController extends Controller
         if ($data->delete()) {
             return new FamilyStatusResource($data);
         }
-    }
-
-    /**
-     * Get the resource with the specified user id.
-     *
-     * @param int $userId
-     * @return FamilyStatusResource
-     */
-    public function getByUserId($userId)
-    {
-        $data = FamilyStatus::where('user_id', $userId)->get();
-        return new FamilyStatusResource($data);
     }
 }

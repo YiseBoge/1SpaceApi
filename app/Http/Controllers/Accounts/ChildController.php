@@ -20,7 +20,8 @@ class ChildController extends Controller
      */
     public function index()
     {
-        $data = Child::paginate();
+        $filters = (array) json_decode(request()->input('filter'));
+        $data = Child::where($filters)->paginate();
         return ChildResource::collection($data);
     }
 
@@ -112,17 +113,5 @@ class ChildController extends Controller
         if ($data->delete()) {
             return new ChildResource($data);
         }
-    }
-
-    /**
-     * Get the resource with the specified user id.
-     *
-     * @param int $familyStatusId
-     * @return AnonymousResourceCollection
-     */
-    public function getByFamilyStatusId($familyStatusId)
-    {
-        $data = Child::where('family_status_id', $familyStatusId)->get();
-        return ChildResource::collection($data);
     }
 }

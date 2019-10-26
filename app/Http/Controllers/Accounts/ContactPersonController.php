@@ -17,10 +17,12 @@ class ContactPersonController extends Controller
      * Display a listing of the resource.
      *
      * @return AnonymousResourceCollection
+     * @throws Exception
      */
     public function index()
     {
-        $data = ContactPerson::paginate();
+        $filters = (array) json_decode(request()->input('filter'));
+        $data = ContactPerson::where($filters)->paginate();
         return ContactPersonResource::collection($data);
     }
 
@@ -127,17 +129,4 @@ class ContactPersonController extends Controller
             return new ContactPersonResource($data);
         }
     }
-
-    /**
-     * Get the resource with the specified user id.
-     *
-     * @param int $userId
-     * @return AnonymousResourceCollection
-     */
-    public function getByUserId($userId)
-    {
-        $data = ContactPerson::where('user_id', $userId)->get();
-        return ContactPersonResource::collection($data);
-    }
-
 }

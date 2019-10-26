@@ -57,15 +57,10 @@ Route::middleware(['jwt.auth', 'auth.permission:can_add_user'])->get('/user', fu
 
 //  API Resources  //
 
-Route::get('accounts/contact-person/user/{userID}', 'Accounts\ContactPersonController@getByUserId');
 Route::apiResource('accounts/contact-person', ContactPersonController::class);
-Route::get('accounts/education-status/user/{userID}', 'Accounts\EducationStatusController@getByUserId');
 Route::apiResource('accounts/education-status', EducationStatusController::class);
-Route::get('accounts/family-status/user/{userID}', 'Accounts\FamilyStatusController@getByUserId');
 Route::apiResource('accounts/family-status', FamilyStatusController::class);
-Route::get('accounts/child/family-status/{familyStatusID}','Accounts\ChildController@getByFamilyStatusId');
 Route::apiResource('accounts/child', ChildController::class);
-Route::get('accounts/work-experience/user/{userID}', 'Accounts\WorkExperienceController@getByUserId');
 Route::apiResource('accounts/work-experience', WorkExperienceController::class);
 Route::apiResource('accounts/user', UserController::class);
 

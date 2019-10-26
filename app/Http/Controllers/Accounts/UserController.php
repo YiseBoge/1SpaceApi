@@ -17,12 +17,14 @@ class UserController extends Controller
      */
     public function index()
     {
+        $filters = (array) json_decode(request()->input('filter'));
+
         if (request()->query('all')) {
             $data =  User::all();
             return $data;
         }
 
-        $data = User::with(['role', 'position', 'department'])->paginate();
+        $data = User::with(['role', 'position', 'department'])->where($filters)->paginate();
         return UserResource::collection($data);
     }
 
