@@ -5,9 +5,20 @@ namespace App\Models\Projects;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProjectCategory extends Model
 {
+    use SoftDeletes;
+
+    protected $dates = [
+        'deleted_at',
+    ];
+
+    protected $fillable = [
+        'name', 'description',
+    ];
+
     /**
      * @return HasMany
      */

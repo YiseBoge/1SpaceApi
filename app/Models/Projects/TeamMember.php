@@ -5,9 +5,20 @@ namespace App\Models\Projects;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TeamMember extends Model
 {
+    use SoftDeletes;
+
+    protected $dates = [
+        'deleted_at',
+    ];
+
+    protected $fillable = [
+        'pmo_id', 'user_id', 'professional_role', 'task_description',
+    ];
+
     /**
      * @return BelongsTo
      */

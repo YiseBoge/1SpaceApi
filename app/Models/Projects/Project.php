@@ -6,9 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
 {
+    use SoftDeletes;
+
+    protected $dates = [
+        'deleted_at',
+    ];
+
+    protected $fillable = [
+        'company_id', 'title', 'description',
+    ];
+
     /**
      * @return BelongsTo
      */
@@ -30,7 +41,7 @@ class Project extends Model
      */
     public function pmo()
     {
-        return $this->belongsTo('App\Models\Projects\ProjectManagementOrganization');
+        return $this->belongsTo('App\Models\Projects\ProjectManagementOrganization', 'pmo_id');
     }
 
     /**
