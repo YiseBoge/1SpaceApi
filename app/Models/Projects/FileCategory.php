@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @method static FileCategory findOrFail(int $id)
+ * @method static FileCategory create(array $array)
+ */
 class FileCategory extends Model
 {
     use SoftDeletes;

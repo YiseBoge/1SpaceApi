@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @method static ProjectManagementOrganization findOrFail($id)
+ * @method static ProjectManagementOrganization create(array $array)
+ * @property string|null title
+ * @property string|null description
+ */
 class ProjectManagementOrganization extends Model
 {
     use SoftDeletes;

@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @method static TeamMember findOrFail(int $id)
+ * @method static create(array $array)
+ * @property string|null professional_role
+ * @property string|null task_description
+ */
 class TeamMember extends Model
 {
     use SoftDeletes;

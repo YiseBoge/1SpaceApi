@@ -2,12 +2,23 @@
 
 namespace App\Models\Projects;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @method static Project findOrFail(int $id)
+ * @method static Project create(array $array)
+ * @property string|null name
+ * @property string|null description
+ * @property string|null client
+ * @property DateTime start_date
+ * @property string|null latitude
+ * @property string|null longitude
+ */
 class Project extends Model
 {
     use SoftDeletes;
@@ -17,7 +28,7 @@ class Project extends Model
     ];
 
     protected $fillable = [
-        'company_id', 'title', 'description',
+        'pmo_id', 'project_category_id', 'name', 'description', 'client', 'start_date',
     ];
 
     /**
