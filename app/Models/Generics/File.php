@@ -24,10 +24,6 @@ class File extends Model
         'deleted_at',
     ];
 
-    protected $fillable = [
-        'file_name', 'file_type', 'file_description',
-    ];
-
     protected $enumTypes = [
         'Project File',
         'ID Scan',

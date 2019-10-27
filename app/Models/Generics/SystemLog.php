@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @method static SystemLog findOrFail(int $id)
+ * @property string|null action_type
+ * @property string|null remark
+ */
 class SystemLog extends Model
 {
     use SoftDeletes;
@@ -14,10 +19,6 @@ class SystemLog extends Model
 
     protected $dates = [
         'deleted_at',
-    ];
-
-    protected $fillable = [
-        'action_type',
     ];
 
     protected $enumActionTypes = [

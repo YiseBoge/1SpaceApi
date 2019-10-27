@@ -179,6 +179,15 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany('App\Models\Generics\SystemLog');
     }
 
+
+    /**
+     * @return MorphMany
+     */
+    public function loggedItems()
+    {
+        return $this->morphMany('App\Models\Generics\SystemLog', 'loggable');
+    }
+
     /**
      * @return HasMany
      */
