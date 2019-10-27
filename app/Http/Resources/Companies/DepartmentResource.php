@@ -18,11 +18,12 @@ class DepartmentResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'company' => $this->company,
             'parent_department' => $this->parentDepartment,
             'sub_departments' => DepartmentResource::collection($this->subDepartments),
             'users' => UserResource::collection($this->users),
 
-            'name' => $this->title,
+            'name' => $this->name,
             'description' => $this->description,
             'remark' => $this->remark,
 

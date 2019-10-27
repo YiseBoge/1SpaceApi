@@ -9,7 +9,6 @@ use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\Response;
 
 class ForumController extends Controller
 {
@@ -22,16 +21,6 @@ class ForumController extends Controller
     {
         $data = Forum::paginate();
         return ForumResource::collection($data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -65,17 +54,6 @@ class ForumController extends Controller
     {
         $data = Forum::findOrFail($id);
         return new ForumResource($data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

@@ -19,6 +19,7 @@ use Accounts\UserController;
 use Accounts\WorkExperienceController;
 use App\User;
 use Chats\PrivateMessageController;
+use Companies\CompanyController;
 use Companies\DepartmentController;
 use Companies\PositionController;
 use Companies\RoleController;

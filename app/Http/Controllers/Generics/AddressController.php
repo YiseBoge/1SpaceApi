@@ -8,7 +8,6 @@ use App\Models\Generics\Address;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\Response;
 
 class AddressController extends Controller
 {
@@ -21,16 +20,6 @@ class AddressController extends Controller
     {
         $data = Address::paginate();
         return AddressResource::collection($data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -67,17 +56,6 @@ class AddressController extends Controller
     {
         $data = Address::findOrFail($id);
         return new AddressResource($data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

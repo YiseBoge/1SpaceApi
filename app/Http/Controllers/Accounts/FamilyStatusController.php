@@ -9,7 +9,6 @@ use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\Response;
 
 class FamilyStatusController extends Controller
 {
@@ -22,16 +21,6 @@ class FamilyStatusController extends Controller
     {
         $data = FamilyStatus::paginate();
         return FamilyStatusResource::collection($data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -67,17 +56,6 @@ class FamilyStatusController extends Controller
     {
         $data = FamilyStatus::findOrFail($id);
         return new FamilyStatusResource($data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

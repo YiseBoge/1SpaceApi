@@ -9,7 +9,6 @@ use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\Response;
 
 class NoticeController extends Controller
 {
@@ -22,16 +21,6 @@ class NoticeController extends Controller
     {
         $data = Notice::paginate();
         return NoticeResource::collection($data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -67,17 +56,6 @@ class NoticeController extends Controller
     {
         $data = Notice::findOrFail($id);
         return new NoticeResource($data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

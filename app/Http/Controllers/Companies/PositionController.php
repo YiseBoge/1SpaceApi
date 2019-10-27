@@ -8,7 +8,6 @@ use App\Models\Companies\Position;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\Response;
 
 class PositionController extends Controller
 {
@@ -24,16 +23,6 @@ class PositionController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param Request $request
@@ -42,6 +31,7 @@ class PositionController extends Controller
     public function store(Request $request)
     {
         $data = Position::create([
+            'company_id' => $request->input('company_id'),
             'name' => $request->input('name'),
             'description' => $request->input('description'),
             'quantity_needed' => $request->input('quantity_needed'),
@@ -64,17 +54,6 @@ class PositionController extends Controller
     {
         $data = Position::findOrFail($id);
         return new PositionResource($data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

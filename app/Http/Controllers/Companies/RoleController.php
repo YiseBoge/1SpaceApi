@@ -8,7 +8,6 @@ use App\Models\Companies\Role;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\Response;
 
 class RoleController extends Controller
 {
@@ -24,16 +23,6 @@ class RoleController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param Request $request
@@ -42,6 +31,7 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $data = Role::create([
+            'company_id' => $request->input('company_id'),
             'name' => $request->input('name'),
             'description' => $request->input('description'),
 
@@ -90,17 +80,6 @@ class RoleController extends Controller
     {
         $data = Role::findOrFail($id);
         return new RoleResource($data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

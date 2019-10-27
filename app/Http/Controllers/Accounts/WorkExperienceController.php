@@ -9,7 +9,6 @@ use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\Response;
 
 class WorkExperienceController extends Controller
 {
@@ -22,16 +21,6 @@ class WorkExperienceController extends Controller
     {
         $data = WorkExperience::paginate();
         return WorkExperienceResource::collection($data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -69,17 +58,6 @@ class WorkExperienceController extends Controller
     {
         $data = WorkExperience::findOrFail($id);
         return new WorkExperienceResource($data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

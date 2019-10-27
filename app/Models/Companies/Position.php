@@ -25,7 +25,7 @@ class Position extends Model
     ];
 
     protected $fillable = [
-        'name', 'description', 'quantity_needed',
+        'company_id', 'name', 'description', 'quantity_needed',
     ];
 
     /**

@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @method static Company findOrFail(int $id)
+ * @method static Company create(array $array)
+ * @property string|null name
+ * @property string|null description
+ * @property string|null category
+ */
 class Company extends Model
 {
     use SoftDeletes;
@@ -31,7 +38,7 @@ class Company extends Model
      */
     public function departments()
     {
-        return $this->hasMany('App\Models\Companies\Department');
+        return $this->hasMany('App\Models\Companies\Department')->where('parent_department_id', null);
     }
 
     /**

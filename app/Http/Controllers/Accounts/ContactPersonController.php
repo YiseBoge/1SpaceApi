@@ -9,7 +9,6 @@ use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\Response;
 
 class ContactPersonController extends Controller
 {
@@ -22,16 +21,6 @@ class ContactPersonController extends Controller
     {
         $data = ContactPerson::paginate();
         return ContactPersonResource::collection($data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -77,17 +66,6 @@ class ContactPersonController extends Controller
     {
         $data = ContactPerson::findOrFail($id);
         return new ContactPersonResource($data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

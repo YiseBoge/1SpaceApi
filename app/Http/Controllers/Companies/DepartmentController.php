@@ -8,7 +8,6 @@ use App\Models\Companies\Department;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\Response;
 
 class DepartmentController extends Controller
 {
@@ -24,16 +23,6 @@ class DepartmentController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param Request $request
@@ -42,11 +31,13 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
         $data = Department::create([
+            'company_id' => $request->input('company_id'),
             'name' => $request->input('name'),
             'description' => $request->input('description'),
         ]);
 
         $data->remark = $request->input('remark');
+        $data->parent_department_id = $request->input('parent_department_id');
 
         if ($data->save()) {
             return new DepartmentResource($data);
@@ -63,17 +54,6 @@ class DepartmentController extends Controller
     {
         $data = Department::findOrFail($id);
         return new DepartmentResource($data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
