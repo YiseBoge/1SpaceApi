@@ -33,6 +33,6 @@ class CreateTeamMembersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('project_team_members');
+        Schema::dropIfExists('team_members');
     }
 }

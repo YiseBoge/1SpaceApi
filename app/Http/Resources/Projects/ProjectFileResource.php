@@ -18,7 +18,7 @@ class ProjectFileResource extends JsonResource
         return [
             'id' => $this->id,
             'owner' => $this->fileable,
-            'category' => $this->projectFileCategory,
+            'file_category' => $this->projectFileCategory()->first(),
 
             'file_name' => $this->file_name,
             'file_url' => $this->file_url,

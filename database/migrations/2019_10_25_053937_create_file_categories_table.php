@@ -32,6 +32,6 @@ class CreateFileCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('project_file_categories');
+        Schema::dropIfExists('file_categories');
     }
 }

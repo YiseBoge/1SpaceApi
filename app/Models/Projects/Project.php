@@ -44,7 +44,7 @@ class Project extends Model
      */
     public function coordinates()
     {
-        return $this->hasMany('App\Models\Generics\Coordinate');
+        return $this->hasMany('App\Models\Projects\Coordinate');
     }
 
     /**

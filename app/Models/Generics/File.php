@@ -6,6 +6,15 @@ use App\Traits\Enums;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @method static File findOrFail(int $id)
+ * @method static File create(array $array)
+ * @property string|null file_name
+ * @property string|null
+ * @property string|null file_type
+ * @property string|null file_url
+ * @property string|null file_description
+ */
 class File extends Model
 {
     use SoftDeletes;
@@ -16,10 +25,11 @@ class File extends Model
     ];
 
     protected $fillable = [
-        'file_name', 'file_url', 'file_type',
+        'file_name', 'file_type', 'file_description',
     ];
 
     protected $enumTypes = [
+        'Project File',
         'ID Scan',
         'Profile Picture',
         'Company Document',
@@ -37,9 +47,12 @@ class File extends Model
     }
 
 
+    /**
+     * @return mixed
+     */
     public function projectFileCategory()
     {
-        return $this->hasOneThrough('App\Models\Projects\FileCategory', 'App\Models\Projects\FileCategoryFile', 'file_id', 'id', 'id', 'file_category_id');
+        return $this->belongsToMany('App\Models\Projects\FileCategory', 'file_category_file');
     }
 
 }
