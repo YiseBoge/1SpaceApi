@@ -31,21 +31,19 @@ class WorkExperienceController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::findOrFail($request->input('user_id'));
+        User::findOrFail($request->input('user_id'));
 
         $data = WorkExperience::create([
+            'user_id' => $request->input('user_id'),
             'company_name' => $request->input('company_name'),
             'department' => $request->input('department'),
             'position' => $request->input('position'),
             'role' => $request->input('role'),
+            'start_date' => $request->input('start_date'),
         ]);
-
-        $data->start_date = $request->input('start_date');
         $data->end_date = $request->input('end_date');
 
-        if ($user->workExperiences()->save($data)) {
-            return new WorkExperienceResource($data);
-        }
+        return new WorkExperienceResource($data);
     }
 
     /**

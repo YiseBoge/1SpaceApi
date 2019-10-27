@@ -26,7 +26,7 @@ class PrivateMessage extends Model
     ];
 
     protected $fillable = [
-        'subject', 'content',
+        'sender_id', 'receiver_id', 'subject', 'content',
     ];
 
     /**

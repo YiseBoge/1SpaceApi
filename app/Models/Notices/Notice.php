@@ -26,7 +26,7 @@ class Notice extends Model
     ];
 
     protected $fillable = [
-        'title', 'description',
+        'poster_id', 'title', 'description',
     ];
 
     /**

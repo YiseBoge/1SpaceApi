@@ -42,9 +42,7 @@ class ProjectController extends Controller
         $data->latitude = $request->input('latitude');
         $data->longitude = $request->input('longitude');
 
-        if ($data->save()) {
-            return new ProjectResource($data);
-        }
+        return new ProjectResource($data);
     }
 
     /**

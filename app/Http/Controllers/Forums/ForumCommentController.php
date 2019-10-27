@@ -33,17 +33,15 @@ class ForumCommentController extends Controller
     public function store(Request $request)
     {
         User::findOrFail($request->input('commenter_id'));
-        $forumPost = ForumPost::findOrFail($request->input('forum_post_id'));
+        ForumPost::findOrFail($request->input('forum_post_id'));
 
         $data = ForumComment::create([
+            'forum_post_id' => $request->input('forum_post_id'),
+            'commenter_id' => $request->input('commenter_id'),
             'comment' => $request->input('comment'),
         ]);
 
-        $data->commenter_id = $request->input('commenter_id');
-
-        if ($forumPost->forumComments()->save($data)) {
-            return new ForumCommentResource($data);
-        }
+        return new ForumCommentResource($data);
     }
 
     /**

@@ -34,17 +34,15 @@ class EducationStatusController extends Controller
         $user = User::findOrFail($request->input('user_id'));
 
         $data = EducationStatus::create([
+            'user_id' => $request->input('user_id'),
             'education_level' => $request->input('education_level'),
             'field_of_study' => $request->input('field_of_study'),
             'school_name' => $request->input('school_name'),
+            'start_date' => $request->input('start_date'),
         ]);
-
-        $data->start_date = $request->input('start_date');
         $data->end_date = $request->input('end_date');
 
-        if ($user->educationStatuses()->save($data)) {
-            return new EducationStatusResource($data);
-        }
+        return new EducationStatusResource($data);
     }
 
     /**

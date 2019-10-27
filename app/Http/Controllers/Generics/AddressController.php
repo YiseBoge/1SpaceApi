@@ -41,9 +41,7 @@ class AddressController extends Controller
             'house_no' => $request->input('house_no'),
         ]);
 
-        if ($data->save()) {
-            return new AddressResource($data);
-        }
+        return new AddressResource($data);
     }
 
     /**

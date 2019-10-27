@@ -35,9 +35,7 @@ class ProjectCategoryController extends Controller
             'description' => $request->input('description'),
         ]);
 
-        if ($data->save()) {
-            return new ProjectCategoryResource($data);
-        }
+        return new ProjectCategoryResource($data);
     }
 
     /**

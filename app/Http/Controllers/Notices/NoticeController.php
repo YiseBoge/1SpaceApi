@@ -31,19 +31,17 @@ class NoticeController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::findOrFail($request->input('poster_id'));
+        User::findOrFail($request->input('poster_id'));
 
         $data = Notice::create([
+            'poster_id' => $request->input('poster_id'),
             'title' => $request->input('title'),
             'description' => $request->input('description'),
         ]);
-
         $data->target_date = $request->input('target_date');
         $data->remind_before = $request->input('remind_before');
 
-        if ($user->postedNotices()->save($data)) {
-            return new NoticeResource($data);
-        }
+        return new NoticeResource($data);
     }
 
     /**

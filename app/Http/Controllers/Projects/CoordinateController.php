@@ -36,9 +36,7 @@ class CoordinateController extends Controller
             'value_y' => $request->input('value_y'),
         ]);
 
-        if ($data->save()) {
-            return new CoordinateResource($data);
-        }
+        return new CoordinateResource($data);
     }
 
     /**

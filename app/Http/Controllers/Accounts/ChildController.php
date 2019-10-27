@@ -31,18 +31,16 @@ class ChildController extends Controller
      */
     public function store(Request $request)
     {
-        $family_status = FamilyStatus::findOrFail($request->input('family_status_id'));
+        FamilyStatus::findOrFail($request->input('family_status_id'));
 
         $data = Child::create([
+            'family_status_id' => $request->input('family_status_id'),
             'name' => $request->input('name'),
             'sex' => $request->input('sex'),
             'birth_date' => $request->input('birth_date'),
         ]);
 
-        if ($family_status->children()->save($data)) {
-            return new ChildResource($data);
-        }
-
+        return new ChildResource($data);
     }
 
     /**

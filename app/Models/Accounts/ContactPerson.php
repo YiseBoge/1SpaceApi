@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null sex
  * @property string|null phone_number
  * @property string|null employer_company
+ * @property string|null type
  */
 class ContactPerson extends Model
 {
@@ -29,7 +30,7 @@ class ContactPerson extends Model
     ];
 
     protected $fillable = [
-        'personal_name', 'father_name', 'grand_father_name', 'sex', 'phone_number', 'employer_company',
+        'user_id', 'personal_name', 'father_name', 'grand_father_name', 'sex', 'phone_number', 'employer_company',
     ];
 
     protected $enumTypes = [

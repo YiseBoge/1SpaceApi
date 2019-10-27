@@ -37,9 +37,7 @@ class TeamMemberController extends Controller
             'task_description' => $request->input('task_description'),
         ]);
 
-        if ($data->save()) {
-            return new TeamMemberResource($data);
-        }
+        return new TeamMemberResource($data);
     }
 
     /**

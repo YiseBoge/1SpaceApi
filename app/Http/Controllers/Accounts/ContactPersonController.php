@@ -34,16 +34,16 @@ class ContactPersonController extends Controller
         $user = User::findOrFail($request->input('user_id'));
 
         $data = ContactPerson::create([
+            'user_id' => $request->input('user_id'),
             'personal_name' => $request->input('personal_name'),
             'father_name' => $request->input('father_name'),
             'grand_father_name' => $request->input('grand_father_name'),
             'sex' => $request->input('sex'),
             'phone_number' => $request->input('phone_number'),
             'employer_company' => $request->input('employer_company'),
+            'type' => $request->input('type'),
         ]);
-
-        $type = $request->input('type');
-        if ($type == 'Voucher' && $user->contactPeople()->where('type', 'Voucher')->exists()) {
+        if ($data->type == 'Voucher' && $user->contactPeople()->where('type', 'Voucher')->exists()) {
             return 'This contact already exists';
         }
 
@@ -51,7 +51,7 @@ class ContactPersonController extends Controller
         $data->address_id = $request->input('address_id');
 
 
-        if ($user->contactPeople()->save($data)) {
+        if ($data->save()) {
             return new ContactPersonResource($data);
         }
     }

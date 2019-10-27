@@ -62,12 +62,9 @@ class RoleController extends Controller
             'can_evaluate_project' => $request->has('can_evaluate_project'),
             'can_generate_project_report' => $request->has('can_generate_project_report'),
         ]);
-
         $data->remark = $request->input('remark');
 
-        if ($data->save()) {
-            return new RoleResource($data);
-        }
+        return new RoleResource($data);
     }
 
     /**

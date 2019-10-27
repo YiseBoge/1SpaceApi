@@ -35,12 +35,9 @@ class PMOController extends Controller
             'title' => $request->input('title'),
             'description' => $request->input('description'),
         ]);
-
         $data->parent_pmo_id = $request->input('parent_pmo_id');
 
-        if ($data->save()) {
-            return new PMOResource($data);
-        }
+        return new PMOResource($data);
     }
 
     /**

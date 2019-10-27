@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Forums;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Forums\ForumPostResource;
+use App\Models\Forums\Forum;
 use App\Models\Forums\ForumPost;
 use App\User;
 use Exception;
@@ -32,15 +33,14 @@ class ForumPostController extends Controller
     public function store(Request $request)
     {
         User::findOrFail($request->input('poster_id'));
-        $forum = User::findOrFail($request->input('forum_id'));
+        Forum::findOrFail($request->input('forum_id'));
 
         $data = ForumPost::create([
+            'forum_id' => $request->input('forum_id'),
             'content' => $request->input('content'),
         ]);
 
-        if ($forum->forumPosts()->save($data)) {
-            return new ForumPostResource($data);
-        }
+        return new ForumPostResource($data);
     }
 
     /**

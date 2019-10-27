@@ -26,7 +26,7 @@ class EducationStatus extends Model
     ];
 
     protected $fillable = [
-        'education_level', 'field_of_study', 'school_name',
+        'user_id', 'education_level', 'field_of_study', 'school_name', 'start_date',
     ];
 
     /**

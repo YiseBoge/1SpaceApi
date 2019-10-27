@@ -35,13 +35,10 @@ class DepartmentController extends Controller
             'name' => $request->input('name'),
             'description' => $request->input('description'),
         ]);
-
         $data->remark = $request->input('remark');
         $data->parent_department_id = $request->input('parent_department_id');
 
-        if ($data->save()) {
-            return new DepartmentResource($data);
-        }
+        return new DepartmentResource($data);
     }
 
     /**

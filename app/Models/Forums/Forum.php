@@ -26,7 +26,7 @@ class Forum extends Model
     ];
 
     protected $fillable = [
-        'title', 'description', 'forum_type',
+        'creator_id', 'title', 'description', 'forum_type',
     ];
 
     protected $enumTypes = [

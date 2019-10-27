@@ -31,17 +31,16 @@ class ForumController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::findOrFail($request->input('creator_id'));
+        User::findOrFail($request->input('creator_id'));
 
         $data = Forum::create([
+            'creator_id' => $request->input('creator_id'),
             'title' => $request->input('title'),
             'description' => $request->input('description'),
             'forum_type' => $request->input('forum_type'),
         ]);
 
-        if ($user->createdForums()->save($data)) {
-            return new ForumResource($data);
-        }
+        return new ForumResource($data);
     }
 
     /**

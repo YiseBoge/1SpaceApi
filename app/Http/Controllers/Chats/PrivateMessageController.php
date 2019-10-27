@@ -35,18 +35,15 @@ class PrivateMessageController extends Controller
         User::findOrFail($request->input('receiver_id'));
 
         $data = PrivateMessage::create([
+            'sender_id' => $request->input('sender_id'),
+            'receiver_id' => $request->input('receiver_id'),
             'subject' => $request->input('subject'),
             'content' => $request->input('content'),
         ]);
-
         $data->is_important = $request->input('is_important');
         $data->parent_message_id = $request->input('parent_message_id');
-        $data->sender_id = $request->input('sender_id');
-        $data->receiver_id = $request->input('receiver_id');
 
-        if ($data->save()) {
-            return new PrivateMessageResource($data);
-        }
+        return new PrivateMessageResource($data);
     }
 
     /**

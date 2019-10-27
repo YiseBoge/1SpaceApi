@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @method static Child findOrFail(int $id)
- * @method static create(array $array)
+ * @method static Child create(array $array)
  * @property string|null name
  * @property string|null sex
  * @property DateTime birth_date
@@ -25,7 +25,7 @@ class Child extends Model
     ];
 
     protected $fillable = [
-        'name', 'sex', 'birth_date',
+        'family_status_id', 'name', 'sex', 'birth_date',
     ];
 
     protected $enumSexes = [

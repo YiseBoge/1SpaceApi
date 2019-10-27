@@ -22,7 +22,7 @@ class ForumPost extends Model
     ];
 
     protected $fillable = [
-        'content',
+        'forum_id', 'content',
     ];
 
     /**

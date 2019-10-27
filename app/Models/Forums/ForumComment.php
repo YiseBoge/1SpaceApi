@@ -21,7 +21,7 @@ class ForumComment extends Model
     ];
 
     protected $fillable = [
-        'comment',
+        'forum_post_id', 'commenter_id', 'comment',
     ];
 
     /**

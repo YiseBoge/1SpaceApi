@@ -67,7 +67,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return UserResource
      */
     public function show($id)
@@ -102,7 +102,7 @@ class UserController extends Controller
 
         $user = $this->prepareUser($request, $user);
 
-        $address =  Address::create();
+        $address = Address::create();
         $user->address_id = $address->id;
 
 
@@ -132,16 +132,16 @@ class UserController extends Controller
     private function validationRules()
     {
         return [
-                'role_id' => 'required',
-                'department_id' => 'required',
-                'position_id' => 'required',
-                'email' => 'required|unique:users',
-                'phone_number' => 'required|unique:users',
-                'password' => 'required|min:8',
-                'personal_name' => 'required',
-                'father_name' => 'required',
-                'grand_father_name' => 'required',
-                'sex' => 'required',
+            'role_id' => 'required',
+            'department_id' => 'required',
+            'position_id' => 'required',
+            'email' => 'required|unique:users',
+            'phone_number' => 'required|unique:users',
+            'password' => 'required|min:8',
+            'personal_name' => 'required',
+            'father_name' => 'required',
+            'grand_father_name' => 'required',
+            'sex' => 'required',
         ];
     }
 
@@ -152,13 +152,13 @@ class UserController extends Controller
     {
         return [
 
-                'role_id' =>'role',
-                'department_id' => 'department',
-                'position_id' => 'position',
-                'phone_number' => 'phone number',
-                'personal_name' => 'personal name',
-                'father_name' => 'father name',
-                'grand_father_name' => 'grand father name'
+            'role_id' => 'role',
+            'department_id' => 'department',
+            'position_id' => 'position',
+            'phone_number' => 'phone number',
+            'personal_name' => 'personal name',
+            'father_name' => 'father name',
+            'grand_father_name' => 'grand father name'
         ];
     }
 

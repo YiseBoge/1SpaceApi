@@ -35,9 +35,7 @@ class CompanyController extends Controller
             'category' => $request->input('category'),
         ]);
 
-        if ($data->save()) {
-            return new CompanyResource($data);
-        }
+        return new CompanyResource($data);
     }
 
     /**

@@ -34,12 +34,9 @@ class FileCategoryController extends Controller
             'name' => $request->input('name'),
             'description' => $request->input('description'),
         ]);
-
         $data->parent_category_id = $request->input('parent_category_id');
 
-        if ($data->save()) {
-            return new FileCategoryResource($data);
-        }
+        return new FileCategoryResource($data);
     }
 
     /**

@@ -37,14 +37,9 @@ class FamilyStatusController extends Controller
             'user_id' => $request->input('status'),
             'status' => $request->input('status'),
         ]);
+        if ($data->status == 'Married') $data->partner_name = $request->input('partner_name');
 
-        if ($data->status == 'Married') {
-            $data->partner_name = $request->input('partner_name');
-        }
-
-        if ($data->save()) {
-            return new FamilyStatusResource($data);
-        }
+        return new FamilyStatusResource($data);
     }
 
     /**

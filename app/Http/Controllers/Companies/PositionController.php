@@ -36,12 +36,9 @@ class PositionController extends Controller
             'description' => $request->input('description'),
             'quantity_needed' => $request->input('quantity_needed'),
         ]);
-
         $data->remark = $request->input('remark');
 
-        if ($data->save()) {
-            return new PositionResource($data);
-        }
+        return new PositionResource($data);
     }
 
     /**
