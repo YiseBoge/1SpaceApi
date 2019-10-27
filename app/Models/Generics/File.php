@@ -19,14 +19,6 @@ class File extends Model
         'file_name', 'file_url', 'file_type',
     ];
 
-    /**
-     * Get the owning fileable model.
-     */
-    public function fileable()
-    {
-        return $this->morphTo();
-    }
-
     protected $enumTypes = [
         'ID Scan',
         'Profile Picture',
@@ -36,5 +28,18 @@ class File extends Model
         'Other'
     ];
 
+    /**
+     * Get the owning fileable model.
+     */
+    public function fileable()
+    {
+        return $this->morphTo();
+    }
+
+
+    public function projectFileCategory()
+    {
+        return $this->hasOneThrough('App\Models\Projects\FileCategory', 'App\Models\Projects\FileCategoryFile', 'file_id', 'id', 'id', 'file_category_id');
+    }
 
 }

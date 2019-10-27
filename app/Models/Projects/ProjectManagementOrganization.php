@@ -55,7 +55,7 @@ class ProjectManagementOrganization extends Model
      */
     public function teamMembers()
     {
-        return $this->hasMany('App\Models\Accounts\TeamMember', 'pmo_id');
+        return $this->hasMany('App\Models\Projects\TeamMember', 'pmo_id');
     }
 
     /**

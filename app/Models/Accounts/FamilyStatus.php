@@ -24,7 +24,7 @@ class FamilyStatus extends Model
     ];
 
     protected $fillable = [
-        'status',
+        'user_id', 'status',
     ];
 
     protected $enumTypes = [

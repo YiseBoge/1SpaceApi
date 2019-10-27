@@ -15,6 +15,13 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
  * @method static User findOrFail(array|string|null $input)
+ * @property array|string|null email
+ * @property array|string|null phone_number
+ * @property string password
+ * @property array|string|null personal_name
+ * @property array|string|null father_name
+ * @property array|string|null grand_father_name
+ * @property array|string|null sex
  */
 class User extends Authenticatable implements JWTSubject
 {

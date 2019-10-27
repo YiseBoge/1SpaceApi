@@ -17,7 +17,7 @@ class CreateFamilyStatusesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('user_id');
 
-            $table->string('status');
+            $table->string('status')->nullable();
             $table->string('partner_name')->nullable();
 
             $table->timestamps();

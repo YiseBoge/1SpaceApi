@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @method static TeamMember findOrFail(int $id)
- * @method static create(array $array)
+ * @method static TeamMember create(array $array)
  * @property string|null professional_role
  * @property string|null task_description
  */

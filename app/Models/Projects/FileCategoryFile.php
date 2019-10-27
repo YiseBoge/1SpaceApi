@@ -13,6 +13,10 @@ class FileCategoryFile extends Model
         'deleted_at',
     ];
 
+    protected $fillable = [
+        'file_id', 'file_category_id',
+    ];
+
     public $incrementing = false;
     protected $primaryKey = null;
 }

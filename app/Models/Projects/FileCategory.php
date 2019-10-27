@@ -29,7 +29,7 @@ class FileCategory extends Model
      */
     public function parentCategory()
     {
-        return $this->belongsTo('App\Models\Projects\FileCategory');
+        return $this->belongsTo('App\Models\Projects\FileCategory', 'parent_category_id');
     }
 
     /**
@@ -37,7 +37,7 @@ class FileCategory extends Model
      */
     public function subCategories()
     {
-        return $this->hasMany('App\Models\Projects\FileCategory');
+        return $this->hasMany('App\Models\Projects\FileCategory', 'parent_category_id');
     }
 
     /**
@@ -45,7 +45,7 @@ class FileCategory extends Model
      */
     public function files()
     {
-        return $this->hasManyThrough('App\Models\Generics\File', 'App\Models\Project\FileCategoryFile');
+        return $this->hasManyThrough('App\Models\Generics\File', 'App\Models\Projects\FileCategoryFile', 'file_category_id', 'id', 'id', 'file_id');
     }
 
 }

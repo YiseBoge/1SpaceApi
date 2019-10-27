@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Projects;
 
-use App\Http\Resources\Generics\FileResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -21,7 +20,7 @@ class ProjectResource extends JsonResource
             'category' => $this->projectCategory,
             'pmo' => $this->pmo,
             'coordinates' => CoordinateResource::collection($this->coordinates),
-            'files' => FileResource::collection($this->files),
+            'files' => ProjectFileResource::collection($this->files),
 
             'name' => $this->name,
             'description' => $this->description,

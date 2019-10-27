@@ -31,9 +31,10 @@ class FamilyStatusController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::findOrFail($request->input('user_id'));
+        User::findOrFail($request->input('user_id'));
 
         $data = FamilyStatus::create([
+            'user_id' => $request->input('status'),
             'status' => $request->input('status'),
         ]);
 
@@ -41,7 +42,7 @@ class FamilyStatusController extends Controller
             $data->partner_name = $request->input('partner_name');
         }
 
-        if ($user->familyStatus()->save($data)) {
+        if ($data->save()) {
             return new FamilyStatusResource($data);
         }
     }

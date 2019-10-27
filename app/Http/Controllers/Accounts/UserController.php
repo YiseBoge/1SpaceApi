@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Accounts;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Accounts\UserResource;
+use App\Models\Accounts\FamilyStatus;
 use App\Models\Generics\Address;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
@@ -47,16 +47,19 @@ class UserController extends Controller
     {
         $this->validate($request, $this->validationRules(), [], $this->validationAttribs());
 
-
         $user = new User();
-
         $user = $this->prepareUser($request, $user);
 
-        $address =  Address::create();
+        $address = new Address();
+        $address->save();
         $user->address_id = $address->id;
 
 
         if ($user->save()) {
+            FamilyStatus::create([
+                'user_id' => $user->id,
+                'status' => null,
+            ]);
             return new UserResource($user);
         }
     }
@@ -65,11 +68,11 @@ class UserController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return Response
+     * @return UserResource
      */
     public function show($id)
     {
-        $data = User::with(['role', 'position', 'department', 'address'])->findOrFail($id);
+        $data = User::findOrFail($id);
         return new UserResource($data);
     }
 
@@ -78,7 +81,7 @@ class UserController extends Controller
      *
      * @param Request $request
      * @param int $id
-     * @return Response
+     * @return UserResource
      * @throws ValidationException
      */
     public function update(Request $request, $id)
@@ -123,6 +126,9 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * @return array
+     */
     private function validationRules()
     {
         return [
@@ -139,6 +145,9 @@ class UserController extends Controller
         ];
     }
 
+    /**
+     * @return array
+     */
     private function validationAttribs()
     {
         return [
@@ -153,6 +162,11 @@ class UserController extends Controller
         ];
     }
 
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return User
+     */
     private function prepareUser(Request $request, User $user)
     {
 
