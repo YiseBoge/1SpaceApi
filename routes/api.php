@@ -31,6 +31,12 @@ use Generics\FileController;
 use Generics\SystemLogController;
 use Illuminate\Http\Request;
 use Notices\NoticeController;
+use Projects\CoordinateController;
+use Projects\FileCategoryController;
+use Projects\PMOController;
+use Projects\ProjectCategoryController;
+use Projects\ProjectController;
+use Projects\TeamMemberController;
 
 Route::post('login', function (Request $request) {
 
@@ -83,6 +89,13 @@ Route::apiResource('generics/file', FileController::class);
 Route::apiResource('generics/system-log', SystemLogController::class);
 
 Route::apiResource('notices/notice', NoticeController::class);
+
+Route::apiResource('projects/project', ProjectController::class);
+Route::apiResource('projects/coordinate', CoordinateController::class);
+Route::apiResource('projects/project-category', ProjectCategoryController::class);
+Route::apiResource('projects/file-category', FileCategoryController::class);
+Route::apiResource('projects/pmo', PMOController::class);
+Route::apiResource('projects/team-member', TeamMemberController::class);
 
 
 //  --end--  API Resources  --end--   //

@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @method static Coordinate findOrFail(int $id)
+ * @method static Coordinate create(array $array)
+ * @property float value_x
+ * @property float value_y
+ */
 class Coordinate extends Model
 {
     use SoftDeletes;
@@ -15,7 +21,7 @@ class Coordinate extends Model
     ];
 
     protected $fillable = [
-        'value',
+        'project_id', 'value_x', 'value_y',
     ];
 
 

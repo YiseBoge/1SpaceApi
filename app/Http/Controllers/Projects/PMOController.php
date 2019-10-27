@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Project;
+namespace App\Http\Controllers\Projects;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Projects\FileCategoryResource;
-use App\Models\Projects\FileCategory;
+use App\Http\Resources\Projects\PMOResource;
+use App\Models\Projects\ProjectManagementOrganization;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
-class FileCategoryController extends Controller
+class PMOController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,27 +18,28 @@ class FileCategoryController extends Controller
      */
     public function index()
     {
-        $data = FileCategory::paginate();
-        return FileCategoryResource::collection($data);
+        $data = ProjectManagementOrganization::paginate();
+        return PMOResource::collection($data);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return FileCategoryResource
+     * @return PMOResource
      */
     public function store(Request $request)
     {
-        $data = FileCategory::create([
-            'name' => $request->input('name'),
+        $data = ProjectManagementOrganization::create([
+            'company_id' => $request->input('company_id'),
+            'title' => $request->input('title'),
             'description' => $request->input('description'),
         ]);
 
-        $data->parent_category_id = $request->input('parent_category_id');
+        $data->parent_pmo_id = $request->input('parent_pmo_id');
 
         if ($data->save()) {
-            return new FileCategoryResource($data);
+            return new PMOResource($data);
         }
     }
 
@@ -46,12 +47,12 @@ class FileCategoryController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return FileCategoryResource
+     * @return PMOResource
      */
     public function show($id)
     {
-        $data = FileCategory::findOrFail($id);
-        return new FileCategoryResource($data);
+        $data = ProjectManagementOrganization::findOrFail($id);
+        return new PMOResource($data);
     }
 
     /**
@@ -59,18 +60,17 @@ class FileCategoryController extends Controller
      *
      * @param Request $request
      * @param int $id
-     * @return FileCategoryResource
+     * @return PMOResource
      */
     public function update(Request $request, $id)
     {
-        $data = FileCategory::findOrFail($id);
+        $data = ProjectManagementOrganization::findOrFail($id);
 
-        $data->name = $request->input('name');
+        $data->title = $request->input('title');
         $data->description = $request->input('description');
-        $data->parent_category_id = $request->input('parent_category_id');
 
         if ($data->save()) {
-            return new FileCategoryResource($data);
+            return new PMOResource($data);
         }
     }
 
@@ -78,14 +78,14 @@ class FileCategoryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return FileCategoryResource
+     * @return PMOResource
      * @throws Exception
      */
     public function destroy($id)
     {
-        $data = FileCategory::findOrFail($id);
+        $data = ProjectManagementOrganization::findOrFail($id);
         if ($data->delete()) {
-            return new FileCategoryResource($data);
+            return new PMOResource($data);
         }
     }
 }

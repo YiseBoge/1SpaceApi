@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Project;
+namespace App\Http\Controllers\Projects;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Projects\PMOResource;
-use App\Models\Projects\ProjectManagementOrganization;
+use App\Http\Resources\Projects\ProjectCategoryResource;
+use App\Models\Projects\ProjectCategory;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
-class PMOController extends Controller
+class ProjectCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,28 +18,25 @@ class PMOController extends Controller
      */
     public function index()
     {
-        $data = ProjectManagementOrganization::paginate();
-        return PMOResource::collection($data);
+        $data = ProjectCategory::paginate();
+        return ProjectCategoryResource::collection($data);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return PMOResource
+     * @return ProjectCategoryResource
      */
     public function store(Request $request)
     {
-        $data = ProjectManagementOrganization::create([
-            'company_id' => $request->input('company_id'),
-            'title' => $request->input('title'),
+        $data = ProjectCategory::create([
+            'name' => $request->input('name'),
             'description' => $request->input('description'),
         ]);
 
-        $data->parent_pmo_id = $request->input('parent_pmo_id');
-
         if ($data->save()) {
-            return new PMOResource($data);
+            return new ProjectCategoryResource($data);
         }
     }
 
@@ -47,12 +44,12 @@ class PMOController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return PMOResource
+     * @return ProjectCategoryResource
      */
     public function show($id)
     {
-        $data = ProjectManagementOrganization::findOrFail($id);
-        return new PMOResource($data);
+        $data = ProjectCategory::findOrFail($id);
+        return new ProjectCategoryResource($data);
     }
 
     /**
@@ -60,17 +57,17 @@ class PMOController extends Controller
      *
      * @param Request $request
      * @param int $id
-     * @return PMOResource
+     * @return ProjectCategoryResource
      */
     public function update(Request $request, $id)
     {
-        $data = ProjectManagementOrganization::findOrFail($id);
+        $data = ProjectCategory::findOrFail($id);
 
-        $data->title = $request->input('title');
+        $data->name = $request->input('name');
         $data->description = $request->input('description');
 
         if ($data->save()) {
-            return new PMOResource($data);
+            return new ProjectCategoryResource($data);
         }
     }
 
@@ -78,14 +75,14 @@ class PMOController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return PMOResource
+     * @return ProjectCategoryResource
      * @throws Exception
      */
     public function destroy($id)
     {
-        $data = ProjectManagementOrganization::findOrFail($id);
+        $data = ProjectCategory::findOrFail($id);
         if ($data->delete()) {
-            return new PMOResource($data);
+            return new ProjectCategoryResource($data);
         }
     }
 }

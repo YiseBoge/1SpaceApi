@@ -17,7 +17,8 @@ class CreateCoordinatesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('project_id');
 
-            $table->float('value');
+            $table->float('value_x');
+            $table->float('value_y');
 
             $table->timestamps();
             $table->softDeletes();

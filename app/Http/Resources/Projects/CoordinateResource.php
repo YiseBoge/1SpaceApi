@@ -17,7 +17,8 @@ class CoordinateResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'value' => $this->value,
+            'value_x' => $this->value_x,
+            'value_y' => $this->value_y,
         ];
     }
 }
