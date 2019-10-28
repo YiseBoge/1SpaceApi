@@ -48,7 +48,14 @@ class FileController extends Controller
                 break;
             case 'Project File':
                 $owner = Project::findOrFail($ownerId);
-                $data->file_url = '';
+                $folder = 'project_files';
+                $file = $request->file('file');
+
+                list($fileName, $fileNameToStore) = $this->__storeFile($file, 'public/' . $folder);
+
+                $data->file_url = "/storage/$folder/$fileNameToStore";
+                $data->file_name = $fileName;
+
                 break;
             default:
                 break;
@@ -104,8 +111,24 @@ class FileController extends Controller
     public function destroy($id)
     {
         $data = File::findOrFail($id);
+
         if ($data->delete()) {
             return new FileResource($data);
         }
+    }
+
+    /**
+     * @param $file
+     * @param string $folder
+     * @return array
+     */
+    private function __storeFile($file, string $folder): array
+    {
+        $fileNameWithExt = $file->getClientOriginalName();
+        $fileExt = $file->getClientOriginalExtension();
+        $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+        $fileNameToStore = $fileName . '_' . time() . '_' . $fileExt;
+        $file->storeAs($folder, $fileNameToStore);
+        return array($fileName, $fileNameToStore);
     }
 }
