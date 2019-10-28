@@ -11,6 +11,7 @@ use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\UploadedFile;
 
 class FileController extends Controller
 {
@@ -122,7 +123,7 @@ class FileController extends Controller
      * @param string $folder
      * @return array
      */
-    private function __storeFile($file, string $folder): array
+    private function __storeFile(UploadedFile $file, string $folder): array
     {
         $fileNameWithExt = $file->getClientOriginalName();
         $fileExt = $file->getClientOriginalExtension();
