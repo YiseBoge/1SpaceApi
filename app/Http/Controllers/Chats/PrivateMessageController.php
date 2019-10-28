@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Chats;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Chats\PrivateMessageResource;
 use App\Models\Chats\PrivateMessage;
+use App\Models\Chats\Conversation;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -50,16 +51,18 @@ class PrivateMessageController extends Controller
     {
         User::findOrFail($request->input('sender_id'));
         User::findOrFail($request->input('receiver_id'));
+        Conversation::findOrFail($request->input('conversation_id'));
 
-        $data = PrivateMessage::create([
-            'subject' => $request->input('subject'),
-            'content' => $request->input('content'),
-        ]);
+        // $data = PrivateMessage::create([
+        //     'content' => $request->input('content'),
+        // ]);
 
-        $data->is_important = $request->input('is_important');
-        $data->parent_message_id = $request->input('parent_message_id');
+        $data = new PrivateMessage();
+
+        $data->content = $request->input('content');
         $data->sender_id = $request->input('sender_id');
         $data->receiver_id = $request->input('receiver_id');
+        $data->conversation_id = $request->input('conversation_id');
 
         if ($data->save()) {
             return new PrivateMessageResource($data);
@@ -100,9 +103,8 @@ class PrivateMessageController extends Controller
     {
         $data = PrivateMessage::findOrFail($id);
 
-        $data->subject = $request->input('subject');
         $data->content = $request->input('content');
-        $data->is_important = $request->input('is_important');
+        $data->is_read = $request->input('is_read');
 
         if ($data->save()) {
             return new PrivateMessageResource($data);

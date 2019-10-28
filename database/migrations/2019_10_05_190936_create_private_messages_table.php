@@ -17,11 +17,10 @@ class CreatePrivateMessagesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('sender_id');
             $table->bigInteger('receiver_id');
-            $table->bigInteger('parent_message_id')->nullable();
+            $table->bigInteger('conversation_id');
 
-            $table->string('subject');
             $table->string('content');
-            $table->boolean('is_important')->default(false);
+            $table->boolean('is_read')->default(false);
 
             $table->timestamps();
             $table->softDeletes();

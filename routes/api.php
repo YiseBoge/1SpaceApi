@@ -22,6 +22,7 @@ use Generics\AddressController;
 use Generics\PositionController;
 use Forums\ForumCommentController;
 use Generics\DepartmentController;
+use Chats\ConversationController;
 use Chats\PrivateMessageController;
 use Accounts\FamilyStatusController;
 use Accounts\ContactPersonController;
@@ -64,6 +65,8 @@ Route::apiResource('accounts/child', ChildController::class);
 Route::apiResource('accounts/work-experience', WorkExperienceController::class);
 Route::apiResource('accounts/user', UserController::class);
 
+Route::get('chats/conversation/user/{id}', 'Chats\ConversationController@getByUser');
+Route::apiResource('chats/conversation', ConversationController::class);
 Route::apiResource('chats/private-message', PrivateMessageController::class);
 
 Route::apiResource('forums/forum', ForumController::class);
