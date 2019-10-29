@@ -47,7 +47,10 @@ class Role extends Model
     ];
 
     protected $fillable = [
-        'company_id', 'name', 'description', 'quantity_needed',
+        'company_id', 'name', 'description', 'quantity_needed','can_add_user', 
+        'can_edit_user', 'can_delete_user','can_add_position', 'can_edit_position', 
+        'can_delete_position','can_add_department', 'can_edit_department', 'can_delete_department',
+        'can_add_professional_role', 'can_edit_professional_role', 'can_delete_professional_role'
     ];
 
     /**
