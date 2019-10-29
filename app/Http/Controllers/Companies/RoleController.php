@@ -18,12 +18,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $filters = (array) json_decode(request()->input('filters'));
-        $queries = [];
+        $data = Role::select();
 
-        foreach($filters as $key => $value) $queries[] = [$key, 'like', "%$value%"];
-        
-        $data = Role::where($queries);
+        if ($name = request()->query('name', null)) $data->where('name', 'like', "%$name%");
 
         return request()->has('no_pagination') ? RoleResource::collection($data->get()) : RoleResource::collection($data->paginate());
     }

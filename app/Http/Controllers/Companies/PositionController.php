@@ -18,12 +18,9 @@ class PositionController extends Controller
      */
     public function index()
     {
-        $filters = (array) json_decode(request()->input('filters'));
-        $queries = [];
+        $data = Position::with('users');
 
-        foreach($filters as $key => $value) $queries[] = [$key, 'like', "%$value%"];
-        
-        $data = Position::with('users')->where($queries);
+        if ($name = request()->query('name', null)) $data->where('name', 'like', "%$name%");
 
         return request()->has('no_pagination') ? PositionResource::collection($data->get()) : PositionResource::collection($data->paginate());
     }
