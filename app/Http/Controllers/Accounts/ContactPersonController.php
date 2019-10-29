@@ -40,7 +40,7 @@ class ContactPersonController extends Controller
     {
         $user = User::findOrFail($request->input('user_id'));
 
-        $data = ContactPerson::create([
+        $data = new ContactPerson([
             'user_id' => $request->input('user_id'),
             'personal_name' => $request->input('personal_name'),
             'father_name' => $request->input('father_name'),
@@ -50,12 +50,14 @@ class ContactPersonController extends Controller
             'employer_company' => $request->input('employer_company'),
             'type' => $request->input('type'),
         ]);
+
         if ($data->type == 'Voucher' && $user->contactPeople()->where('type', 'Voucher')->exists()) {
-            return 'This contact already exists';
+            return response( ['message' => 'This contact already exists'], 400);
         }
 
+
         // TODO modify this if address needs to be created here
-        $data->address_id = $request->input('address_id');
+        $data->address_id = 1;
 
 
         if ($data->save()) {

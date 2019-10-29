@@ -46,8 +46,8 @@ class WorkExperienceController extends Controller
             'position' => $request->input('position'),
             'role' => $request->input('role'),
             'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date')
         ]);
-        $data->end_date = $request->input('end_date');
 
         return new WorkExperienceResource($data);
     }

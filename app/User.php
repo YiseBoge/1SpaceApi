@@ -250,8 +250,8 @@ class User extends Authenticatable implements JWTSubject
                 $this->toArray(),
                 [
                     'role' => $this->role->toArray(),
-                    // 'position' => $this->position->toArray(),
-                    // 'department' => $this->department->toArray()
+                    'position' => $this->position->toArray(),
+                    'department' => $this->department->toArray()
                 ]
             )
         ];

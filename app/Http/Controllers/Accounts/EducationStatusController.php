@@ -45,8 +45,8 @@ class EducationStatusController extends Controller
             'field_of_study' => $request->input('field_of_study'),
             'school_name' => $request->input('school_name'),
             'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date')
         ]);
-        $data->end_date = $request->input('end_date');
 
         return new EducationStatusResource($data);
     }

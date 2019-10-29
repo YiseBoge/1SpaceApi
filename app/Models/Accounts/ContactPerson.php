@@ -38,7 +38,7 @@ class ContactPerson extends Model
         'Voucher',
     ];
 
-    protected $enumSexes = [
+    protected $enumSexs = [
         'Male',
         'Female',
     ];
