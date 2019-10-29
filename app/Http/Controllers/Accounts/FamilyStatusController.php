@@ -22,7 +22,9 @@ class FamilyStatusController extends Controller
         $filters = (array) json_decode(request()->input('filters'));
         $queries = [];
 
-        foreach($filters as $key => $value) $queries[] = [$key, 'like', "%$value%"];
+        foreach ($filters as $key => $value) {
+            $queries[] = [$key, 'like', "%$value%"];
+        }
         
         $data = FamilyStatus::where($queries);
 
@@ -43,7 +45,9 @@ class FamilyStatusController extends Controller
             'user_id' => $request->input('status'),
             'status' => $request->input('status'),
         ]);
-        if ($data->status == 'Married') $data->partner_name = $request->input('partner_name');
+        if ($data->status == 'Married') {
+            $data->partner_name = $request->input('partner_name');
+        }
 
         return new FamilyStatusResource($data);
     }
@@ -92,5 +96,17 @@ class FamilyStatusController extends Controller
         if ($data->delete()) {
             return new FamilyStatusResource($data);
         }
+    }
+    
+    /**
+     * Get the resource with the specified user id.
+     *
+     * @param int $userId
+     * @return FamilyStatusResource
+     */
+    public function getByUserId($userId)
+    {
+        $data = FamilyStatus::where('user_id', $userId)->get();
+        return new FamilyStatusResource($data);
     }
 }

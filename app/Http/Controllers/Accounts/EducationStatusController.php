@@ -99,4 +99,16 @@ class EducationStatusController extends Controller
             return new EducationStatusResource($data);
         }
     }
+    
+    /**
+     * Get the resource with the specified user id.
+     *
+     * @param int $userId
+     * @return AnonymousResourceCollection
+     */
+    public function getByUserId($userId)
+    {
+        $data = EducationStatus::where('user_id', $userId)->get();
+        return EducationStatusResource::collection($data);
+    }
 }

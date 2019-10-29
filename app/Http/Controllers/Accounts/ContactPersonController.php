@@ -48,9 +48,10 @@ class ContactPersonController extends Controller
             'sex' => $request->input('sex'),
             'phone_number' => $request->input('phone_number'),
             'employer_company' => $request->input('employer_company'),
-            'type' => $request->input('type'),
-        ]);
+            ]);
 
+        $data->type = $request->input('type');
+        
         if ($data->type == 'Voucher' && $user->contactPeople()->where('type', 'Voucher')->exists()) {
             return response( ['message' => 'This contact already exists'], 400);
         }
@@ -114,4 +115,18 @@ class ContactPersonController extends Controller
             return new ContactPersonResource($data);
         }
     }
+    
+    /**
+     * Get the resource with the specified user id.
+     *
+     * @param int $userId
+     * @return AnonymousResourceCollection
+     */
+    public function getByUserId($userId)
+    {
+        $data = ContactPerson::where('user_id', $userId)->get();
+        return ContactPersonResource::collection($data);
+    }
+    
 }
+    

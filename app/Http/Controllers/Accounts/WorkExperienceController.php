@@ -101,4 +101,16 @@ class WorkExperienceController extends Controller
             return new WorkExperienceResource($data);
         }
     }
+    
+    /**
+     * Get the resource with the specified user id.
+     *
+     * @param int $userId
+     * @return AnonymousResourceCollection
+     */
+    public function getByUserId($userId)
+    {
+        $data = WorkExperience::where('user_id', $userId)->get();
+        return WorkExperienceResource::collection($data);
+    }
 }
