@@ -44,7 +44,7 @@ class WorkExperienceController extends Controller
     {
         $user = User::findOrFail($request->input('user_id'));
 
-        $data = WorkExperience::create([
+        $data = new WorkExperience([
             'company_name' => $request->input('company_name'),
             'department' => $request->input('department'),
             'position' => $request->input('position'),

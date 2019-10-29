@@ -44,7 +44,7 @@ class EducationStatusController extends Controller
     {
         $user = User::findOrFail($request->input('user_id'));
 
-        $data = EducationStatus::create([
+        $data = new EducationStatus([
             'education_level' => $request->input('education_level'),
             'field_of_study' => $request->input('field_of_study'),
             'school_name' => $request->input('school_name'),
