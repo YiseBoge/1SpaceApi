@@ -19,6 +19,7 @@ use Accounts\UserController;
 use Accounts\WorkExperienceController;
 use App\User;
 use Chats\PrivateMessageController;
+use Chats\ConversationController;
 use Companies\CompanyController;
 use Companies\DepartmentController;
 use Companies\PositionController;
@@ -73,6 +74,8 @@ Route::apiResource('accounts/child', ChildController::class);
 Route::apiResource('accounts/work-experience', WorkExperienceController::class);
 Route::apiResource('accounts/user', UserController::class);
 
+Route::get('chats/conversation/user/{id}', 'Chats\ConversationController@getByUser');
+Route::apiResource('chats/conversation', ConversationController::class);
 Route::apiResource('chats/private-message', PrivateMessageController::class);
 
 Route::apiResource('companies/company', CompanyController::class);

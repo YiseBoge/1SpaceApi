@@ -19,8 +19,14 @@ class FamilyStatusController extends Controller
      */
     public function index()
     {
-        $data = FamilyStatus::paginate();
-        return FamilyStatusResource::collection($data);
+        $filters = (array) json_decode(request()->input('filters'));
+        $queries = [];
+
+        foreach($filters as $key => $value) $queries[] = [$key, 'like', "%$value%"];
+        
+        $data = FamilyStatus::where($queries);
+
+        return request()->has('no_pagination') ? FamilyStatusResource::collection($data->get()) : FamilyStatusResource::collection($data->paginate());
     }
 
     /**

@@ -18,8 +18,14 @@ class PositionController extends Controller
      */
     public function index()
     {
-        $data = Position::paginate();
-        return PositionResource::collection($data);
+        $filters = (array) json_decode(request()->input('filters'));
+        $queries = [];
+
+        foreach($filters as $key => $value) $queries[] = [$key, 'like', "%$value%"];
+        
+        $data = Position::with('users')->where($queries);
+
+        return request()->has('no_pagination') ? PositionResource::collection($data->get()) : PositionResource::collection($data->paginate());
     }
 
     /**

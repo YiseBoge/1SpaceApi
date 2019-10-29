@@ -26,7 +26,8 @@ class PrivateMessage extends Model
     ];
 
     protected $fillable = [
-        'sender_id', 'receiver_id', 'subject', 'content',
+//        'sender_id', 'receiver_id', 'subject', 'content',
+        'content',
     ];
 
     /**
@@ -48,10 +49,19 @@ class PrivateMessage extends Model
     /**
      * @return BelongsTo
      */
-    public function parentMessage()
+    public function conversation()
     {
-        return $this->belongsTo('App\Models\Chats\PrivateMessage', 'parent_message_id');
+        return $this->belongsTo('App\Models\Chats\Conversation');
     }
+
+    /**
+     * @return MorphMany
+     */
+    public function files()
+    {
+        return $this->morphMany('App\Models\Generics\File', 'fileable');
+    }
+
 
     /**
      * @return HasMany

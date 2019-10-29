@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Chats;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Chats\PrivateMessageResource;
 use App\Models\Chats\PrivateMessage;
+use App\Models\Chats\Conversation;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -19,8 +20,14 @@ class PrivateMessageController extends Controller
      */
     public function index()
     {
-        $data = PrivateMessage::paginate();
-        return PrivateMessageResource::collection($data);
+        $filters = (array) json_decode(request()->input('filters'));
+        $queries = [];
+
+        foreach($filters as $key => $value) $queries[] = [$key, 'like', "%$value%"];
+
+        $data = PrivateMessage::where($queries);
+
+        return request()->has('no_pagination') ? PrivateMessageResource::collection($data->get()) : PrivateMessageResource::collection($data->paginate());
     }
 
     /**
@@ -33,15 +40,18 @@ class PrivateMessageController extends Controller
     {
         User::findOrFail($request->input('sender_id'));
         User::findOrFail($request->input('receiver_id'));
+        Conversation::findOrFail($request->input('conversation_id'));
 
-        $data = PrivateMessage::create([
-            'sender_id' => $request->input('sender_id'),
-            'receiver_id' => $request->input('receiver_id'),
-            'subject' => $request->input('subject'),
-            'content' => $request->input('content'),
-        ]);
-        $data->is_important = $request->input('is_important');
-        $data->parent_message_id = $request->input('parent_message_id');
+        // $data = PrivateMessage::create([
+        //     'content' => $request->input('content'),
+        // ]);
+
+        $data = new PrivateMessage();
+
+        $data->content = $request->input('content');
+        $data->sender_id = $request->input('sender_id');
+        $data->receiver_id = $request->input('receiver_id');
+        $data->conversation_id = $request->input('conversation_id');
 
         return new PrivateMessageResource($data);
     }
@@ -69,9 +79,8 @@ class PrivateMessageController extends Controller
     {
         $data = PrivateMessage::findOrFail($id);
 
-        $data->subject = $request->input('subject');
         $data->content = $request->input('content');
-        $data->is_important = $request->input('is_important');
+        $data->is_read = $request->input('is_read');
 
         if ($data->save()) {
             return new PrivateMessageResource($data);

@@ -20,8 +20,14 @@ class ForumPostController extends Controller
      */
     public function index()
     {
-        $data = ForumPost::paginate();
-        return ForumPostResource::collection($data);
+        $filters = (array) json_decode(request()->input('filters'));
+        $queries = [];
+
+        foreach($filters as $key => $value) $queries[] = [$key, 'like', "%$value%"];
+        
+        $data = ForumPost::where($queries);
+
+        return request()->has('no_pagination') ? ForumPostResource::collection($data->get()) : ForumPostResource::collection($data->paginate());
     }
 
     /**

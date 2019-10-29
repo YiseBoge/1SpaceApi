@@ -16,11 +16,18 @@ class ContactPersonController extends Controller
      * Display a listing of the resource.
      *
      * @return AnonymousResourceCollection
+     * @throws Exception
      */
     public function index()
     {
-        $data = ContactPerson::paginate();
-        return ContactPersonResource::collection($data);
+        $filters = (array) json_decode(request()->input('filters'));
+        $queries = [];
+
+        foreach($filters as $key => $value) $queries[] = [$key, 'like', "%$value%"];
+        
+        $data = ContactPerson::where($queries);
+
+        return request()->has('no_pagination') ? ContactPersonResource::collection($data->get()) : ContactPersonResource::collection($data->paginate());
     }
 
     /**

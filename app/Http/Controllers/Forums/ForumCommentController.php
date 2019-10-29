@@ -20,8 +20,14 @@ class ForumCommentController extends Controller
      */
     public function index()
     {
-        $data = ForumComment::paginate();
-        return ForumCommentResource::collection($data);
+        $filters = (array) json_decode(request()->input('filters'));
+        $queries = [];
+
+        foreach($filters as $key => $value) $queries[] = [$key, 'like', "%$value%"];
+        
+        $data = ForumComment::where($queries);
+
+        return request()->has('no_pagination') ? ForumCommentResource::collection($data->get()) : ForumCommentResource::collection($data->paginate());
     }
 
     /**

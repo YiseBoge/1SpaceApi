@@ -19,8 +19,14 @@ class EducationStatusController extends Controller
      */
     public function index()
     {
-        $data = EducationStatus::paginate();
-        return EducationStatusResource::collection($data);
+        $filters = (array) json_decode(request()->input('filters'));
+        $queries = [];
+
+        foreach($filters as $key => $value) $queries[] = [$key, 'like', "%$value%"];
+        
+        $data = EducationStatus::where($queries);
+
+        return request()->has('no_pagination') ? EducationStatusResource::collection($data->get()) : EducationStatusResource::collection($data->paginate());
     }
 
     /**

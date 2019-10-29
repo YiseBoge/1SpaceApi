@@ -19,8 +19,14 @@ class ChildController extends Controller
      */
     public function index()
     {
-        $data = Child::paginate();
-        return ChildResource::collection($data);
+        $filters = (array) json_decode(request()->input('filters'));
+        $queries = [];
+
+        foreach($filters as $key => $value) $queries[] = [$key, 'like', "%$value%"];
+        
+        $data = Child::where($queries);
+
+        return request()->has('no_pagination') ? ChildResource::collection($data->get()) : ChildResource::collection($data->paginate());
     }
 
     /**

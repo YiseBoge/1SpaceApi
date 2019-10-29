@@ -19,8 +19,14 @@ class WorkExperienceController extends Controller
      */
     public function index()
     {
-        $data = WorkExperience::paginate();
-        return WorkExperienceResource::collection($data);
+        $filters = (array) json_decode(request()->input('filters'));
+        $queries = [];
+
+        foreach($filters as $key => $value) $queries[] = [$key, 'like', "%$value%"];
+        
+        $data = WorkExperience::where($queries);
+
+        return request()->has('no_pagination') ? WorkExperienceResource::collection($data->get()) : WorkExperienceResource::collection($data->paginate());
     }
 
     /**
