@@ -11,6 +11,11 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class DepartmentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('jwt.auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -33,8 +38,12 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
+        $this->middleware('auth.permission:can_add_user');
+
+        $company_id = auth()->user()->department->company->id;
+
         $data = Department::create([
-            'company_id' => $request->input('company_id'),
+            'company_id' => $company_id,
             'name' => $request->input('name'),
             'description' => $request->input('description'),
         ]);

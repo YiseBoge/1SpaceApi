@@ -5,12 +5,18 @@ namespace App\Http\Controllers\Companies;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Companies\RoleResource;
 use App\Models\Companies\Role;
+use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('jwt.auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -33,8 +39,11 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        $this->middleware('auth.permission:can_add_user');
+
+        $company_id = auth()->user()->department->company->id;
         $data = Role::create([
-            'company_id' => $request->input('company_id'),
+            'company_id' => $company_id,
             'name' => $request->input('name'),
             'description' => $request->input('description'),
 
