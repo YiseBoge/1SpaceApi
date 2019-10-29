@@ -20,8 +20,8 @@ class DepartmentResource extends JsonResource
             'id' => $this->id,
             'company' => $this->company,
             'parent_department' => $this->parentDepartment,
-            'sub_departments' => DepartmentResource::collection($this->subDepartments),
-            'users' => UserResource::collection($this->users),
+            'sub_departments' => $this->subDepartments,
+            'users' => $this->users,
 
             'name' => $this->name,
             'description' => $this->description,

@@ -16,7 +16,7 @@ class RoleResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
+        $resource = [
             'id' => $this->id,
             'company' => $this->company,
             'users' => UserResource::collection($this->users),
@@ -31,5 +31,8 @@ class RoleResource extends JsonResource
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
         ];
+
+
+        return array_merge($resource, parent::toArray($request));
     }
 }
