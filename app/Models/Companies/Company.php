@@ -30,6 +30,7 @@ class Company extends Model
     protected $enumCategories = [
         'Contractor',
         'Consultant',
+        'Government'
     ];
 
 
