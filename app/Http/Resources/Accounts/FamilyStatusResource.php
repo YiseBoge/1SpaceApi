@@ -21,7 +21,7 @@ class FamilyStatusResource extends JsonResource
 
             'status' => $this->status,
             'partner_name' => $this->partner_name,
-            'children' => ChildResource::collection($this->children),
+            'children' => $this->children,
 
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
