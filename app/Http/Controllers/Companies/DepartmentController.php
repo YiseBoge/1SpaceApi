@@ -42,14 +42,15 @@ class DepartmentController extends Controller
 
         $company_id = auth()->user()->department->company->id;
 
-        $data = Department::create([
+        $data = new Department([
             'company_id' => $company_id,
             'name' => $request->input('name'),
             'description' => $request->input('description'),
         ]);
+
         $data->remark = $request->input('remark');
         $data->parent_department_id = $request->input('parent_department_id');
-
+        $data->save();
         return new DepartmentResource($data);
     }
 
@@ -79,6 +80,7 @@ class DepartmentController extends Controller
         $data->name = $request->input('name');
         $data->description = $request->input('description');
         $data->remark = $request->input('remark');
+        $data->parent_department_id = $request->input('parent_department_id');
 
         if ($data->save()) {
             return new DepartmentResource($data);
