@@ -45,6 +45,14 @@ class FileController extends Controller
         switch ($data->file_type) {
             case 'Profile Picture':
                 $owner = User::findOrFail($ownerId);
+                $port_path = public_path().'users/profile/port/port'.time().'png';
+                $port_path = public_path().'users/profile/square/square'.time().'png';
+                $port_profile = $data->input('img_port');
+                $port_profile = substr($port_profile, strpos($port_profile, ",")+1);
+                $port_img = base64_decode($port_profile);
+                $success = file_put_contents($port_pathpath, $port_img);
+                die($success ? $port_path : 'Unable to save the file.');
+                $square_profile = $data->input('img_square');
                 $data->file_url = '';
                 break;
             case 'Project File':
