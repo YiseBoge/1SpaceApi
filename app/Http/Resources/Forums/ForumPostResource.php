@@ -19,10 +19,10 @@ class ForumPostResource extends JsonResource
             'id' => $this->id,
             'forum' => $this->forum,
             'poster' => $this->poster,
-            'comments' => ForumCommentResource::collection($this->forumComments),
+            'comments' => $this->forumComments,
+            'likes' => $this->likes()->count(),
 
             'content' => $this->content,
-            'likes' => $this->likes,
 
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
