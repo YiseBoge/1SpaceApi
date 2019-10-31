@@ -4,6 +4,7 @@ namespace App\Http\Resources\Forums;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 class ForumPostResource extends JsonResource
 {
@@ -21,6 +22,7 @@ class ForumPostResource extends JsonResource
             'poster' => $this->poster,
             'comments' => $this->forumComments,
             'likes' => $this->likes()->count(),
+            'has_liked' => $this->likes()->search(Auth::user()),
 
             'content' => $this->content,
 
