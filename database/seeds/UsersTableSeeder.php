@@ -1,11 +1,12 @@
 <?php
 
-use App\Models\Companies\Department;
-use App\Models\Companies\Position;
-use App\Models\Companies\Role;
-use App\Models\Generics\Address;
 use App\User;
+use App\Models\Companies\Role;
 use Illuminate\Database\Seeder;
+use App\Models\Generics\Address;
+use App\Models\Companies\Position;
+use App\Models\Companies\Department;
+use App\Models\Accounts\FamilyStatus;
 
 class UsersTableSeeder extends Seeder
 {
@@ -34,6 +35,10 @@ class UsersTableSeeder extends Seeder
         $address = Address::create();
         $user->address_id = $address->id;
         $user->save();
+
+        FamilyStatus::create([
+            'user_id' => $user->id,
+        ]);
 
     }
 }
