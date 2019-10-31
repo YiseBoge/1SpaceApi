@@ -19,8 +19,8 @@ class ProjectResource extends JsonResource
             'id' => $this->id,
             'category' => $this->projectCategory,
             'pmo' => $this->pmo,
-            'coordinates' => CoordinateResource::collection($this->coordinates),
-            'files' => ProjectFileResource::collection($this->files),
+            'coordinates' => $this->coordinates,
+            'files' => $this->files,
 
             'name' => $this->name,
             'description' => $this->description,

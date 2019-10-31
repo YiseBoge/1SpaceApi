@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources\Notices;
 
-use App\Http\Resources\Accounts\UserResource;
-use App\Http\Resources\Generics\FileResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,8 +18,8 @@ class NoticeResource extends JsonResource
         return [
             'id' => $this->id,
             'poster' => $this->poster,
-            'target_users' => UserResource::collection($this->users),
-            'files' => FileResource::collection($this->files),
+            'target_users' => $this->users,
+            'files' => $this->files,
 
             'title' => $this->title,
             'description' => $this->description,

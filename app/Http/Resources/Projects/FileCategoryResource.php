@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Projects;
 
-use App\Http\Resources\Generics\FileResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,7 +19,7 @@ class FileCategoryResource extends JsonResource
             'id' => $this->id,
             'parent_category' => $this->parentCategory,
             'sub_categories' => FileCategoryResource::collection($this->subCategories),
-            'files' => FileResource::collection($this->files),
+            'files' => $this->files,
 
             'name' => $this->name,
             'description' => $this->description,

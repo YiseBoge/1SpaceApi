@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Projects;
 
-use App\Http\Resources\Generics\FileResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,7 +19,7 @@ class TeamMemberResource extends JsonResource
             'id' => $this->id,
             'pmo' => $this->pmo,
             'user' => $this->user,
-            'files' => FileResource::collection($this->files),
+            'files' => $this->files,
 
             'name' => $this->name,
             'description' => $this->description,

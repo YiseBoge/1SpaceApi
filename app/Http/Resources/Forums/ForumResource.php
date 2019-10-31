@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Forums;
 
-use App\Http\Resources\Accounts\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,8 +18,8 @@ class ForumResource extends JsonResource
         return [
             'id' => $this->id,
             'creator' => $this->creator,
-            'members' => UserResource::collection($this->users),
-            'posts' => ForumPostResource::collection($this->forumPosts),
+            'members' => $this->users,
+            'posts' => $this->forumPosts,
 
             'title' => $this->title,
             'description' => $this->description,

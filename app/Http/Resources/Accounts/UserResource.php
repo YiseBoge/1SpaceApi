@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Accounts;
 
-use App\Http\Resources\Generics\FileResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -23,10 +22,9 @@ class UserResource extends JsonResource
             'position' => $this->position,
             'address' => $this->address,
             'family_status' => new FamilyStatusResource($this->familyStatus),
-            'work_experiences' => WorkExperienceResource::collection($this->workExperiences),
-            'files' => FileResource::collection($this->files),
+            'work_experiences' => $this->workExperiences,
+            'files' => $this->files,
             'contact_people' => ContactPersonResource::collection($this->contactPeople),
-            // TODO Figure out how to put in the queried relations here
 
             'email' => $this->email,
             'phone_number' => $this->phone_number,

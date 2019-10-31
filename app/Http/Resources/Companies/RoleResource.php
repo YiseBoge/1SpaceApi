@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Companies;
 
-use App\Http\Resources\Accounts\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,7 +18,7 @@ class RoleResource extends JsonResource
         $resource = [
             'id' => $this->id,
             'company' => $this->company,
-            'users' => UserResource::collection($this->users),
+            'users' => $this->users,
 
             'name' => $this->name,
             'description' => $this->description,

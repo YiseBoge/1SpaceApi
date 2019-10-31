@@ -17,9 +17,9 @@ class CompanyResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'departments' => DepartmentResource::collection($this->departments),
-            'positions' => PositionResource::collection($this->positions),
-            'roles' => RoleResource::collection($this->roles),
+            'departments' => $this->departments,
+            'positions' => $this->positions,
+            'roles' => $this->roles,
 
             'name' => $this->name,
             'description' => $this->description,

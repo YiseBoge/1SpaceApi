@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Projects;
 
-use App\Http\Resources\Generics\FileResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,8 +19,8 @@ class PMOResource extends JsonResource
             'id' => $this->id,
             'parent_pmo' => $this->parentPMO,
             'sub_pmos' => PMOResource::collection($this->subPMOs),
-            'team_members' => TeamMemberResource::collection($this->teamMembers),
-            'files' => FileResource::collection($this->files),
+            'team_members' => $this->teamMembers,
+            'files' => $this->files,
 
             'title' => $this->name,
             'description' => $this->description,
