@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Chats;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Chats\PrivateMessageResource;
-use App\Models\Chats\PrivateMessage;
 use App\Models\Chats\Conversation;
+use App\Models\Chats\PrivateMessage;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -65,7 +65,9 @@ class PrivateMessageController extends Controller
     public function show($id)
     {
         $data = PrivateMessage::findOrFail($id);
-        return new PrivateMessageResource($data);
+        $data->is_read = true;
+        $data->save();
+        return new PrivateMessageResource($data->fresh());
     }
 
     /**

@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer receiver_id
  * @property string|null subject
  * @property string|null content
+ * @property boolean is_read
  */
 class PrivateMessage extends Model
 {
