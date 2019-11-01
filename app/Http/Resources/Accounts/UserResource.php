@@ -26,6 +26,8 @@ class UserResource extends JsonResource
             'work_experiences' => WorkExperienceResource::collection($this->workExperiences),
             'files' => FileResource::collection($this->files),
             'contact_people' => ContactPersonResource::collection($this->contactPeople),
+            'profile_pic_portrait' => $this->portraitProfilePictureURL(),
+            'profile_pic_square' => $this->squareProfilePictureURL(),
             // TODO Figure out how to put in the queried relations here
 
             'email' => $this->email,

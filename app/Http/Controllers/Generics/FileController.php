@@ -43,17 +43,9 @@ class FileController extends Controller
         $owner = null;
 
         switch ($data->file_type) {
-            case 'Profile Picture':
+            case 'PROFILE_PICTURE':
                 $owner = User::findOrFail($ownerId);
-                $port_path = public_path().'users/profile/port/port'.time().'png';
-                $port_path = public_path().'users/profile/square/square'.time().'png';
-                $port_profile = $data->input('img_port');
-                $port_profile = substr($port_profile, strpos($port_profile, ",")+1);
-                $port_img = base64_decode($port_profile);
-                $success = file_put_contents($port_pathpath, $port_img);
-                die($success ? $port_path : 'Unable to save the file.');
-                $square_profile = $data->input('img_square');
-                $data->file_url = '';
+                return $this->__uploadProfilePictures($owner);              
                 break;
             case 'Project File':
                 $owner = Project::findOrFail($ownerId);
@@ -70,12 +62,12 @@ class FileController extends Controller
                 break;
         }
 
-        if ($owner->files()->save($data)) {
-            if ($data->file_type == 'Project File') {
-                $fileCategory = FileCategory::findOrFail($request->input('file_category_id'));
-                $fileCategory->files()->attach([$data->id]);
-            }
+        if ($owner->files()->save($data))
+        {
             return new FileResource($data);
+        }
+        else{
+            return response(['message' => 'Can not upload file'], 400);
         }
     }
 
@@ -139,5 +131,54 @@ class FileController extends Controller
         $fileNameToStore = $fileName . '_' . time() . '_' . $fileExt;
         $file->storeAs($folder, $fileNameToStore);
         return array($fileName, $fileNameToStore);
+    }
+
+    private function __uploadProfilePictures(User $user)
+    {
+        $port_path = '/users/profile/port/port'.time().'.png';
+        $square_path = '/users/profile/square/square'.time().'.png';
+
+        $port_profile = request()->input('img_port');
+        $square_profile = request()->input('img_square');
+
+        $port_profile = substr($port_profile, strpos($port_profile, ",") + 1);
+        $square_profile = substr($square_profile, strpos($square_profile, ",") + 1);
+
+        $port_img = base64_decode($port_profile);
+        $square_img = base64_decode($square_profile);
+
+        file_put_contents(public_path().$port_path, $port_img);
+        file_put_contents(public_path().$square_path, $square_img);
+
+        //store portrait image
+        $previousPortraitPicture = $user->files->where('file_type', 'PROFILE_PICTURE_PORTRAIT')->first();
+        if ($previousPortraitPicture) {
+            $previousPortraitPicture->file_url = $port_path;
+            $previousPortraitPicture->save();
+        }
+        else{
+            $portraitData = new File;
+            $portraitData->file_type = 'PROFILE_PICTURE_PORTRAIT';
+            $portraitData->file_name = '';
+            $portraitData->file_url = $port_path;
+            $user->files()->save($portraitData);
+        }
+
+
+        //store square image
+        $previousSquarePicture = $user->files->where('file_type', 'PROFILE_PICTURE_SQUARE')->first();
+        if ($previousSquarePicture) {
+            $previousSquarePicture->file_url = $square_path;
+            $previousSquarePicture->save();
+        }
+        else{
+            $squareData = new File;
+            $squareData->file_type = 'PROFILE_PICTURE_SQUARE';
+            $squareData->file_name = '';
+            $squareData->file_url = $square_path;
+            $user->files()->save($squareData);
+        }
+
+
     }
 }
