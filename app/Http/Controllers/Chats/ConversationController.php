@@ -17,35 +17,25 @@ class ConversationController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return AnonymousResourceCollection
      */
     public function index()
     {
-        $filters = (array) json_decode(request()->input('filters'));
-        $queries = [];
+        $data = Conversation::with([]);
 
-        foreach($filters as $key => $value) $queries[] = [$key, 'like', "%$value%"];
-        
-        $data = Conversation::where($queries);
+        if ($starter_id = request()->query('starter_id', null)) $data->where('starter_id', '=', $starter_id);
+        if ($receiver_id = request()->query('receiver_id', null)) $data->where('receiver_id', '=', $receiver_id);
+        if ($conversation_id = request()->query('conversation_id', null)) $data->where('conversation_id', '=', $conversation_id);
+        if ($is_read = request()->query('is_read', null)) $data->where('is_read', '=', $is_read);
 
         return request()->has('no_pagination') ? ConversationResource::collection($data->get()) : ConversationResource::collection($data->paginate());
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return ConversationResource
      */
     public function store(Request $request)
     {
@@ -59,7 +49,7 @@ class ConversationController extends Controller
 
         $message = new PrivateMessage();
 
-        $message->content = $request->input('content');  
+        $message->content = $request->input('content');
         $message->sender_id = $request->input('starter_id');
         $message->receiver_id = $request->input('receiver_id');
 
@@ -74,7 +64,7 @@ class ConversationController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return ConversationResource
      */
     public function show($id)
     {
@@ -83,22 +73,11 @@ class ConversationController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -108,8 +87,9 @@ class ConversationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return ConversationResource
+     * @throws Exception
      */
     public function destroy($id)
     {
@@ -119,13 +99,14 @@ class ConversationController extends Controller
         }
     }
 
-     /**
+    /**
      * Display a listing of the resource by user.
      *
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return AnonymousResourceCollection
      */
-    public function getByUser($id)
-    {        
+    public function getByUser(int $id)
+    {
         $data = Conversation::where('starter_id', $id)->orWhere('receiver_id', $id);
 
         return request()->has('no_pagination') ? ConversationResource::collection($data->get()) : ConversationResource::collection($data->paginate());

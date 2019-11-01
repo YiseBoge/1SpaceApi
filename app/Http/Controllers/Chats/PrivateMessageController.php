@@ -20,12 +20,10 @@ class PrivateMessageController extends Controller
      */
     public function index()
     {
-        $filters = (array) json_decode(request()->input('filters'));
-        $queries = [];
+        $data = PrivateMessage::with([]);
 
-        foreach($filters as $key => $value) $queries[] = [$key, 'like', "%$value%"];
-
-        $data = PrivateMessage::where($queries);
+        if ($starter_id = request()->query('starter_id', null)) $data->where('starter_id', '=', $starter_id);
+        if ($receiver_id = request()->query('receiver_id', null)) $data->where('receiver_id', '=', $receiver_id);
 
         return request()->has('no_pagination') ? PrivateMessageResource::collection($data->get()) : PrivateMessageResource::collection($data->paginate());
     }
