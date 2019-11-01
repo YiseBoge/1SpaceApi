@@ -22,6 +22,7 @@ class DepartmentResource extends JsonResource
             'parent_department' => $this->parentDepartment,
             'sub_departments' => $this->subDepartments,
             'users' => $this->users,
+            'files' => $this->files,
 
             'name' => $this->name,
             'description' => $this->description,

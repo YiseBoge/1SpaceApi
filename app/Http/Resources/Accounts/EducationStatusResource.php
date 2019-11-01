@@ -24,6 +24,7 @@ class EducationStatusResource extends JsonResource
             'school_name' => $this->school_name,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
+            'file' => $this->file,
 
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

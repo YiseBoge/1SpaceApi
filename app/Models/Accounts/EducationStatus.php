@@ -5,7 +5,7 @@ namespace App\Models\Accounts;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -38,10 +38,10 @@ class EducationStatus extends Model
     }
 
     /**
-     * @return MorphMany
+     * @return MorphOne
      */
-    public function files()
+    public function file()
     {
-        return $this->morphMany('App\Models\Generics\File', 'fileable');
+        return $this->morphOne('App\Models\Generics\File', 'fileable');
     }
 }

@@ -103,7 +103,7 @@ class FamilyStatusController extends Controller
      */
     public function getByUserId($userId)
     {
-        $data = FamilyStatus::where('user_id', $userId)->get();
+        $data = FamilyStatus::where('user_id', $userId)->first();
         return new FamilyStatusResource($data);
     }
 }

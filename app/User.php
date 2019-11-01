@@ -228,6 +228,25 @@ class User extends Authenticatable implements JWTSubject
         return $this->morphMany('App\Models\Generics\File', 'fileable');
     }
 
+    public function squareProfilePictureURL()
+    {
+        $file = $this->files()->where('file_type', 'PROFILE_PICTURE_SQUARE')->first();
+        if ($file) {
+            return env('APP_URL').$file->file_url;
+        }
+        return "";
+    }
+
+    public function portraitProfilePictureURL()
+    {
+        $file = $this->files()->where('file_type', 'PROFILE_PICTURE_PORTRAIT')->first();
+        if ($file) {
+            return env('APP_URL').$file->file_url;
+        }
+        return "";
+    }
+
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
@@ -251,7 +270,9 @@ class User extends Authenticatable implements JWTSubject
                 [
                     'role' => $this->role->toArray(),
                     'position' => $this->position->toArray(),
-                    'department' => $this->department->toArray()
+                    'department' => $this->department->toArray(),
+                    'profile_pic_portrait' => $this->portraitProfilePictureURL(),
+                    'profile_pic_square' => $this->squareProfilePictureURL(),
                 ]
             )
         ];

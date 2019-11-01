@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Accounts;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\Accounts\UserResource;
-use App\Models\Accounts\FamilyStatus;
-use App\Models\Generics\Address;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use App\Models\Generics\Address;
+use App\Http\Controllers\Controller;
+use App\Models\Accounts\FamilyStatus;
+use App\Http\Resources\Accounts\UserResource;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class UserController extends Controller
 {
@@ -125,6 +125,28 @@ class UserController extends Controller
         }
     }
 
+    public function generatePDF(Request $request, $id)
+    {
+        $workExperiences = $request->input('workExperiences');
+        $educationStatuses = $request->input('EducationStatuses');
+        $professionalBiograpy = $request->input('professionalBiography');
+        $skills = $request->input('skills');
+        $user = User::findOrFail($id);
+
+        $data = [
+            'workExperiences' => $workExperiences,
+            'educationStatuses' => $educationStatuses,
+            'professionalBiograpy' => $professionalBiograpy,
+            'skills' => "My skills",
+            'user' => $user
+        ];
+
+
+        $fileName = "$user->personal_name.$user->father_name.pdf";
+        $pdf = \PDF::loadView('PDF.test', $data);
+        return $pdf->stream($fileName);
+    }
+
     /**
      * @return array
      */
@@ -168,7 +190,6 @@ class UserController extends Controller
      */
     private function prepareUser(Request $request, User $user)
     {
-
         $user->role_id = $request->input('role_id');
         $user->department_id = $request->input('department_id');
         $user->position_id = $request->input('position_id');
