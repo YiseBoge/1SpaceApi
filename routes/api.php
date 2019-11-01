@@ -40,7 +40,6 @@ use Projects\ProjectController;
 use Projects\TeamMemberController;
 
 Route::post('login', function (Request $request) {
-
     $password = $request->input('password');
     $login = $request->input('login');
 
@@ -50,12 +49,10 @@ Route::post('login', function (Request $request) {
         $token = JWTAuth::fromUser($user);
         $data = ['token' => $token];
         return response($data);
-
     } else {
         return response('Unauthorized', 401);
     }
 });
-
 
 
 //  API Resources  //
@@ -66,10 +63,11 @@ Route::get('accounts/education-status/user/{userID}', 'Accounts\EducationStatusC
 Route::apiResource('accounts/education-status', EducationStatusController::class);
 Route::get('accounts/family-status/user/{userID}', 'Accounts\FamilyStatusController@getByUserId');
 Route::apiResource('accounts/family-status', FamilyStatusController::class);
-Route::get('accounts/child/family-status/{familyStatusID}','Accounts\ChildController@getByFamilyStatusId');
+Route::get('accounts/child/family-status/{familyStatusID}', 'Accounts\ChildController@getByFamilyStatusId');
 Route::apiResource('accounts/child', ChildController::class);
 Route::get('accounts/work-experience/user/{userID}', 'Accounts\WorkExperienceController@getByUserId');
 Route::apiResource('accounts/work-experience', WorkExperienceController::class);
+Route::get('accounts/user/{id}/generate-pdf', 'Accounts\UserController@generatePDF');
 Route::apiResource('accounts/user', UserController::class);
 
 Route::get('chats/conversation/user/{id}', 'Chats\ConversationController@getByUser');
