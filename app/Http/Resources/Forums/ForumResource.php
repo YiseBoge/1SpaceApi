@@ -24,6 +24,9 @@ class ForumResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'forum_type' => $this->forum_type,
+            'members_no' => $this->users()->count(),
+            'comments_no' => $this->comments(),
+            'likes_no' => $this->likes(),
 
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

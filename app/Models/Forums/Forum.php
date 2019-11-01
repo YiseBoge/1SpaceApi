@@ -57,4 +57,22 @@ class Forum extends Model
     {
         return $this->hasMany('App\Models\Forums\ForumPost');
     }
+
+    /**
+     * @return int
+     */
+    public function comments()
+    {
+        return $this->hasManyThrough('App\Models\Forums\ForumComment', 'App\Models\Forums\ForumPost')->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function likes()
+    {
+        $total = 0;
+        foreach ($this->forumPosts as $post) $total += $post->likes()->count();
+        return $total;
+    }
 }
