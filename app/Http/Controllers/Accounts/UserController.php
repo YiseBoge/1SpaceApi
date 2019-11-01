@@ -17,15 +17,20 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return AnonymousResourceCollection
      */
     public function index()
     {
         $data = User::with(['role', 'position', 'department']);
-        
+
+        if ($role_id = request()->query('role_id', null)) $data->where('role_id', '=', $role_id);
+        if ($department_id = request()->query('department_id', null)) $data->where('department_id', '=', $department_id);
+        if ($position_id = request()->query('position_id', null)) $data->where('position_id', '=', $position_id);
+
         if ($personal_name = request()->query('personal_name', null)) $data->where('personal_name', 'like', "%$personal_name%");
-        if ($father_name = request()->query('father_name', null)) $data->orWhere('father_name', 'like', "%$father_name%");
-        
+        if ($father_name = request()->query('father_name', null)) $data->where('father_name', 'like', "%$father_name%");
+        if ($sex = request()->query('sex', null)) $data->where('sex', 'like', "%$sex%");
+
         return request()->has('no_pagination') ? UserResource::collection($data->get()) : UserResource::collection($data->paginate());
     }
 

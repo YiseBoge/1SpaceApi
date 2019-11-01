@@ -6,6 +6,7 @@ use App\Models\Companies\Role;
 use App\Models\Generics\Address;
 use App\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder
 {
@@ -20,7 +21,7 @@ class UsersTableSeeder extends Seeder
 
         $user->email = "abeje.doni@gmail.com";
         $user->phone_number = "0926388050";
-        $user->password = bcrypt('doniabeje');
+        $user->password = Hash::make('doniabeje');
         $user->sex = "Male";
 
         $user->department_id = Department::first()->id;

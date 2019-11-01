@@ -18,8 +18,8 @@ use Accounts\FamilyStatusController;
 use Accounts\UserController;
 use Accounts\WorkExperienceController;
 use App\User;
-use Chats\PrivateMessageController;
 use Chats\ConversationController;
+use Chats\PrivateMessageController;
 use Companies\CompanyController;
 use Companies\DepartmentController;
 use Companies\PositionController;
@@ -31,6 +31,7 @@ use Generics\AddressController;
 use Generics\FileController;
 use Generics\SystemLogController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Notices\NoticeController;
 use Projects\CoordinateController;
 use Projects\FileCategoryController;
@@ -43,7 +44,6 @@ Route::post('login', function (Request $request) {
 
     $password = $request->input('password');
     $login = $request->input('login');
-
     $user = User::where('email', $login)->orWhere('phone_number', $login)->first();
 
     if ($user && Hash::check($password, $user->password)) {

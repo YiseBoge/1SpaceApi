@@ -5,13 +5,23 @@ namespace App\Http\Controllers\Forums;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Forums\ForumResource;
 use App\Models\Forums\Forum;
-use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Auth;
 
 class ForumController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('jwt.auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,12 +29,13 @@ class ForumController extends Controller
      */
     public function index()
     {
-        $filters = (array) json_decode(request()->input('filters'));
-        $queries = [];
+        $data = Forum::with([]);
 
-        foreach($filters as $key => $value) $queries[] = [$key, 'like', "%$value%"];
-        
-        $data = Forum::where($queries);
+        if ($creator_id = request()->query('creator_id', null)) $data->where('creator_id', '=', $creator_id);
+
+        if ($title = request()->query('title', null)) $data->where('title', 'like', "%$title%");
+        if ($description = request()->query('description', null)) $data->where('description', 'like', "%$description%");
+        if ($forum_type = request()->query('forum_type', null)) $data->where('forum_type', 'like', "%$forum_type%");
 
         return request()->has('no_pagination') ? ForumResource::collection($data->get()) : ForumResource::collection($data->paginate());
     }
@@ -37,14 +48,16 @@ class ForumController extends Controller
      */
     public function store(Request $request)
     {
-        User::findOrFail($request->input('creator_id'));
-
+        $user = Auth::user();
         $data = Forum::create([
-            'creator_id' => $request->input('creator_id'),
+            'creator_id' => $user->id,
             'title' => $request->input('title'),
             'description' => $request->input('description'),
             'forum_type' => $request->input('forum_type'),
         ]);
+
+        $members = (array)json_decode(request()->input('members'));
+        $data->users()->attach($members);
 
         return new ForumResource($data);
     }
@@ -74,7 +87,6 @@ class ForumController extends Controller
 
         $data->title = $request->input('title');
         $data->description = $request->input('description');
-        $data->forum_type = $request->input('forum_type');
 
         if ($data->save()) {
             return new ForumResource($data);
