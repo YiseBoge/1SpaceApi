@@ -19,12 +19,9 @@ class WorkExperienceController extends Controller
      */
     public function index()
     {
-        $filters = (array) json_decode(request()->input('filters'));
-        $queries = [];
+        $data = WorkExperience::with([]);
 
-        foreach($filters as $key => $value) $queries[] = [$key, 'like', "%$value%"];
-        
-        $data = WorkExperience::where($queries);
+        if ($user_id = request()->query('user_id', null)) $data->where('user_id', '=', $user_id);
 
         return request()->has('no_pagination') ? WorkExperienceResource::collection($data->get()) : WorkExperienceResource::collection($data->paginate());
     }
@@ -101,7 +98,7 @@ class WorkExperienceController extends Controller
             return new WorkExperienceResource($data);
         }
     }
-    
+
     /**
      * Get the resource with the specified user id.
      *

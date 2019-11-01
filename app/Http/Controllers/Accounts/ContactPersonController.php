@@ -20,12 +20,9 @@ class ContactPersonController extends Controller
      */
     public function index()
     {
-        $filters = (array) json_decode(request()->input('filters'));
-        $queries = [];
+        $data = ContactPerson::with([]);
 
-        foreach($filters as $key => $value) $queries[] = [$key, 'like', "%$value%"];
-        
-        $data = ContactPerson::where($queries);
+        if ($user_id = request()->query('user_id', null)) $data->where('user_id', '=', $user_id);
 
         return request()->has('no_pagination') ? ContactPersonResource::collection($data->get()) : ContactPersonResource::collection($data->paginate());
     }
@@ -51,7 +48,7 @@ class ContactPersonController extends Controller
             ]);
 
         $data->type = $request->input('type');
-        
+
         if ($data->type == 'Voucher' && $user->contactPeople()->where('type', 'Voucher')->exists()) {
             return response( ['message' => 'This contact already exists'], 400);
         }
@@ -115,7 +112,7 @@ class ContactPersonController extends Controller
             return new ContactPersonResource($data);
         }
     }
-    
+
     /**
      * Get the resource with the specified user id.
      *
@@ -127,6 +124,5 @@ class ContactPersonController extends Controller
         $data = ContactPerson::where('user_id', $userId)->get();
         return ContactPersonResource::collection($data);
     }
-    
+
 }
-    

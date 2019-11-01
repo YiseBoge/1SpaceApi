@@ -19,12 +19,11 @@ class ChildController extends Controller
      */
     public function index()
     {
-        $filters = (array) json_decode(request()->input('filters'));
-        $queries = [];
+        $data = Child::with([]);
 
-        foreach($filters as $key => $value) $queries[] = [$key, 'like', "%$value%"];
-        
-        $data = Child::where($queries);
+        if ($family_status_id = request()->query('family_status_id', null)) $data->where('family_status_id', '=', $family_status_id);
+
+        if ($sex = request()->query('sex', null)) $data->where('sex', 'like', "%$sex%");
 
         return request()->has('no_pagination') ? ChildResource::collection($data->get()) : ChildResource::collection($data->paginate());
     }
@@ -95,7 +94,7 @@ class ChildController extends Controller
             return new ChildResource($data);
         }
     }
-    
+
     /**
      * Get the resource with the specified user id.
      *
@@ -108,4 +107,3 @@ class ChildController extends Controller
         return ChildResource::collection($data);
     }
 }
-    

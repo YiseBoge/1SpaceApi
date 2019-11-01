@@ -29,6 +29,7 @@ class UserController extends Controller
 
         if ($personal_name = request()->query('personal_name', null)) $data->where('personal_name', 'like', "%$personal_name%");
         if ($father_name = request()->query('father_name', null)) $data->where('father_name', 'like', "%$father_name%");
+        if ($grand_father_name = request()->query('grand_father_name', null)) $data->where('grand_father_name', 'like', "%$grand_father_name%");
         if ($sex = request()->query('sex', null)) $data->where('sex', 'like', "%$sex%");
 
         return request()->has('no_pagination') ? UserResource::collection($data->get()) : UserResource::collection($data->paginate());

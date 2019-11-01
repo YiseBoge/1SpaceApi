@@ -19,14 +19,11 @@ class FamilyStatusController extends Controller
      */
     public function index()
     {
-        $filters = (array) json_decode(request()->input('filters'));
-        $queries = [];
+        $data = FamilyStatus::with([]);
 
-        foreach ($filters as $key => $value) {
-            $queries[] = [$key, 'like', "%$value%"];
-        }
-        
-        $data = FamilyStatus::where($queries);
+        if ($user_id = request()->query('user_id', null)) $data->where('user_id', '=', $user_id);
+
+        if ($status = request()->query('status', null)) $data->where('status', 'like', "%$status%");
 
         return request()->has('no_pagination') ? FamilyStatusResource::collection($data->get()) : FamilyStatusResource::collection($data->paginate());
     }
@@ -97,7 +94,7 @@ class FamilyStatusController extends Controller
             return new FamilyStatusResource($data);
         }
     }
-    
+
     /**
      * Get the resource with the specified user id.
      *

@@ -19,12 +19,14 @@ class EducationStatusController extends Controller
      */
     public function index()
     {
-        $filters = (array) json_decode(request()->input('filters'));
-        $queries = [];
+        $data = EducationStatus::with([]);
 
-        foreach($filters as $key => $value) $queries[] = [$key, 'like', "%$value%"];
-        
-        $data = EducationStatus::where($queries);
+        if ($user_id = request()->query('user_id', null)) $data->where('user_id', '=', $user_id);
+
+        if ($personal_name = request()->query('personal_name', null)) $data->where('personal_name', 'like', "%$personal_name%");
+        if ($father_name = request()->query('father_name', null)) $data->where('father_name', 'like', "%$father_name%");
+        if ($grand_father_name = request()->query('grand_father_name', null)) $data->where('grand_father_name', 'like', "%$grand_father_name%");
+        if ($sex = request()->query('sex', null)) $data->where('sex', 'like', "%$sex%");
 
         return request()->has('no_pagination') ? EducationStatusResource::collection($data->get()) : EducationStatusResource::collection($data->paginate());
     }
@@ -99,7 +101,7 @@ class EducationStatusController extends Controller
             return new EducationStatusResource($data);
         }
     }
-    
+
     /**
      * Get the resource with the specified user id.
      *
