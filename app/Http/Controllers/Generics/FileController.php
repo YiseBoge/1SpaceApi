@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers\Generics;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\Generics\FileResource;
-use App\Models\Generics\File;
-use App\Models\Projects\FileCategory;
-use App\Models\Projects\Project;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use App\Models\Generics\File;
+use App\Models\Projects\Project;
 use Illuminate\Http\UploadedFile;
+use App\Http\Controllers\Controller;
+use App\Models\Projects\FileCategory;
+use App\Models\Accounts\WorkExperience;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Accounts\EducationStatus;
+use App\Http\Resources\Generics\FileResource;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class FileController extends Controller
 {
@@ -38,35 +41,35 @@ class FileController extends Controller
         $data->file_name = $request->input('file_name');
         $data->file_type = $request->input('file_type');
         $data->file_description = $request->input('file_description');
-
+        $file = $request->file('file');
         $ownerId = $request->input('fileable_id');
         $owner = null;
+        $folder = '';
 
         switch ($data->file_type) {
             case 'PROFILE_PICTURE':
                 $owner = User::findOrFail($ownerId);
-                return $this->__uploadProfilePictures($owner);              
+                return $this->__uploadProfilePictures($owner);
                 break;
-            case 'Project File':
-                $owner = Project::findOrFail($ownerId);
-                $folder = 'project_files';
-                $file = $request->file('file');
-
-                list($fileName, $fileNameToStore) = $this->__storeFile($file, 'public/' . $folder);
-
-                $data->file_url = "/storage/$folder/$fileNameToStore";
-                $data->file_name = $fileName;
-
+            case 'WORK_EXPERIENCE':
+                $owner = WorkExperience::findOrFail($ownerId);
+                $folder = 'work_experience';
                 break;
-            default:
+            case 'EDUCATION_STATUS':
+                $owner = EducationStatus::findOrFail($ownerId);
+                $folder = 'education_status';
+                break;
+                default:
                 break;
         }
 
-        if ($owner->files()->save($data))
-        {
+        list($fileName, $fileNameToStore) = $this->__storeFile($file, $folder);
+        $data->file_url = "$folder/$fileNameToStore";
+        $data->file_name = $fileName;
+
+        if ($owner->file()->save($data)) {
             return new FileResource($data);
-        }
-        else{
+        } else {
             return response(['message' => 'Can not upload file'], 400);
         }
     }
@@ -80,7 +83,7 @@ class FileController extends Controller
     public function show($id)
     {
         $data = File::findOrFail($id);
-        return new FileResource($data);
+        return Storage::download($data->file_url);
     }
 
     /**
@@ -128,7 +131,7 @@ class FileController extends Controller
         $fileNameWithExt = $file->getClientOriginalName();
         $fileExt = $file->getClientOriginalExtension();
         $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-        $fileNameToStore = $fileName . '_' . time() . '_' . $fileExt;
+        $fileNameToStore = $fileName . '_' . time() . '.' . $fileExt;
         $file->storeAs($folder, $fileNameToStore);
         return array($fileName, $fileNameToStore);
     }
@@ -155,8 +158,7 @@ class FileController extends Controller
         if ($previousPortraitPicture) {
             $previousPortraitPicture->file_url = $port_path;
             $previousPortraitPicture->save();
-        }
-        else{
+        } else {
             $portraitData = new File;
             $portraitData->file_type = 'PROFILE_PICTURE_PORTRAIT';
             $portraitData->file_name = '';
@@ -170,15 +172,12 @@ class FileController extends Controller
         if ($previousSquarePicture) {
             $previousSquarePicture->file_url = $square_path;
             $previousSquarePicture->save();
-        }
-        else{
+        } else {
             $squareData = new File;
             $squareData->file_type = 'PROFILE_PICTURE_SQUARE';
             $squareData->file_name = '';
             $squareData->file_url = $square_path;
             $user->files()->save($squareData);
         }
-
-
     }
 }

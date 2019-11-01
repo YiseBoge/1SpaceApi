@@ -25,6 +25,7 @@ class WorkExperienceResource extends JsonResource
             'role' => $this->role,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
+            'file' => $this->file,
 
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
