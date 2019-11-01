@@ -14,6 +14,7 @@ use App\Models\Accounts\WorkExperience;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Accounts\EducationStatus;
 use App\Http\Resources\Generics\FileResource;
+use App\Models\Companies\Department;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class FileController extends Controller
@@ -59,16 +60,29 @@ class FileController extends Controller
                 $owner = EducationStatus::findOrFail($ownerId);
                 $folder = 'education_status';
                 break;
+            case 'DIRECTIEVE_AND_MANUAL':
+                $owner = Department::findOrFail($ownerId);
+                $folder = 'directive_and_manual';
+                break;
                 default:
                 break;
         }
 
         list($fileName, $fileNameToStore) = $this->__storeFile($file, $folder);
         $data->file_url = "$folder/$fileNameToStore";
-        $data->file_name = $fileName;
+        $success = false;
+        
+        if ($data->file_type == 'DIRECTIEVE_AND_MANUAL') {
+            $success = $owner->files()->save($data);
+            
+        } else {
+            $data->file_name = $fileName;
+            $success = $owner->file()->save($data);
+        }
 
-        if ($owner->file()->save($data)) {
+        if ($success) {
             return new FileResource($data);
+
         } else {
             return response(['message' => 'Can not upload file'], 400);
         }
