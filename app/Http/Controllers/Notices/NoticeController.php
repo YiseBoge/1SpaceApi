@@ -5,13 +5,23 @@ namespace App\Http\Controllers\Notices;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Notices\NoticeResource;
 use App\Models\Notices\Notice;
-use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Auth;
 
 class NoticeController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('jwt.auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +33,7 @@ class NoticeController extends Controller
         $queries = [];
 
         foreach($filters as $key => $value) $queries[] = [$key, 'like', "%$value%"];
-        
+
         $data = Notice::where($queries);
 
         return request()->has('no_pagination') ? NoticeResource::collection($data->get()) : NoticeResource::collection($data->paginate());
@@ -37,15 +47,18 @@ class NoticeController extends Controller
      */
     public function store(Request $request)
     {
-        User::findOrFail($request->input('poster_id'));
+        $user = Auth::user();
 
         $data = Notice::create([
-            'poster_id' => $request->input('poster_id'),
+            'poster_id' => $user->id,
             'title' => $request->input('title'),
             'description' => $request->input('description'),
         ]);
         $data->target_date = $request->input('target_date');
         $data->remind_before = $request->input('remind_before');
+
+        $members = (array)json_decode(request()->input('members'));
+        $data->users()->attach($members);
 
         return new NoticeResource($data);
     }
