@@ -29,13 +29,7 @@ class ForumController extends Controller
      */
     public function index()
     {
-        $data = Forum::with([]);
-
-        if ($creator_id = request()->query('creator_id', null)) $data->where('creator_id', '=', $creator_id);
-
-        if ($title = request()->query('title', null)) $data->where('title', 'like', "%$title%");
-        if ($description = request()->query('description', null)) $data->where('description', 'like', "%$description%");
-        if ($forum_type = request()->query('forum_type', null)) $data->where('forum_type', 'like', "%$forum_type%");
+        $data = Auth::user()->forums();
 
         return request()->has('no_pagination') ? ForumResource::collection($data->get()) : ForumResource::collection($data->paginate());
     }
@@ -56,8 +50,9 @@ class ForumController extends Controller
             'forum_type' => $request->input('forum_type'),
         ]);
 
-        $members = (array)json_decode(request()->input('members'));
-        $data->users()->attach($members);
+        $members = request()->input('member_ids');
+        $members[] = $user->id;
+        $data->users()->syncWithoutDetaching($members);
 
         return new ForumResource($data);
     }
@@ -87,7 +82,10 @@ class ForumController extends Controller
 
         $data->title = $request->input('title');
         $data->description = $request->input('description');
-
+        
+        $members = request()->input('member_ids');
+        $data->users()->syncWithoutDetaching($members);
+        
         if ($data->save()) {
             return new ForumResource($data);
         }

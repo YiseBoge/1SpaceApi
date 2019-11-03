@@ -10,9 +10,20 @@ use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Auth;
 
 class ForumPostController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('jwt.auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -20,12 +31,9 @@ class ForumPostController extends Controller
      */
     public function index()
     {
-        $filters = (array) json_decode(request()->input('filters'));
-        $queries = [];
+        $data = ForumPost::orderBy('created_at','desc');
 
-        foreach($filters as $key => $value) $queries[] = [$key, 'like', "%$value%"];
-        
-        $data = ForumPost::where($queries);
+        if ($forum_id = request()->input('forum_id')) $data->where('forum_id',$forum_id);
 
         return request()->has('no_pagination') ? ForumPostResource::collection($data->get()) : ForumPostResource::collection($data->paginate());
     }
@@ -38,13 +46,15 @@ class ForumPostController extends Controller
      */
     public function store(Request $request)
     {
-        User::findOrFail($request->input('poster_id'));
         Forum::findOrFail($request->input('forum_id'));
 
-        $data = ForumPost::create([
+        $data = new ForumPost([
             'forum_id' => $request->input('forum_id'),
             'content' => $request->input('content'),
         ]);
+
+        $data->poster_id = Auth::user()->id;
+        $data->save();
 
         return new ForumPostResource($data);
     }
@@ -93,5 +103,20 @@ class ForumPostController extends Controller
         if ($data->delete()) {
             return new ForumPostResource($data);
         }
+    }
+
+    public function changeLike($id)
+    {
+        $data = ForumPost::findOrFail($id);
+        $user = Auth::user();
+        $liked = $data->likes()->wherePivot('user_id', $user->id)->exists();
+        if ($liked) {
+            $data->likes()->detach([$user->id]);
+        }
+        else{
+            $data->likes()->syncWithoutDetaching([$user->id]);
+        }
+
+        return new ForumPostResource($data);
     }
 }

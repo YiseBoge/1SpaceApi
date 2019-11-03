@@ -10,9 +10,21 @@ use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Auth;
 
 class ForumCommentController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('jwt.auth');
+    }
+    
+
     /**
      * Display a listing of the resource.
      *
@@ -20,12 +32,9 @@ class ForumCommentController extends Controller
      */
     public function index()
     {
-        $filters = (array) json_decode(request()->input('filters'));
-        $queries = [];
-
-        foreach($filters as $key => $value) $queries[] = [$key, 'like', "%$value%"];
         
-        $data = ForumComment::where($queries);
+        $data = ForumComment::orderBy('created_at', 'asc');
+        if ($post_id = request()->input('post_id')) $data->where('forum_post_id', $post_id);
 
         return request()->has('no_pagination') ? ForumCommentResource::collection($data->get()) : ForumCommentResource::collection($data->paginate());
     }
@@ -38,12 +47,11 @@ class ForumCommentController extends Controller
      */
     public function store(Request $request)
     {
-        User::findOrFail($request->input('commenter_id'));
         ForumPost::findOrFail($request->input('forum_post_id'));
 
         $data = ForumComment::create([
             'forum_post_id' => $request->input('forum_post_id'),
-            'commenter_id' => $request->input('commenter_id'),
+            'commenter_id' => Auth::user()->id,
             'comment' => $request->input('comment'),
         ]);
 

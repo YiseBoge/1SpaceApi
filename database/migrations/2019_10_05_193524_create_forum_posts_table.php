@@ -18,7 +18,7 @@ class CreateForumPostsTable extends Migration
             $table->bigInteger('forum_id');
             $table->bigInteger('poster_id');
 
-            $table->string('content');
+            $table->text('content');
 
             $table->timestamps();
             $table->softDeletes();

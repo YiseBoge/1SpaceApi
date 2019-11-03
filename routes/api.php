@@ -80,6 +80,7 @@ Route::apiResource('companies/position', PositionController::class);
 Route::apiResource('companies/role', RoleController::class);
 
 Route::apiResource('forums/forum', ForumController::class);
+Route::post('forums/forum-post/{id}/change-like', 'Forums\ForumPostController@changeLike');
 Route::apiResource('forums/forum-post', ForumPostController::class);
 Route::apiResource('forums/forum-comment', ForumCommentController::class);
 

@@ -6,15 +6,16 @@ use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use App\Models\Generics\File;
+use App\Models\Forums\ForumPost;
 use App\Models\Projects\Project;
 use Illuminate\Http\UploadedFile;
 use App\Http\Controllers\Controller;
+use App\Models\Companies\Department;
 use App\Models\Projects\FileCategory;
 use App\Models\Accounts\WorkExperience;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Accounts\EducationStatus;
 use App\Http\Resources\Generics\FileResource;
-use App\Models\Companies\Department;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class FileController extends Controller
@@ -46,6 +47,7 @@ class FileController extends Controller
         $ownerId = $request->input('fileable_id');
         $owner = null;
         $folder = '';
+        $options = [];
 
         switch ($data->file_type) {
             case 'PROFILE_PICTURE':
@@ -64,11 +66,16 @@ class FileController extends Controller
                 $owner = Department::findOrFail($ownerId);
                 $folder = 'directive_and_manual';
                 break;
+            case 'POST_IMAGE':
+                $owner = ForumPost::findOrFail($ownerId);
+                $folder = '/post_image';
+                $options = 'public';
+                break;
                 default:
                 break;
         }
 
-        list($fileName, $fileNameToStore) = $this->__storeFile($file, $folder);
+        list($fileName, $fileNameToStore) = $this->__storeFile($file, $folder, $options);
         $data->file_url = "$folder/$fileNameToStore";
         $success = false;
         
@@ -140,13 +147,13 @@ class FileController extends Controller
      * @param string $folder
      * @return array
      */
-    private function __storeFile(UploadedFile $file, string $folder): array
+    private function __storeFile(UploadedFile $file, string $folder, $options=[]): array
     {
         $fileNameWithExt = $file->getClientOriginalName();
         $fileExt = $file->getClientOriginalExtension();
         $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
         $fileNameToStore = $fileName . '_' . time() . '.' . $fileExt;
-        $file->storeAs($folder, $fileNameToStore);
+        $file->storeAs($folder, $fileNameToStore, $options);
         return array($fileName, $fileNameToStore);
     }
 

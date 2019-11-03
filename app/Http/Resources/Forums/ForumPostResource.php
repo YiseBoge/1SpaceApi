@@ -2,9 +2,11 @@
 
 namespace App\Http\Resources\Forums;
 
+use App\Http\Resources\Accounts\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class ForumPostResource extends JsonResource
 {
@@ -19,10 +21,11 @@ class ForumPostResource extends JsonResource
         return [
             'id' => $this->id,
             'forum' => $this->forum,
-            'poster' => $this->poster,
+            'poster' => new UserResource($this->poster),
             'comments' => $this->forumComments,
             'likes' => $this->likes()->count(),
-            'has_liked' => $this->likes()->search(Auth::user()),
+            'has_liked' => $this->likes()->wherePivot('user_id',Auth::user()->id)->exists(),
+            'file' => $this->getFileUrl(),
 
             'content' => $this->content,
 

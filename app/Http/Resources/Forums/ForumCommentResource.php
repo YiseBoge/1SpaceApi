@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Forums;
 
+use App\Http\Resources\Accounts\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,7 +19,7 @@ class ForumCommentResource extends JsonResource
         return [
             'id' => $this->id,
             'forum_post' => $this->forumPost,
-            'commenter' => $this->commenter,
+            'commenter' => new UserResource($this->commenter),
 
             'comment' => $this->comment,
 

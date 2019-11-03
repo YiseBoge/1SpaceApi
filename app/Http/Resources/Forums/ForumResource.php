@@ -19,7 +19,6 @@ class ForumResource extends JsonResource
             'id' => $this->id,
             'creator' => $this->creator,
             'members' => $this->users,
-            'posts' => $this->forumPosts,
 
             'title' => $this->title,
             'description' => $this->description,
@@ -27,6 +26,7 @@ class ForumResource extends JsonResource
             'members_no' => $this->users()->count(),
             'comments_no' => $this->comments(),
             'likes_no' => $this->likes(),
+            'posts_no' => $this->forumPosts()->count(),
 
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

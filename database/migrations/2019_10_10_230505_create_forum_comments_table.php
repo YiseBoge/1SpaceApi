@@ -18,7 +18,7 @@ class CreateForumCommentsTable extends Migration
             $table->bigInteger('forum_post_id');
             $table->bigInteger('commenter_id');
 
-            $table->string('comment');
+            $table->text('comment');
 
             $table->timestamps();
             $table->softDeletes();

@@ -57,4 +57,21 @@ class ForumPost extends Model
     {
         return $this->belongsToMany('App\User', 'forum_post_likes');
     }
+
+    /**
+     * @return MorphOne
+     */
+    public function file()
+    {
+        return $this->morphOne('App\Models\Generics\File', 'fileable');
+    }
+
+    public function getFileUrl(){
+        if ($this->file) {
+            return env('APP_URL').'/storage'.$this->file->file_url;
+
+        }
+
+        return null;
+    }
 }
