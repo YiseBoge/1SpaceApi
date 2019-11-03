@@ -18,7 +18,7 @@ class CreateNoticesTable extends Migration
             $table->bigInteger('poster_id');
 
             $table->string('title');
-            $table->string('description');
+            $table->text('description');
             $table->date('target_date')->nullable();
             $table->integer('remind_before')->nullable();
 

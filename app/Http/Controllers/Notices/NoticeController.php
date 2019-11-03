@@ -29,7 +29,7 @@ class NoticeController extends Controller
      */
     public function index()
     {
-        $data = Notice::with([]);
+        $data = Notice::orderBy('created_at','desc');
 
         if ($poster_id = request()->query('poster_id', null)) $data->where('poster_id', '=', $poster_id);
 
@@ -57,8 +57,9 @@ class NoticeController extends Controller
         $data->target_date = $request->input('target_date');
         $data->remind_before = $request->input('remind_before');
 
-        $members = (array)json_decode(request()->input('members'));
-        $data->users()->attach($members);
+        // TODO  set receivers here
+        // $members = (array)json_decode(request()->input('members'));
+        // $data->users()->attach($members);
 
         return new NoticeResource($data);
     }
