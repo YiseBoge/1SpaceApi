@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Chats;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\Chats\PrivateMessageResource;
-use App\Models\Chats\Conversation;
-use App\Models\Chats\PrivateMessage;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
+use App\Models\Chats\Conversation;
+use App\Http\Controllers\Controller;
+use App\Models\Chats\PrivateMessage;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\Chats\PrivateMessageResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class PrivateMessageController extends Controller
@@ -20,10 +21,11 @@ class PrivateMessageController extends Controller
      */
     public function index()
     {
-        $data = PrivateMessage::with([]);
+        $data = PrivateMessage::orderBy('created_at',  'desc');
 
         if ($starter_id = request()->query('starter_id', null)) $data->where('starter_id', '=', $starter_id);
         if ($receiver_id = request()->query('receiver_id', null)) $data->where('receiver_id', '=', $receiver_id);
+        if ($conversation_id = request()->query('conversation_id', null)) $data->where('conversation_id', '=', $conversation_id);
 
         return request()->has('no_pagination') ? PrivateMessageResource::collection($data->get()) : PrivateMessageResource::collection($data->paginate());
     }
@@ -36,7 +38,7 @@ class PrivateMessageController extends Controller
      */
     public function store(Request $request)
     {
-        User::findOrFail($request->input('sender_id'));
+        $user = Auth::user();
         User::findOrFail($request->input('receiver_id'));
         Conversation::findOrFail($request->input('conversation_id'));
 
@@ -47,9 +49,10 @@ class PrivateMessageController extends Controller
         $data = new PrivateMessage();
 
         $data->content = $request->input('content');
-        $data->sender_id = $request->input('sender_id');
+        $data->sender_id = $user->id;
         $data->receiver_id = $request->input('receiver_id');
         $data->conversation_id = $request->input('conversation_id');
+        $data->save();
 
         return new PrivateMessageResource($data);
     }

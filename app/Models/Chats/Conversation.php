@@ -45,4 +45,8 @@ class Conversation extends Model
     {
         return $this->HasMany('App\Models\Chats\PrivateMessage');
     }
+
+    public function lastMessage(){
+        return $this->messages()->orderBy('created_at','desc')->first();
+    }
 }

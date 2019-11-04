@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Chats;
 
+use App\Http\Resources\Accounts\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,10 +18,10 @@ class PrivateMessageResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'sender' => $this->sender,
-            'receiver' => $this->receiver,
+            'sender' => new UserResource($this->sender),
+            'receiver' => new UserResource($this->receiver),
             'parent_message' => $this->parentMessage,
-            'forwarded_messages' => PrivateMessageResource::collection($this->forwardedMessages),
+            // 'forwarded_messages' => PrivateMessageResource::collection($this->forwardedMessages),
 
             'subject' => $this->subject,
             'content' => $this->content,

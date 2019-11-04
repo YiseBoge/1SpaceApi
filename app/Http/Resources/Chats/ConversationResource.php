@@ -15,7 +15,9 @@ class ConversationResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return array_merge([
+            'last_message' => new PrivateMessageResource($this->lastMessage())
+        ], parent::toArray($request));
     }
 
     public function with($request)
