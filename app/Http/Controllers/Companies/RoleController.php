@@ -9,6 +9,7 @@ use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\support\Facades\Auth;
 
 class RoleController extends Controller
 {
@@ -24,7 +25,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $data = Role::select();
+        $data =  Auth::user()->company->roles();
 
         if ($name = request()->query('name', null)) $data->where('name', 'like', "%$name%");
 
@@ -39,9 +40,9 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $this->middleware('auth.permission:can_add_user');
+        $this->middleware('auth.permission:can_add_professional_role');
 
-        $company_id = auth()->user()->department->company->id;
+        $company_id = auth()->user()->company->id;
         $data = Role::create([
             'company_id' => $company_id,
             'name' => $request->input('name'),
@@ -74,7 +75,6 @@ class RoleController extends Controller
             'can_evaluate_project' => $request->has('can_evaluate_project'),
             'can_generate_project_report' => $request->has('can_generate_project_report'),
         ]);
-        $data->remark = $request->input('remark');
 
         return new RoleResource($data);
     }
@@ -100,6 +100,7 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->middleware('auth.permission:can_edit_professional_role');
         $data = Role::findOrFail($id);
 
         $data->name = $request->input('name');
@@ -146,6 +147,7 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
+        $this->middleware('auth.permission:can_delete_professional_role');
         $data = Role::findOrFail($id);
         if ($data->delete()) {
             return new RoleResource($data);

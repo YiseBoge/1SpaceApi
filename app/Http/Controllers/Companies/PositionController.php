@@ -8,6 +8,7 @@ use App\Models\Companies\Position;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\support\Facades\Auth;
 
 class PositionController extends Controller
 {
@@ -23,7 +24,7 @@ class PositionController extends Controller
      */
     public function index()
     {
-        $data = Position::with('users');
+        $data =  Auth::user()->company->positions();
 
         if ($name = request()->query('name', null)) $data->where('name', 'like', "%$name%");
 
@@ -38,9 +39,9 @@ class PositionController extends Controller
      */
     public function store(Request $request)
     {
-        $this->middleware('auth.permission:can_add_user');
+        $this->middleware('auth.permission:can_add_position');
 
-        $company_id = auth()->user()->department->company->id;
+        $company_id = auth()->user()->company->id;
 
         $data = Position::create([
             'company_id' => $company_id,
@@ -74,6 +75,7 @@ class PositionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->middleware('auth.permission:can_edit_position');
         $data = Position::findOrFail($id);
 
         $data->name = $request->input('name');
@@ -95,6 +97,7 @@ class PositionController extends Controller
      */
     public function destroy($id)
     {
+        $this->middleware('auth.permission:can_delete_position');
         $data = Position::findOrFail($id);
         if ($data->delete()) {
             return new PositionResource($data);

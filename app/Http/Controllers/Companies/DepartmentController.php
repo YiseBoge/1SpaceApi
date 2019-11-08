@@ -8,6 +8,7 @@ use App\Models\Companies\Department;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Auth;
 
 class DepartmentController extends Controller
 {
@@ -23,9 +24,11 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $data = Department::with(['subDepartments']);
+        $data =  Auth::user()->company->departments();
 
-        if ($name = request()->query('name', null)) $data->where('name', 'like', "%$name%");
+        if ($name = request()->query('name', null)) {
+            $data->where('name', 'like', "%$name%");
+        }
 
         return request()->has('no_pagination') ? DepartmentResource::collection($data->get()) : DepartmentResource::collection($data->paginate());
     }
@@ -38,9 +41,9 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        $this->middleware('auth.permission:can_add_user');
+        $this->middleware('auth.permission:can_add_department');
 
-        $company_id = auth()->user()->department->company->id;
+        $company_id = auth()->user()->company->id;
 
         $data = new Department([
             'company_id' => $company_id,
@@ -75,7 +78,22 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->middleware('auth.permission:can_edit_department');
+
         $data = Department::findOrFail($id);
+        $parent_department_id = $request->input('parent_department_id');
+
+        if ($data->company->id != auth()->user()->company->id) {
+            return response(['message' => "You can not edit this department"], 403);
+        }
+
+        if ($data->subDepartments()->where('id', $parent_department_id)->exists()) {
+            return response(['message' => 'Parent department can not be sub-department'], 400);
+        }
+
+        if ($data->id == $parent_department_id){
+            return response(['message' => 'Department can not be parent department of itself'], 400);
+        }
 
         $data->name = $request->input('name');
         $data->description = $request->input('description');
@@ -96,7 +114,14 @@ class DepartmentController extends Controller
      */
     public function destroy($id)
     {
+        $this->middleware('auth.permission:can_delete_department');
+
         $data = Department::findOrFail($id);
+
+        if ($data->company->id != auth()->user()->company->id) {
+            return response(['message' => "You can not delete this department"], 403);
+        }
+
         if ($data->delete()) {
             return new DepartmentResource($data);
         }

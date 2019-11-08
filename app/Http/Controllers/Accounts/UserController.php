@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Http\Request;
 use App\Models\Generics\Address;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Accounts\FamilyStatus;
 use App\Http\Resources\Accounts\UserResource;
 use Illuminate\Validation\ValidationException;
@@ -14,6 +15,11 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('jwt.auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +27,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $data = User::with(['role', 'position', 'department']);
+        $data =  Auth::user()->company->users();
 
         if ($role_id = request()->query('role_id', null)) $data->where('role_id', '=', $role_id);
         if ($department_id = request()->query('department_id', null)) $data->where('department_id', '=', $department_id);
@@ -44,6 +50,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $this->middleware('auth.permission:can_add_user');
         $this->validate($request, $this->validationRules(), [], $this->validationAttribs());
 
         $user = new User();
@@ -85,6 +92,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->middleware('auth.permission:can_edit_user');
         $user = User::findOrFail($id);
         $rules = $this->validationRules();
 
@@ -119,6 +127,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $this->middleware('auth.permission:can_delete_user');
         $data = User::findOrFail($id);
         if ($data->delete()) {
             return new UserResource($data);

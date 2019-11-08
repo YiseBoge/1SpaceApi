@@ -2,10 +2,11 @@
 
 namespace App\Models\Companies;
 
+use App\User;
 use App\Traits\Enums;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @method static Company findOrFail(int $id)
@@ -39,7 +40,7 @@ class Company extends Model
      */
     public function departments()
     {
-        return $this->hasMany('App\Models\Companies\Department')->where('parent_department_id', null);
+        return $this->hasMany('App\Models\Companies\Department');
     }
 
     /**
@@ -57,4 +58,9 @@ class Company extends Model
     {
         return $this->hasMany('App\Models\Companies\Role');
     }
+
+    public function users()
+    {
+        return User::whereIn('department_id', $this->departments->pluck('id'));
+       }
 }

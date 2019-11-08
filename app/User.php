@@ -246,6 +246,11 @@ class User extends Authenticatable implements JWTSubject
         return "";
     }
 
+    public function company()
+    {
+        return $this->department->company();
+    }
+
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
