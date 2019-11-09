@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Generics\Address;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Accounts\FamilyStatus;
 use App\Http\Resources\Accounts\UserResource;
 use Illuminate\Validation\ValidationException;
@@ -51,7 +52,7 @@ class UserController extends Controller
 
         $user = new User();
         $user = $this->prepareUser($request, $user);
-
+        $user->password = bcrypt($request->input('password'));
         $address = new Address();
         $address->save();
         $user->address_id = $address->id;
@@ -95,19 +96,16 @@ class UserController extends Controller
         if ($user->email == $request->input('email')) {
             unset($rules['email']);
         }
-
+        
         if ($user->phone_number == $request->input('phone_number')) {
             unset($rules['phone_number']);
         }
-
+        unset($rules['password']);
+        
         $this->validate($request, $rules, [], $this->validationAttribs());
 
 
         $user = $this->prepareUser($request, $user);
-
-        $address = Address::create();
-        $user->address_id = $address->id;
-
 
         if ($user->save()) {
             return new UserResource($user);
@@ -150,6 +148,24 @@ class UserController extends Controller
         $fileName = "$user->personal_name.$user->father_name.pdf";
         $pdf = \PDF::loadView('PDF.test', $data);
         return $pdf->stream($fileName);
+    }
+
+    public function changePassword(){
+        $user = Auth::user();
+        $newPassword = request()->input('password');
+        $oldPassword = request()->input('old_password');
+        $rules = ['password' => $this->validationRules()['password']];
+
+        if(!Hash::check($oldPassword, $user->password)) {
+            return response(['message' => 'Incorrect password'], 400);
+        }
+        $this->validate(request(), $rules, [], $this->validationAttribs());
+        
+        $user->password = bcrypt($newPassword);
+        $user->save();
+        return response(['message' => 'Password changed']);
+
+
     }
 
     /**
@@ -200,7 +216,6 @@ class UserController extends Controller
         $user->position_id = $request->input('position_id');
         $user->email = $request->input('email');
         $user->phone_number = $request->input('phone_number');
-        $user->password = bcrypt($request->input('password'));
         $user->personal_name = $request->input('personal_name');
         $user->father_name = $request->input('father_name');
         $user->grand_father_name = $request->input('grand_father_name');
