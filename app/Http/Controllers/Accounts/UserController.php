@@ -18,7 +18,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt.auth');
+        // $this->middleware('jwt.auth');
     }
 
     /**
@@ -130,24 +130,23 @@ class UserController extends Controller
 
     public function generatePDF(Request $request, $id)
     {
-        $workExperiences = $request->input('workExperiences');
-        $educationStatuses = $request->input('EducationStatuses');
-        $professionalBiograpy = $request->input('professionalBiography');
+        $workExperiences = $request->input('workExperiences', []);
+        $educationStatuses = $request->input('educationStatuses', []);
+        $professionalBiography = $request->input('professionalBiography');
         $skills = $request->input('skills');
         $user = User::findOrFail($id);
-
         $data = [
             'workExperiences' => $workExperiences,
             'educationStatuses' => $educationStatuses,
-            'professionalBiograpy' => $professionalBiograpy,
-            'skills' => "My skills",
+            'professionalBiography' => $professionalBiography,
+            'skills' => $skills,
             'user' => $user
         ];
 
 
         $fileName = "$user->personal_name.$user->father_name.pdf";
-        $pdf = \PDF::loadView('PDF.test', $data);
-        return $pdf->stream($fileName);
+        $pdf = \PDF::loadView('PDF.CV', $data);
+        return $pdf->download($fileName);
     }
 
     public function changePassword(){

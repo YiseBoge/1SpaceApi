@@ -68,7 +68,7 @@ Route::apiResource('accounts/child', ChildController::class);
 Route::get('accounts/work-experience/user/{userID}', 'Accounts\WorkExperienceController@getByUserId');
 Route::apiResource('accounts/work-experience', WorkExperienceController::class);
 Route::post('accounts/user/change-password', 'Accounts\UserController@changePassword');
-Route::get('accounts/user/{id}/generate-pdf', 'Accounts\UserController@generatePDF');
+Route::post('accounts/user/{id}/generate-pdf', 'Accounts\UserController@generatePDF');
 Route::apiResource('accounts/user', UserController::class);
 
 Route::get('chats/conversation/user/{id}', 'Chats\ConversationController@getByUser');
