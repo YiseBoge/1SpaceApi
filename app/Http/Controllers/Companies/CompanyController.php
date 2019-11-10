@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Companies;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Companies\CompanyResource;
+use App\Http\Resources\Companies\CompanyStructureResource;
 use App\Models\Companies\Company;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends Controller
 {
@@ -83,5 +85,15 @@ class CompanyController extends Controller
         if ($data->delete()) {
             return new CompanyResource($data);
         }
+    }
+
+    public function structure(Request $request){
+        $headDepartment = Auth::user()->company->departments->first();
+
+        if ($topId = $request->query('top_level_department_id', null)){
+            $headDepartment = Auth::user()->company->departments()->find($topId);
+        }
+        
+        return new CompanyStructureResource($headDepartment);
     }
 }

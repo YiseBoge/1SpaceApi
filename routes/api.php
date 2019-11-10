@@ -75,6 +75,7 @@ Route::get('chats/conversation/user/{id}', 'Chats\ConversationController@getByUs
 Route::apiResource('chats/conversation', ConversationController::class);
 Route::apiResource('chats/private-message', PrivateMessageController::class);
 
+Route::get('companies/company/structure', 'Companies\CompanyController@structure');
 Route::apiResource('companies/company', CompanyController::class);
 Route::apiResource('companies/department', DepartmentController::class);
 Route::apiResource('companies/position', PositionController::class);
