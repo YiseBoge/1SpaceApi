@@ -56,10 +56,10 @@
                 </tr>
                 @foreach ($workExperiences as $item)
                 <tr>
-                    <td>{{ $item['company_name'] }}</td>
-                    <td>{{ $item['position'] }}</td>
-                    <td>{{ $item['start_date'] }}</td>
-                    <td>{{ $item['end_date'] }}</td>
+                    <td>{{ $item->company_name }}</td>
+                    <td>{{ $item->position }}</td>
+                    <td>{{ $item->start_date }}</td>
+                    <td>{{ $item->end_date }}</td>
                 </tr>
                 @endforeach
             </table>
@@ -79,11 +79,11 @@
                 @foreach ($educationStatuses as $item)
                     
                 <tr>
-                    <td>{{ $item['school_name'] }}</td> 
-                    <td>{{ $item['education_level'] }}</td> 
-                    <td>{{ $item['field_of_study'] }}</td>
-                    <td>{{ $item['start_date'] }}</td>
-                    <td>{{ $item['end_date'] }}</td>
+                    <td>{{ $item->school_namepersm }}</td> 
+                    <td>{{ $item->education_level }}</td> 
+                    <td>{{ $item->field_of_study }}</td>
+                    <td>{{ $item->start_date }}</td>
+                    <td>{{ $item->end_date }}</td>
                 </tr>
                     
                 @endforeach

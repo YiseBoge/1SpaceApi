@@ -6,10 +6,12 @@ use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use App\Models\Generics\Address;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Accounts\FamilyStatus;
+use App\Models\Accounts\WorkExperience;
 use App\Http\Resources\Accounts\UserResource;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -18,7 +20,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('jwt.auth');
+        $this->middleware('jwt.auth')->except('generatePDF');
     }
 
     /**
@@ -130,26 +132,31 @@ class UserController extends Controller
 
     public function generatePDF(Request $request, $id)
     {
-        $workExperiences = $request->input('workExperiences', []);
-        $educationStatuses = $request->input('educationStatuses', []);
+        $token = $request->input('token','');
+        auth()->setToken($token);
+        $this->middleware('jwt.auth');
+
+        $workExperiences = $request->input('workExperiences', '[]');
+        $educationStatuses = $request->input('educationStatuses', '[]');
         $professionalBiography = $request->input('professionalBiography');
         $skills = $request->input('skills');
         $user = User::findOrFail($id);
+
         $data = [
-            'workExperiences' => $workExperiences,
-            'educationStatuses' => $educationStatuses,
+            'workExperiences' => DB::table('work_experiences')->whereIn('id', json_decode($workExperiences))->get(),
+            'educationStatuses' => DB::table('education_statuses')->whereIn('id', json_decode($educationStatuses))->get(),
             'professionalBiography' => $professionalBiography,
             'skills' => $skills,
             'user' => $user
         ];
-
 
         $fileName = "$user->personal_name.$user->father_name.pdf";
         $pdf = \PDF::loadView('PDF.CV', $data);
         return $pdf->download($fileName);
     }
 
-    public function changePassword(){
+    public function changePassword()
+    {
         $user = Auth::user();
         $newPassword = request()->input('password');
         $oldPassword = request()->input('old_password');
