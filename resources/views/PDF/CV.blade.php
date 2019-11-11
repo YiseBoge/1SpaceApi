@@ -79,7 +79,7 @@
                 @foreach ($educationStatuses as $item)
                     
                 <tr>
-                    <td>{{ $item->school_namepersm }}</td> 
+                    <td>{{ $item->school_name }}</td> 
                     <td>{{ $item->education_level }}</td> 
                     <td>{{ $item->field_of_study }}</td>
                     <td>{{ $item->start_date }}</td>
