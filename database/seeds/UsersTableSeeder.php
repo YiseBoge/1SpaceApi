@@ -20,18 +20,18 @@ class UsersTableSeeder extends Seeder
     {
         $user = new User();
 
-        $user->email = "abeje.doni@gmail.com";
-        $user->phone_number = "0926388050";
-        $user->password = Hash::make('doniabeje');
+        $user->email = "bahirusolomon9@gmail.com";
+        $user->phone_number = "0916055016";
+        $user->password = Hash::make('bahirusolomon!');
         $user->sex = "Male";
 
         $user->department_id = Department::first()->id;
         $user->position_id = Position::first()->id;
         $user->role_id = Role::first()->id;
 
-        $user->personal_name = "Doni";
-        $user->father_name = "Abeje";
-        $user->grand_father_name = "Abiy";
+        $user->personal_name = "Bahiru";
+        $user->father_name = "Solomon";
+        $user->grand_father_name = "Hailu";
 
         $address = Address::create();
         $user->address_id = $address->id;

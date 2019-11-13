@@ -15,7 +15,7 @@ class RolesTableSeeder extends Seeder
     {
         $role = new Role();
 
-        $role->name = 'Sys ADMIN';
+        $role->name = 'ADMIN';
         $role->description = 'System Administrator';
         $role->company_id = Company::first()->id;
 

@@ -15,8 +15,8 @@ class PositionsTableSeeder extends Seeder
     {
         $position = new Position();
 
-        $position->name = 'Head';
-        $position->description = 'Human of Department';
+        $position->name = 'Bureau Head';
+        $position->description = 'Head of Addis Ababa City construction Bureau';
         $position->company_id = Company::first()->id;
         $position->quantity_needed = 10;
 

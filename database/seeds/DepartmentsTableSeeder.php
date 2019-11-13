@@ -15,8 +15,8 @@ class DepartmentsTableSeeder extends Seeder
     {
         $department = new Department();
 
-        $department->name = 'HR';
-        $department->description = 'Human Resource';
+        $department->name = 'Addis Ababa City construction Bureau';
+        $department->description = 'Addis Ababa City construction Bureau';
         $department->company_id = Company::first()->id;
 
         $department->save();
