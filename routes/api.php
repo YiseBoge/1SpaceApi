@@ -82,6 +82,7 @@ Route::apiResource('companies/department', DepartmentController::class);
 Route::apiResource('companies/position', PositionController::class);
 Route::apiResource('companies/role', RoleController::class);
 
+Route::delete('forums/forum/{forumID}/members/{memberID}', 'Forums\ForumController@removeMember' );
 Route::apiResource('forums/forum', ForumController::class);
 Route::post('forums/forum-post/{id}/change-like', 'Forums\ForumPostController@changeLike');
 Route::apiResource('forums/forum-post', ForumPostController::class);

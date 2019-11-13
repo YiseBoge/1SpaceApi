@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Forums;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Accounts\UserResource;
 use App\Http\Resources\Forums\ForumResource;
 use App\Models\Forums\Forum;
+use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -104,5 +106,21 @@ class ForumController extends Controller
         if ($data->delete()) {
             return new ForumResource($data);
         }
+    }
+
+    public function removeMember($forumID, $memberID)
+    {
+        $forum = Forum::findOrFail($forumID);
+        $member = User::findOrFail($memberID);
+
+        if($forum->creator->id == $memberID){
+            return reponse(['message' => 'you can not remove forum creator'], 400);
+        }
+
+        if ($forum->users()->detach($memberID)){
+            return new UserResource($member);
+        }
+
+        return response(['message' => 'unable to remove member'], 400);
     }
 }
