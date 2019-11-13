@@ -17,6 +17,7 @@ use Accounts\EducationStatusController;
 use Accounts\FamilyStatusController;
 use Accounts\UserController;
 use Accounts\WorkExperienceController;
+use Reminders\ReminderController;
 use App\User;
 use Chats\ConversationController;
 use Chats\PrivateMessageController;
@@ -91,6 +92,7 @@ Route::apiResource('generics/file', FileController::class);
 Route::apiResource('generics/system-log', SystemLogController::class);
 
 Route::apiResource('notices/notice', NoticeController::class);
+Route::apiResource('reminders/reminder', ReminderController::class);
 
 Route::apiResource('projects/project', ProjectController::class);
 Route::apiResource('projects/coordinate', CoordinateController::class);
