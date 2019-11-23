@@ -22,20 +22,9 @@ class ConversationController extends Controller
      */
     public function index()
     {
-        $data = Conversation::with([]);
+        $id = Auth::user()->id;
+        $data = Conversation::where('starter_id', $id)->orWhere('receiver_id', $id)->orderBy('created_at','desc');
 
-        if ($starter_id = request()->query('starter_id', null)) {
-            $data->where('starter_id', '=', $starter_id);
-        }
-        if ($receiver_id = request()->query('receiver_id', null)) {
-            $data->where('receiver_id', '=', $receiver_id);
-        }
-        if ($conversation_id = request()->query('conversation_id', null)) {
-            $data->where('conversation_id', '=', $conversation_id);
-        }
-        if ($is_read = request()->query('is_read', null)) {
-            $data->where('is_read', '=', $is_read);
-        }
 
         return request()->has('no_pagination') ? ConversationResource::collection($data->get()) : ConversationResource::collection($data->paginate());
     }
