@@ -50,6 +50,17 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->middleware('auth.permission:can_add_user');
+        $users = Auth::user()
+            ->company->users()
+            ->onlyTrashed()
+            ->where('email',$request->input('email'))
+            ->orWhere('phone_number', $request->input('phone_number'))
+            ->get();
+
+        if ($users) {
+            return response(['error' => ['code' => '0001', 'message' => 'User with the given email or phone is deactivated', 'data' => UserResource::collection($users)]], 400);
+        }
+
         $this->validate($request, $this->validationRules(), [], $this->validationAttribs());
 
         $user = new User();
@@ -172,6 +183,16 @@ class UserController extends Controller
         return response(['message' => 'Password changed']);
 
 
+    }
+
+    public function restore($id){
+
+        $success = User::withTrashed()->findOrFail($id)->restore();
+        if ($success) {
+            return response(['message' => 'User Restored']);
+        }
+
+        return response(['message' => 'Unable To Restore User', 400]);
     }
 
     /**
