@@ -57,7 +57,7 @@ class UserController extends Controller
             ->orWhere('phone_number', $request->input('phone_number'))
             ->get();
 
-        if ($users) {
+        if ($users->isNotEmpty()) {
             return response(['error' => ['code' => '0001', 'message' => 'User with the given email or phone is deactivated', 'data' => UserResource::collection($users)]], 400);
         }
 
