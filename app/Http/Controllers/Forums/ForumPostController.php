@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Forums\ForumPostResource;
 use App\Models\Forums\Forum;
 use App\Models\Forums\ForumPost;
+use App\Notifications\PostLiked;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -115,6 +116,7 @@ class ForumPostController extends Controller
         }
         else{
             $data->likes()->syncWithoutDetaching([$user->id]);
+            $data->poster->notify(new PostLiked($data));
         }
 
         return new ForumPostResource($data);

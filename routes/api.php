@@ -105,4 +105,6 @@ Route::apiResource('projects/pmo', PMOController::class);
 Route::apiResource('projects/team-member', TeamMemberController::class);
 
 
+Route::get('notifications/notification','Notifications\NotificationController@index');
+
 //  --end--  API Resources  --end--   //
