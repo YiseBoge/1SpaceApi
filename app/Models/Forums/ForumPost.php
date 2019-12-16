@@ -3,10 +3,11 @@
 namespace App\Models\Forums;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @method static ForumPost findOrFail(array|string|null $input)
@@ -59,19 +60,23 @@ class ForumPost extends Model
     }
 
     /**
-     * @return MorphOne
+     * @return MorphMany
      */
-    public function file()
+    public function files()
     {
-        return $this->morphOne('App\Models\Generics\File', 'fileable');
+        return $this->morphMany('App\Models\Generics\File', 'fileable');
     }
 
     public function getFileUrl(){
-        if ($this->file) {
-            return env('APP_URL').'/storage'.$this->file->file_url;
+        if ($file = $this->files->where('file_type','POST_IMAGE')->first()) {
+            return env('APP_URL').'/storage'.$file->file_url;
 
         }
 
         return null;
+    }
+
+    public function getAttachment(){
+        return $this->files->where('file_type', 'POST_ATTACHMENT')->first();
     }
 }

@@ -71,6 +71,10 @@ class FileController extends Controller
                 $folder = '/post_image';
                 $options = 'public';
                 break;
+            
+            case 'POST_ATTACHMENT':
+                $owner = ForumPost::findOrFail($ownerId);
+                $folder = '/post_attachment';
                 default:
                 break;
         }
@@ -79,7 +83,7 @@ class FileController extends Controller
         $data->file_url = "$folder/$fileNameToStore";
         $success = false;
         
-        if ($data->file_type == 'DIRECTIEVE_AND_MANUAL') {
+        if ($data->file_type == 'DIRECTIEVE_AND_MANUAL' || $data->file_type == 'POST_IMAGE' || $data->file_type == 'POST_ATTACHMENT') {
             $success = $owner->files()->save($data);
             
         } else {

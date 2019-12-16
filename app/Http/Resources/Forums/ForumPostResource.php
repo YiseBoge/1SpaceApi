@@ -25,7 +25,8 @@ class ForumPostResource extends JsonResource
             'comments' => $this->forumComments,
             'likes' => $this->likes()->count(),
             'has_liked' => $this->likes()->wherePivot('user_id',Auth::user()->id)->exists(),
-            'file' => $this->getFileUrl(),
+            'file' => $this->getAttachment(),
+            'image' => $this->getFileUrl(),
 
             'content' => $this->content,
 
